@@ -2,6 +2,7 @@
 
 /**
  * Module dependencies.
+ * Author: Chi-Han Wang
  */
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
