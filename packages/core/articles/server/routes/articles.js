@@ -25,7 +25,6 @@ var hasPermissions = function(req, res, next) {
 module.exports = function(Articles, app, auth) {
   
   var articles = require('../controllers/articles')(Articles);
-
   app.route('/api/articles')
     .get(articles.all)
     .post(auth.requiresLogin, hasPermissions, articles.create);

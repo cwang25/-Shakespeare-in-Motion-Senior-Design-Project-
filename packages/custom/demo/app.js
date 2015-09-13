@@ -53,6 +53,9 @@ Demo.register(function(app, auth, database) {
         //you now have the settings object
     });
     */
-
+  Demo.events.defaultData({
+    type: 'post',
+    subtype: 'newsarticle'
+  });
   return Demo;
 });
