@@ -6,14 +6,18 @@ module.exports = function(Demo, app, auth, database) {
 
   var newsarticles = require('../controllers/newsArticle')(Demo);
   //
-  //app.route('/api/demo/articles')
-  //    .get(articles.all)
-  //    .post(auth.requiresLogin, hasPermissions, articles.create);
-  //app.route('/api/demo/articles/:articleId')
-  //    .get(auth.isMongoId, articles.show)
-  //    .put(auth.isMongoId, auth.requiresLogin, hasAuthorization, hasPermissions, articles.update)
-  //    .delete(auth.isMongoId, auth.requiresLogin, hasAuthorization, articles.destroy);
+  app.route('/api/demo/newsarticles')
+      .get(newsarticles.all)
+      .post(newsarticles.create);
+  app.route('/api/demo/newsarticles/:newsarticleId')
+      .get(newsarticles.show)
+      .put(newsarticles.update)
+      .delete(newsarticles.destroy);
+  app.param('newsarticleId', newsarticles.newsarticle);
   //
+  app.get('/api/demo/newsbydaterange', function(req, res, next){
+    newsarticles.newsintimerange(req, res, next);
+  });
   //// Finish with setting up the articleId param
   //app.param('articleId', articles.article);
   app.get('/api/demo/addDummyNews', function(req, res, next){

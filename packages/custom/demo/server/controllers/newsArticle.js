@@ -14,11 +14,11 @@ module.exports = function(Articles) {
         /**
          * Find article by id
          */
-        article: function(req, res, next, id) {
-            NewsArticle.load(id, function(err, article) {
+        newsarticle: function(req, res, next, id) {
+            NewsArticle.load(id, function(err, newsarticle) {
                 if (err) return next(err);
-                if (!article) return next(new Error('Failed to load article ' + id));
-                req.article = article;
+                if (!newsarticle) return next(new Error('Failed to load article ' + id));
+                req.newsarticle = newsarticle;
                 next();
             });
         },
@@ -52,18 +52,19 @@ module.exports = function(Articles) {
             article.save(function(err) {
                 if (err) {
                     return res.status(500).json({
-                        error: 'Cannot save the article'
+                        error: 'Cannot save the article',
+                        message: req.body
                     });
                 }
 
-                Articles.events.publish({
-                    action: 'created',
-                    user: {
-                        name: req.user.name
-                    },
-                    url: config.hostname + '/articles/' + article._id,
-                    name: article.title
-                });
+                //Articles.events.publish({
+                //    action: 'created',
+                //    user: {
+                //        name: req.user.name
+                //    },
+                //    url: config.hostname + '/articles/' + article._id,
+                //    name: article.title
+                //});
 
                 res.json(article);
             });
@@ -72,7 +73,7 @@ module.exports = function(Articles) {
          * Update an article
          */
         update: function(req, res) {
-            var article = req.article;
+            var article = req.newsarticle;
 
             article = _.extend(article, req.body);
 
@@ -84,14 +85,14 @@ module.exports = function(Articles) {
                     });
                 }
 
-                Articles.events.publish({
-                    action: 'updated',
-                    user: {
-                        name: req.user.name
-                    },
-                    name: article.title,
-                    url: config.hostname + '/articles/' + article._id
-                });
+                //Articles.events.publish({
+                //    action: 'updated',
+                //    user: {
+                //        name: req.user.name
+                //    },
+                //    name: article.title,
+                //    url: config.hostname + '/articles/' + article._id
+                //});
 
                 res.json(article);
             });
@@ -100,7 +101,7 @@ module.exports = function(Articles) {
          * Delete an article
          */
         destroy: function(req, res) {
-            var article = req.article;
+            var article = req.newsarticle;
 
 
             article.remove(function(err) {
@@ -110,13 +111,13 @@ module.exports = function(Articles) {
                     });
                 }
 
-                Articles.events.publish({
-                    action: 'deleted',
-                    user: {
-                        name: req.user.name
-                    },
-                    name: article.title
-                });
+                //Articles.events.publish({
+                //    action: 'deleted',
+                //    user: {
+                //        name: req.user.name
+                //    },
+                //    name: article.title
+                //});
 
                 res.json(article);
             });
@@ -126,16 +127,34 @@ module.exports = function(Articles) {
          */
         show: function(req, res) {
 
-            Articles.events.publish({
-                action: 'viewed',
-                user: {
-                    name: req.user.name
-                },
-                name: req.article.title,
-                url: config.hostname + '/articles/' + req.article._id
-            });
+            //Articles.events.publish({
+            //    action: 'viewed',
+            //    user: {
+            //        name: req.user.name
+            //    },
+            //    name: req.article.title,
+            //    url: config.hostname + '/articles/' + req.article._id
+            //});
 
-            res.json(req.article);
+            res.json(req.newsarticle);
+        },
+        newsintimerange: function(req, res, next){
+            var date1 = Date.parse(req.query.startdate);
+            var date2 = Date.parse(req.query.enddate);
+            NewsArticle.find({
+                newsDate: {
+                    $gte: date1,
+                    $lte: date2
+                }
+            }).exec(function(err, newsarticles) {
+                if (err) {
+                    return res.status(500).json({
+                        error: 'Cannot list the articles'
+                    });
+                }
+
+                res.json(newsarticles)
+            });
         },
         /**
          * List of Articles
