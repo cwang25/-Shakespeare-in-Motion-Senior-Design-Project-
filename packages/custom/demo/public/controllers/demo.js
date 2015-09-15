@@ -20,12 +20,22 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
 
     $scope.addNews = function() {
       console.log($scope.news);
+      if($scope.news.newsDate.length < 1){
+        delete $scope.news["newsDate"];
+      }
       $http.post('/api/demo/newsarticles', $scope.news).success(function(response) {
         console.log(response);
         refresh();
       });
     };
 
+    $scope.removeNews = function(id) {
+      //console.log($scope.news);
+      $http.delete('/api/demo/newsarticles/'+id).success(function(response) {
+        console.log(response);
+        refresh();
+      });
+    };
   }
 ]);
 

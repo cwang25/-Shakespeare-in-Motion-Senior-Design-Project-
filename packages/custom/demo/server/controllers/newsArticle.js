@@ -49,8 +49,10 @@ module.exports = function(Articles) {
          */
         create: function(req, res) {
             var article = new NewsArticle(req.body);
+            //console.log(article);
             article.save(function(err) {
                 if (err) {
+                    console.log("Failed to store data: "+article);
                     return res.status(500).json({
                         error: 'Cannot save the article',
                         message: req.body
