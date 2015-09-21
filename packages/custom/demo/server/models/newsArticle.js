@@ -25,6 +25,15 @@ var NewsArticleSchema = new Schema({
     type: String,
     required: true,
     trim: true
+  },
+  url: {
+    type: String,
+    required: false,
+    trim: true
+  },
+  wordscapture:{
+    type: Array,
+    required: false
   }
 });
 

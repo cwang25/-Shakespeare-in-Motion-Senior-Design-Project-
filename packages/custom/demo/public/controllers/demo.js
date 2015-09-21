@@ -20,7 +20,7 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
 
     $scope.addNews = function() {
       console.log($scope.news);
-      if($scope.news.newsDate.length < 1){
+      if($scope.news.newsDate === undefined||$scope.news.newsDate.length < 1){
         delete $scope.news["newsDate"];
       }
       $http.post('/api/demo/newsarticles', $scope.news).success(function(response) {

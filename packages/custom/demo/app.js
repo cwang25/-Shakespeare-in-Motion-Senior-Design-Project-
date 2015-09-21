@@ -12,7 +12,6 @@ var Demo = new Module('demo');
  * Dependency injection is used to define required modules
  */
 Demo.register(function(app, auth, database) {
-
   //We enable routing. By default the Package Object is passed to the routes
   Demo.routes(app, auth, database);
 
@@ -57,5 +56,7 @@ Demo.register(function(app, auth, database) {
     type: 'post',
     subtype: 'newsarticle'
   });
+  //app.set('views', __dirname + '/server/views/');
+
   return Demo;
 });

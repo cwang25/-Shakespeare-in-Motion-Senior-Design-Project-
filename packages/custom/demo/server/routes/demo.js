@@ -20,14 +20,7 @@ module.exports = function(Demo, app, auth, database) {
   });
   //// Finish with setting up the articleId param
   //app.param('articleId', articles.article);
-  app.get('/api/demo/addDummyNews', function(req, res, next){
-    //req.body = {title : 'DummyTitle',content : 'DummyContent' };
-    newsarticles.savedummy(req, res);
-    //res.json({ message: 'Bear created!' });
-  });
 
-  app.route('/api/demo/testDummyNews')
-      .get(newsarticles.savedummy)
   app.get('/api/demo/getAllNews', function(req, res, next){
     newsarticles.all(req, res);
   });
