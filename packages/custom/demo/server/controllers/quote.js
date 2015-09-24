@@ -140,7 +140,7 @@ module.exports = function(Articles) {
          * List of Quotes
          */
         all: function(req, res) {
-            Quote.find().exec(function(err, quote) {
+            Quote.find({}).sort('-qdate').exec(function(err, quote) {
                 if (err) {
                     return res.status(500).json({
                         error: 'Cannot list the quotes'

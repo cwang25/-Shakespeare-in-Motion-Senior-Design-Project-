@@ -27,7 +27,7 @@ var QuoteSchema = new Schema({
   },
   high: {
     type: Number,
-    requried: true
+    required: true
   },
   low: {
     type: Number,
@@ -51,22 +51,22 @@ var QuoteSchema = new Schema({
  * Validations
  */
 
-QuoteSchema.pre("save",function(next, done){
+QuoteSchema.pre("save",function(next){
   var self = this;
   mongoose.models["Quote"].findOne({
     symbol: self.symbol,
-    date: self.qdate
+    qdate: self.qdate
   },function(err, quote){
     if(err){
-      done(err);
+      next(err);
     }else if(quote){
-      self.invalidate("qdate","There is no two same symbol quotes with the same date");
-      done(new Error("date must be different for quote with same symbol"));
+      //self.invalidate("qdate","There is no two same symbol quotes with the same date");
+      next(new Error("date must be different for quote with same symbol"));
     }else{
-      done();
+      next();
     }
   });
-  next();
+  //next();
 });
 
 /**
