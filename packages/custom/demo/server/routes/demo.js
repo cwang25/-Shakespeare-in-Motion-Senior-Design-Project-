@@ -7,12 +7,12 @@ module.exports = function(Demo, app, auth, database) {
   var newsarticles = require('../controllers/newsArticle')(Demo);
   //news article rest api
   app.route('/api/demo/newsarticles')
-      .get(newsarticles.all)
-      .post(newsarticles.create);
+    .get(newsarticles.all)
+    .post(newsarticles.create);
   app.route('/api/demo/newsarticles/:newsarticleId')
-      .get(newsarticles.show)
-      .put(newsarticles.update)
-      .delete(newsarticles.destroy);
+    .get(newsarticles.show)
+    .put(newsarticles.update)
+    .delete(newsarticles.destroy);
   //This is function that always attach record data into request if given
   //record id.  It will help for update, delete, findOne.
   app.param('newsarticleId', newsarticles.newsarticle);
@@ -22,16 +22,15 @@ module.exports = function(Demo, app, auth, database) {
   });
   //// Finish with setting up the articleId param
   //app.param('articleId', articles.article);
-
   //quotes rest api
   var quotes = require('../controllers/quote')(Demo);
   app.route('/api/demo/quotes')
-      .get(quotes.all)
-      .post(quotes.create);
+    .get(quotes.all)
+    .post(quotes.create);
   app.route('/api/demo/quotes/:quoteId')
-      .get(quotes.show)
-      .put(quotes.update)
-      .delete(quotes.destroy);
+    .get(quotes.show)
+    .put(quotes.update)
+    .delete(quotes.destroy);
   //This is function that always attach record data into request if given
   //record id.  It will help for update, delete, findOne.
   app.param('quoteId', quotes.quote);
@@ -40,8 +39,15 @@ module.exports = function(Demo, app, auth, database) {
    * - startdate
    * - enddate
    */
+  //required startdate and enddate parameter
+  //i.e. /api/demo/quotes_in_time_range?startdate=YYYY-MM-DD&enddate=YYYY-MM-DD
   app.get('/api/demo/quotes_by_date_range', function(req, res, next){
     quotes.quotes_in_time_range(req, res, next);
+  });
+  // required parameter indexsymbol which is the symbol of the idnex to look for
+  //i.e. /api/demo/quotes_by_symbol?indexsymbol=^DJI
+  app.get('/api/demo/quotes_by_symbol', function(req, res, next){
+    quotes.quotes_by_symbol(req, res, next);
   });
   //-----
   app.get('/api/demo/getAllNews', function(req, res, next){

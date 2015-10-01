@@ -121,11 +121,13 @@ module.exports = function(Articles) {
         quotes_in_time_range: function(req, res, next){
             var date1 = Date.parse(req.query.startdate);
             var date2 = Date.parse(req.query.enddate);
+            var sym = req.query.indexsymbol;
             Quote.find({
                 qdate: {
                     $gte: date1,
                     $lte: date2
-                }
+                },
+                symbol:sym
             }).exec(function(err, quotes) {
                 if (err) {
                     return res.status(500).json({
@@ -149,7 +151,21 @@ module.exports = function(Articles) {
 
                 res.json(quote)
             });
-
+        },
+        quotes_by_symbol: function (req, res, next){
+            var sym = req.query.indexsymbol;
+            Quote.aggregate({
+                $match:{
+                    symbol:sym
+                }
+            }).exec(function(err, quotes){
+                if (err) {
+                    return res.status(500).json({
+                        error: 'Cannot list the qutoes'
+                    });
+                }
+                res.json(quotes)
+            });
         }
     };
 }
