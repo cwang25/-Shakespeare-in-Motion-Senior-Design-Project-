@@ -39,15 +39,26 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
 
     $scope.chart = null;
 
+
     $scope.showGraph = function() {
+      $http.get('/api/demo/quotes_by_date_range?startdate=2015-09-21&enddate=2015-09-25').success(function (response) {
+        console.log("I got the quotes I requested");
+        $scope.quotes = response;
+        $scope.quote = "";
+
+
       $scope.chart = c3.generate({
-        bindto: '#chart',
+
         data: {
+
+
           columns: [
-            ['data1', 30, 200, 100, 400, 150, 250],
-            ['data2', 50, 20, 10, 40, 15, 25]
+
+            ['BCOM', $scope.quotes[0].close, $scope.quotes[1].close, $scope.quotes[2].close, $scope.quotes[3].close, $scope.quotes[4].close]
           ]
+
         }
+      });
       });
     }
   }
