@@ -44,7 +44,7 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
       $http.get('/api/demo/quotes_by_date_range?startdate=2015-09-21&enddate=2015-09-25').success(function (response) {
         console.log("I got the quotes I requested");
         $scope.quotes = response;
-        $scope.quote = "";
+        
 
 
       $scope.chart = c3.generate({
