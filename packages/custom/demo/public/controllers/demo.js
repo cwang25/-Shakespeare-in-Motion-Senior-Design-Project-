@@ -41,7 +41,7 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
 
 
     $scope.showGraph = function() {
-      $http.get('/api/demo/quotes_by_date_range?startdate=2015-09-21&enddate=2015-09-25').success(function (response) {
+      $http.get('/api/demo/quotes_by_date_range?startdate=2015-09-21&enddate=2015-09-30').success(function (response) {
         console.log("I got the quotes I requested");
         $scope.quotes = response;
         
