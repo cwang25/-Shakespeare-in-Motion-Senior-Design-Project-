@@ -29,11 +29,11 @@ Demo.register(function(app, auth, database) {
     menu: 'main'
   });
   /**
-   * Here is place improt all files from assets includig js library.
+   * Here is place improt all files from assets including js library.
    */
   Demo.aggregateAsset('css', 'demo.css');
-  Demo.aggregateAsset('js', '../lib/d3.js');
-  Demo.aggregateAsset('js', '../lib/c3.js');
+  Demo.aggregateAsset('js', '../library/d3.js');
+  Demo.aggregateAsset('js', '../library/c3.js');
   /**
     //Uncomment to use. Requires meanio@0.3.7 or above
     // Save settings with callback
