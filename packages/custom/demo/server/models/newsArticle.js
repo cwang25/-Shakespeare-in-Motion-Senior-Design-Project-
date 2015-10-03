@@ -31,7 +31,7 @@ var NewsArticleSchema = new Schema({
     required: false,
     trim: true
   },
-  wordscapture:{
+  words_capture:{
     type: Array,
     required: false
   }
