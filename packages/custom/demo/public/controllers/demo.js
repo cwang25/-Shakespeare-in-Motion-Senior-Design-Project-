@@ -13,6 +13,7 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
         $scope.newsarticles = response;
         $scope.news = "";
 
+
       });
 
     };
@@ -41,9 +42,11 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
 
 
     $scope.showGraph = function() {
-      $http.get('/api/demo/quotes_by_date_range?startdate=2015-09-21&enddate=2015-09-30').success(function (response) {
+
+      $http.get('/api/demo/quotes_by_date_range?startdate='+$scope.quote.startDate+'&enddate='+$scope.quote.endDate+'&indexsymbol=^'+$scope.quote.symbol).success(function (response) {
         console.log("I got the quotes I requested");
         $scope.quotes = response;
+
 
 
 
@@ -51,15 +54,28 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
 
         data: {
 
-
+          x: 'x',
           columns: [
-
-            ['BCOM', $scope.quotes[0].close, $scope.quotes[1].close, $scope.quotes[2].close, $scope.quotes[3].close, $scope.quotes[4].close]
+            ['x', new Date($scope.quotes[0].qdate), new Date($scope.quotes[1].qdate), new Date($scope.quotes[2].qdate), new Date($scope.quotes[3].qdate), new Date($scope.quotes[4].qdate)],
+            [$scope.quote.symbol, $scope.quotes[0].close, $scope.quotes[1].close, $scope.quotes[2].close, $scope.quotes[3].close, $scope.quotes[4].close]
           ]
 
+        },
+        axis: {
+          x: {
+            type: 'timeseries',
+            localtime: false,
+            tick: {
+              format: '%m-%d'
+            }
+          }
+        },
+        padding: {
+          right: 100
         }
       });
       });
+      //$scope.quote = null;
     }
   }
 ]);
