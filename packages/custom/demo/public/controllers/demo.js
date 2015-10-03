@@ -70,6 +70,12 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
             tick: {
               format: '%m-%d'
             }
+          },
+          y: {
+            tick: {
+              format: d3.format(".2f")
+
+            }
           }
         },
         padding: {
@@ -77,7 +83,7 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
         }
       });
       });
-      //$scope.quote = null;
+
     }
   }
 ]);
