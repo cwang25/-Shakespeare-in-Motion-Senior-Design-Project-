@@ -41,6 +41,7 @@ module.exports = function(Demo, app, auth, database) {
    */
   //required startdate and enddate parameter
   //i.e. /api/demo/quotes_in_time_range?startdate=YYYY-MM-DD&enddate=YYYY-MM-DD
+  //optional argument: indexsymbol
   app.get('/api/demo/quotes_by_date_range', function(req, res, next){
     quotes.quotes_in_time_range(req, res, next);
   });
