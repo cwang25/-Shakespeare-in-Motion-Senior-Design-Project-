@@ -1,3 +1,4 @@
+db.quotes.remove({});
 db.quotes.insert({
     high : 87.00,
     volume : 0,
