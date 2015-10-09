@@ -10,5 +10,7 @@ angular.module('mean.demo').config(['$stateProvider',
       url: '/demo/reports',
       templateUrl: 'demo/views/reports.html'
     });
+
   }
 ]);
+
