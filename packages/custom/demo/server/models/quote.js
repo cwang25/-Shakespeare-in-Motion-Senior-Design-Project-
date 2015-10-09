@@ -60,7 +60,7 @@ QuoteSchema.pre("save",function(next){
     if(err){
       next(err);
     }else if(quote){
-      //self.invalidate("qdate","There is no two same symbol quotes with the same date");
+      console.log("There is no two same symbol quotes with the same date");
       next(new Error("date must be different for quote with same symbol"));
     }else{
       next();

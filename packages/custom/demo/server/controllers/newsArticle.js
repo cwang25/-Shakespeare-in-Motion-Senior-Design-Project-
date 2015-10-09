@@ -23,27 +23,6 @@ module.exports = function(Articles) {
             });
         },
 
-        savedummy: function(req, res){
-            var news = new NewsArticle({title : 'DummyTitle3',content : 'DummyContent3' });
-            news.save(function(err) {
-                if (err) {
-                    return res.status(500).json({
-                        error: 'Cannot save the article'
-                    });
-                }
-
-                //Articles.events.publish({
-                //    action: 'created',
-                //    user: {
-                //        name: req.user.name
-                //    },
-                //    url: config.hostname + '/articles/' + article._id,
-                //    name: article.title
-                //});
-
-                res.json(news);
-            });
-        },
         /**
          * Create an article
          */

@@ -7,12 +7,12 @@ var mongoose = require('mongoose'),
     Quote = mongoose.model('Quote'),
     config = require('meanio').loadConfig(),
     _ = require('lodash');
-
+var ipaddr = require('ipaddr.js');
 module.exports = function(Articles) {
 
     return {
         /**
-         * Find article by id
+         * Find quote by id
          */
         quote: function(req, res, next, id) {
             Quote.load(id, function(err, quote) {
@@ -23,7 +23,7 @@ module.exports = function(Articles) {
             });
         },
         /**
-         * Create an article
+         * Create an quote
          */
         create: function(req, res) {
             var quote = new Quote(req.body);
@@ -36,21 +36,11 @@ module.exports = function(Articles) {
                         message: req.body
                     });
                 }
-
-                //Articles.events.publish({
-                //    action: 'created',
-                //    user: {
-                //        name: req.user.name
-                //    },
-                //    url: config.hostname + '/articles/' + article._id,
-                //    name: article.title
-                //});
-
                 res.json(quote);
             });
         },
         /**
-         * Update an article
+         * Update an quote
          */
         update: function(req, res) {
             var quote = req.quote;
@@ -64,21 +54,11 @@ module.exports = function(Articles) {
                         error: 'Cannot update the quote'
                     });
                 }
-
-                //Articles.events.publish({
-                //    action: 'updated',
-                //    user: {
-                //        name: req.user.name
-                //    },
-                //    name: article.title,
-                //    url: config.hostname + '/articles/' + article._id
-                //});
-
                 res.json(quote);
             });
         },
         /**
-         * Delete an article
+         * Delete an quote
          */
         destroy: function(req, res) {
             var quote = req.quote;
@@ -90,34 +70,21 @@ module.exports = function(Articles) {
                         error: 'Cannot delete the article'
                     });
                 }
-
-                //Articles.events.publish({
-                //    action: 'deleted',
-                //    user: {
-                //        name: req.user.name
-                //    },
-                //    name: article.title
-                //});
-
                 res.json(quote);
             });
         },
         /**
-         * Show an article
+         * Show an quote
          */
         show: function(req, res) {
-
-            //Articles.events.publish({
-            //    action: 'viewed',
-            //    user: {
-            //        name: req.user.name
-            //    },
-            //    name: req.article.title,
-            //    url: config.hostname + '/articles/' + req.article._id
-            //});
-
             res.json(req.quote);
         },
+        /**
+         * Get quote in given time range
+         * @param req
+         * @param res
+         * @param next
+         */
         quotes_in_time_range: function(req, res, next){
             var date1 = Date.parse(req.query.startdate);
             var date2 = Date.parse(req.query.enddate);
@@ -142,6 +109,7 @@ module.exports = function(Articles) {
          * List of Quotes
          */
         all: function(req, res) {
+            console.log(_.isEqual(ipaddr.process(req.ip), ipaddr.process('127.0.0.1')));
             Quote.find({}).sort('-qdate').exec(function(err, quote) {
                 if (err) {
                     return res.status(500).json({
@@ -152,6 +120,12 @@ module.exports = function(Articles) {
                 res.json(quote)
             });
         },
+        /**
+         * Get quote by symbol
+         * @param req
+         * @param res
+         * @param next
+         */
         quotes_by_symbol: function (req, res, next){
             var sym = req.query.indexsymbol;
             Quote.aggregate({
