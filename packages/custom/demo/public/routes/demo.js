@@ -2,11 +2,11 @@
 
 angular.module('mean.demo').config(['$stateProvider',
   function($stateProvider) {
-    $stateProvider.state('demo example page', {
-      url: '/demo/example',
-      templateUrl: 'demo/views/index.html'
+    $stateProvider.state('Rest API document', {
+      url: '/demo/rest_api_document',
+      templateUrl: 'demo/views/rest_api_document.html'
     });
-    $stateProvider.state('reports page', {
+    $stateProvider.state('Reports Page', {
       url: '/demo/reports',
       templateUrl: 'demo/views/reports.html'
     });

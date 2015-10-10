@@ -1,7 +1,854 @@
 <!doctype html>
 <html>
-<body>
-GHEEEJKLj
-</body>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>API Reference</title>
 
+    <link href="/demo/assets/doc_assets/stylesheets/screen.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="/demo/assets/doc_assets/stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+      <script src="/demo/assets/doc_assets/javascripts/all.js" type="text/javascript"></script>
+
+      <script>
+        $(function() {
+          setupLanguages(["javascript","python"]);
+        });
+      </script>
+  </head>
+
+  <body class="index">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="/demo/assets/doc_assets/images/navbar.png" />
+      </span>
+    </a>
+    <div class="tocify-wrapper">
+      <img src="/demo/assets/doc_assets/images/logo.png" />
+        <div class="lang-selector">
+              <a href="#" data-language-name="javascript">javascript</a>
+              <a href="#" data-language-name="python">python</a>
+        </div>
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <div id="toc">
+      </div>
+        <ul class="toc-footer">
+            <li><a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a></li>
+        </ul>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id="introduction">Introduction</h1>
+
+<p>Welcome to the Shakespeare-In-Motion Rest API! You can use our API to access Shakespeare-In-Motion Rest API endpoints, which can get information about weekly summaries about finance, market, commodities index analysis in our database.</p>
+
+<p>Rest API is cross platform, which you can use it as long as being able to send Rest request call to our server.  Most return data will be returned as JSON data format from server.  The code examples will show in JavaScript and Python. You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
+
+<h1 id="news-articles">News Articles</h1>
+
+<h2 id="get-all-news-articles">Get All news articles</h2>
+<pre class="highlight javascript"><code>
+<span class="nx">$http</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'http://localhost:3000/api/demo/newsarticles'</span><span class="p">).</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+<span class="p">});</span>
+
+</code></pre>
+<pre class="highlight python"><code>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://localhost:3000/api/demo/newsarticles'</span><span class="p">)</span>
+
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55ff65f3e57ca43d87d69255"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sample title 1"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"content"</span><span class="p">:</span><span class="w"> </span><span class="s2">"This is sample content 1"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"__v"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"words_capture"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"sample"</span><span class="p">,</span><span class="s2">"content"</span><span class="p">],</span><span class="w">
+    </span><span class="nt">"newsDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-09-21T02:05:39.253Z"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55ff963e1e03272096adaa42"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sample title 2"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"content"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sample content 2"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"words_capture"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"Sample"</span><span class="p">,</span><span class="s2">"content"</span><span class="p">,</span><span class="s2">"2"</span><span class="p">],</span><span class="w">
+    </span><span class="nt">"__v"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"newsDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-09-23T05:31:42.546Z"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint retrieves all news article.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET http://localhost:3000/api/demo/newsarticles</code></p>
+
+<h2 id="create-and-store-news-article">Create and store News Article</h2>
+<pre class="highlight javascript"><code>
+<span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"title"</span><span class="p">:</span><span class="s2">"test title"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span><span class="s2">"test content"</span><span class="p">};</span>
+<span class="nx">$http</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'/api/demo/newsarticles'</span><span class="p">,</span> <span class="nx">data</span><span class="p">).</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+<span class="p">});</span>
+
+</code></pre>
+<pre class="highlight python"><code>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">"title"</span><span class="p">:</span><span class="s">"test title"</span><span class="p">,</span> <span class="s">"content"</span><span class="p">:</span><span class="s">"test content"</span><span class="p">}</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'http://localhost:3000/api/demo/newsarticles'</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+</code></pre>
+
+<blockquote>
+<p>The above command requires to attach JSON structured in the request body:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sample title 1"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"content"</span><span class="p">:</span><span class="w"> </span><span class="s2">"This is sample content 1"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"words_capture"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"sample"</span><span class="p">,</span><span class="s2">"content"</span><span class="p">],</span><span class="w">
+  </span><span class="nt">"newsDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-09-21T02:05:39.253Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint will create and store news article record to server&rsquo;s database.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST http://localhost:3000/api/demo/newsarticles/</code></p>
+
+<h3 id="json-data-format">JSON data format</h3>
+
+<p>* - required field</p>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>newsDate</td>
+<td>The date of the news article (default is the date when the news is inserted in to the database)</td>
+</tr>
+<tr>
+<td>*title</td>
+<td>The title of the news article</td>
+</tr>
+<tr>
+<td>*content</td>
+<td>The body content of the article</td>
+</tr>
+<tr>
+<td>url</td>
+<td>The url of the news article</td>
+</tr>
+<tr>
+<td>words_capture</td>
+<td>The key words that was capture for this article</td>
+</tr>
+</tbody></table>
+
+<aside class="warning">This API is a private api, which server will only accept the requests from authenticated sources.</aside>
+
+<h2 id="get-a-news-articles-with-time-range">Get a News Articles with time range</h2>
+<pre class="highlight javascript"><code>
+<span class="nx">$http</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'http://localhost:3000/api/demo/newsarticles?startdate=2015-09-20&amp;enddate=2015-09-25'</span><span class="p">).</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+<span class="p">});</span>
+
+</code></pre>
+<pre class="highlight python"><code>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://localhost:3000/api/demo/newsarticles?startdate=2015-09-20&amp;enddate=2015-09-25'</span><span class="p">)</span>
+
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55ff65f3e57ca43d87d69255"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sample title 1"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"content"</span><span class="p">:</span><span class="w"> </span><span class="s2">"This is sample content 1"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"__v"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"words_capture"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"sample"</span><span class="p">,</span><span class="s2">"content"</span><span class="p">],</span><span class="w">
+    </span><span class="nt">"newsDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-09-21T02:05:39.253Z"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55ff963e1e03272096adaa42"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sample title 2"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"content"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sample content 2"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"words_capture"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"Sample"</span><span class="p">,</span><span class="s2">"content"</span><span class="p">,</span><span class="s2">"2"</span><span class="p">],</span><span class="w">
+    </span><span class="nt">"__v"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"newsDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-09-23T05:31:42.546Z"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint retrieves a list of news articles that is in the given time range.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET http://localhost:3000/api/demo/newsbydaterange?startdate=YYYY-MM-DD&amp;enddate=YYYY-MM-DD</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>startdate</td>
+<td>The start date of the time range</td>
+</tr>
+<tr>
+<td>enddate</td>
+<td>The end date of the time range</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">The time range of startdate and enddate will be inclusive</aside>
+
+<h2 id="get-a-specific-news-article">Get a Specific News Article</h2>
+<pre class="highlight javascript"><code>
+<span class="nx">$http</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'http://localhost:3000/api/demo/newsarticles/55ff65f3e57ca43d87d69255'</span><span class="p">).</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+<span class="p">});</span>
+
+</code></pre>
+<pre class="highlight python"><code>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://localhost:3000/api/demo/newsarticles/55ff65f3e57ca43d87d69255'</span><span class="p">)</span>
+
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55ff65f3e57ca43d87d69255"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sample title 1"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"content"</span><span class="p">:</span><span class="w"> </span><span class="s2">"This is sample content 1"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"__v"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"words_capture"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"sample"</span><span class="p">,</span><span class="s2">"content"</span><span class="p">],</span><span class="w">
+  </span><span class="nt">"newsDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-09-21T02:05:39.253Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint retrieves a specific news article record.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET http://localhost:3000/api/demo/newsarticles/:newsarticleId</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>newsarticleId</td>
+<td>The ID of the news article to retrieve</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">The newsarticleId of the news article is the primary key that the record is stored in the databse.</aside>
+
+<h2 id="update-a-specific-news-article">Update a Specific News Article</h2>
+<pre class="highlight javascript"><code>
+<span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"title"</span><span class="p">:</span><span class="s2">"test title"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span><span class="s2">"test content"</span><span class="p">};</span>
+<span class="nx">$http</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="s1">'/api/demo/newsarticles/55ff65f3e57ca43d87d69255'</span><span class="p">,</span> <span class="nx">data</span><span class="p">).</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+<span class="p">});</span>
+
+</code></pre>
+<pre class="highlight python"><code>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">"title"</span><span class="p">:</span><span class="s">"test title"</span><span class="p">,</span> <span class="s">"content"</span><span class="p">:</span><span class="s">"test content"</span><span class="p">}</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s">'http://localhost:3000/api/demo/newsarticles/55ff65f3e57ca43d87d69255'</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+</code></pre>
+
+<blockquote>
+<p>The above command requires to attach JSON structured in the request body:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sample title 1"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"content"</span><span class="p">:</span><span class="w"> </span><span class="s2">"This is sample content 1"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"words_capture"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"sample"</span><span class="p">,</span><span class="s2">"content"</span><span class="p">],</span><span class="w">
+  </span><span class="nt">"newsDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-09-21T02:05:39.253Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint update a specific news article record.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">PUT http://localhost:3000/api/demo/newsarticles/:newsarticleId</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>newsarticleId</td>
+<td>The ID of the news article to retrieve</td>
+</tr>
+</tbody></table>
+
+<h3 id="json-data-format">JSON data format</h3>
+
+<p>* - required field</p>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>newsDate</td>
+<td>The date of the news article (default is the date when the news is inserted in to the database)</td>
+</tr>
+<tr>
+<td>*title</td>
+<td>The title of the news article</td>
+</tr>
+<tr>
+<td>*content</td>
+<td>The body content of the article</td>
+</tr>
+<tr>
+<td>url</td>
+<td>The url of the news article</td>
+</tr>
+<tr>
+<td>words_capture</td>
+<td>The key words that was capture for this article</td>
+</tr>
+</tbody></table>
+
+<aside class="warning">This API is a private api, which server will only accept the requests from authenticated sources.</aside>
+
+<h2 id="delete-a-news-article">Delete a News Article</h2>
+<pre class="highlight javascript"><code>
+<span class="nx">$http</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="s1">'http://localhost:3000/api/demo/newsarticles/55ff65f3e57ca43d87d69255'</span><span class="p">).</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+<span class="p">});</span>
+
+</code></pre>
+<pre class="highlight python"><code>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s">'http://localhost:3000/api/demo/newsarticles/55ff65f3e57ca43d87d69255'</span><span class="p">)</span>
+
+</code></pre>
+
+<p>This endpoint delete a specific news article record.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">DELETE http://localhost:3000/api/demo/newsarticles/:newsarticleId</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>newsarticleId</td>
+<td>The ID of the news article to delete</td>
+</tr>
+</tbody></table>
+
+<aside class="warning">This API is a private api, which server will only accept the requests from authenticated sources.</aside>
+
+<h1 id="commodity-quotes">Commodity Quotes</h1>
+
+<h2 id="get-all-quotes">Get All quotes</h2>
+<pre class="highlight javascript"><code>
+<span class="nx">$http</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'http://localhost:3000/api/demo/quotes'</span><span class="p">).</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+<span class="p">});</span>
+
+</code></pre>
+<pre class="highlight python"><code>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://localhost:3000/api/demo/quotes'</span><span class="p">)</span>
+
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"561596c64b91f43f49260ba7"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"high"</span><span class="p">:</span><span class="w"> </span><span class="mf">16865.089844</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">120010000</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"low"</span><span class="p">:</span><span class="w"> </span><span class="mf">16746.029297</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"qdate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-10-06T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"close"</span><span class="p">:</span><span class="w"> </span><span class="mf">16790.189453</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^DJI"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"open"</span><span class="p">:</span><span class="w"> </span><span class="mf">16774.019531</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"adj_close"</span><span class="p">:</span><span class="w"> </span><span class="mf">16790.189453</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"__v"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"561596c64b91f43f49260bac"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"high"</span><span class="p">:</span><span class="w"> </span><span class="mf">90.389999</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"low"</span><span class="p">:</span><span class="w"> </span><span class="mf">88.43</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"qdate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-10-06T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"close"</span><span class="p">:</span><span class="w"> </span><span class="mf">90.269997</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^DJC"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"open"</span><span class="p">:</span><span class="w"> </span><span class="mf">88.75</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"adj_close"</span><span class="p">:</span><span class="w"> </span><span class="mf">90.269997</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"__v"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint retrieves all recorded quotes data.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET http://localhost:3000/api/demo/quotes</code></p>
+
+<h2 id="create-and-store-quote">Create and store Quote</h2>
+<pre class="highlight javascript"><code>
+<span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span>
+             <span class="s2">"high"</span><span class="p">:</span> <span class="mf">90.389999</span><span class="p">,</span>
+             <span class="s2">"volume"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+             <span class="s2">"low"</span><span class="p">:</span> <span class="mf">88.43</span><span class="p">,</span>
+             <span class="s2">"qdate"</span><span class="p">:</span> <span class="s2">"2015-10-06T00:00:00.000Z"</span><span class="p">,</span>
+             <span class="s2">"close"</span><span class="p">:</span> <span class="mf">90.269997</span><span class="p">,</span>
+             <span class="s2">"symbol"</span><span class="p">:</span> <span class="s2">"^DJC"</span><span class="p">,</span>
+             <span class="s2">"open"</span><span class="p">:</span> <span class="mf">88.75</span><span class="p">,</span>
+             <span class="s2">"adj_close"</span><span class="p">:</span> <span class="mf">90.269997</span>
+           <span class="p">};</span>
+<span class="nx">$http</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'/api/demo/quotes'</span><span class="p">,</span> <span class="nx">data</span><span class="p">).</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+<span class="p">});</span>
+
+</code></pre>
+<pre class="highlight python"><code>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+         <span class="s">"high"</span><span class="p">:</span> <span class="mf">90.389999</span><span class="p">,</span>
+         <span class="s">"volume"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+         <span class="s">"low"</span><span class="p">:</span> <span class="mf">88.43</span><span class="p">,</span>
+         <span class="s">"qdate"</span><span class="p">:</span> <span class="s">"2015-10-06T00:00:00.000Z"</span><span class="p">,</span>
+         <span class="s">"close"</span><span class="p">:</span> <span class="mf">90.269997</span><span class="p">,</span>
+         <span class="s">"symbol"</span><span class="p">:</span> <span class="s">"^DJC"</span><span class="p">,</span>
+         <span class="s">"open"</span><span class="p">:</span> <span class="mf">88.75</span><span class="p">,</span>
+         <span class="s">"adj_close"</span><span class="p">:</span> <span class="mf">90.269997</span>
+       <span class="p">}</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'http://localhost:3000/api/demo/quotes'</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+</code></pre>
+
+<blockquote>
+<p>The above command requires to attach JSON structured in the request body:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"high"</span><span class="p">:</span><span class="w"> </span><span class="mf">90.389999</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"low"</span><span class="p">:</span><span class="w"> </span><span class="mf">88.43</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"qdate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-10-06T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"close"</span><span class="p">:</span><span class="w"> </span><span class="mf">90.269997</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^DJC"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"open"</span><span class="p">:</span><span class="w"> </span><span class="mf">88.75</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"adj_close"</span><span class="p">:</span><span class="w"> </span><span class="mf">90.269997</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint will create and store quote record to server&rsquo;s database.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST http://localhost:3000/api/demo/quotes/</code></p>
+
+<h3 id="json-data-format">JSON data format</h3>
+
+<p>all fields are required</p>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>high</td>
+<td>The high index recorded for that quote on that date</td>
+</tr>
+<tr>
+<td>low</td>
+<td>The low index recorded for the quote on that date</td>
+</tr>
+<tr>
+<td>close</td>
+<td>The index of the quote when it is closed for the day</td>
+</tr>
+<tr>
+<td>adj_close</td>
+<td>The adjusted close index of the quote for the day</td>
+</tr>
+<tr>
+<td>open</td>
+<td>The index of the quote when it is opened for the day</td>
+</tr>
+<tr>
+<td>symbol</td>
+<td>The symbol/abbreviation of the quote&rsquo;s name on Yahoo! Finance Server</td>
+</tr>
+<tr>
+<td>qdate</td>
+<td>The date of the quote</td>
+</tr>
+</tbody></table>
+
+<aside class="warning">This API is a private api, which server will only accept the requests from authenticated sources.</aside>
+
+<h2 id="get-a-specific-quote">Get a Specific Quote</h2>
+<pre class="highlight javascript"><code>
+<span class="nx">$http</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'http://localhost:3000/api/demo/quotes/561596c64b91f43f49260bac'</span><span class="p">).</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+<span class="p">});</span>
+
+</code></pre>
+<pre class="highlight python"><code>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://localhost:3000/api/demo/quotes/561596c64b91f43f49260bac'</span><span class="p">)</span>
+
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"561596c64b91f43f49260bac"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"high"</span><span class="p">:</span><span class="w"> </span><span class="mf">90.389999</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"low"</span><span class="p">:</span><span class="w"> </span><span class="mf">88.43</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"qdate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-10-06T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"close"</span><span class="p">:</span><span class="w"> </span><span class="mf">90.269997</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^DJC"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"open"</span><span class="p">:</span><span class="w"> </span><span class="mf">88.75</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"adj_close"</span><span class="p">:</span><span class="w"> </span><span class="mf">90.269997</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"__v"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint retrieves a specific news article record.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET http://localhost:3000/api/demo/quotes/:quoteId</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>quoteId</td>
+<td>The ID of the quote to retrieve</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">The quoteId of the quote is the primary key that the record is stored in the databse.</aside>
+
+<h2 id="get-quotes-with-time-range">Get quotes with time range</h2>
+<pre class="highlight javascript"><code>
+<span class="nx">$http</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'http://localhost:3000/api/demo/quotes_by_date_range?startdate=2015-09-10&amp;enddate=2015-09-15&amp;indexsymbol=^DJC'</span><span class="p">).</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+<span class="p">});</span>
+
+</code></pre>
+<pre class="highlight python"><code>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://localhost:3000/api/demo/quotes_by_date_range?startdate=2015-09-10&amp;enddate=2015-09-15&amp;indexsymbol=^DJC'</span><span class="p">)</span>
+
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"56140b96704afaca3a822c88"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"high"</span><span class="p">:</span><span class="w"> </span><span class="mf">88.889999</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"low"</span><span class="p">:</span><span class="w"> </span><span class="mf">88.400002</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"qdate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-09-15T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"close"</span><span class="p">:</span><span class="w"> </span><span class="mf">88.57</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^DJC"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"open"</span><span class="p">:</span><span class="w"> </span><span class="mf">88.839996</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"adj_close"</span><span class="p">:</span><span class="w"> </span><span class="mf">88.57</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"__v"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"56140b96704afaca3a822c89"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"high"</span><span class="p">:</span><span class="w"> </span><span class="mf">89.32</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"low"</span><span class="p">:</span><span class="w"> </span><span class="mf">88.349998</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"qdate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-09-14T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"close"</span><span class="p">:</span><span class="w"> </span><span class="mf">88.57</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^DJC"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"open"</span><span class="p">:</span><span class="w"> </span><span class="mf">89.309998</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"adj_close"</span><span class="p">:</span><span class="w"> </span><span class="mf">88.57</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"__v"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"56140b96704afaca3a822c8a"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"high"</span><span class="p">:</span><span class="w"> </span><span class="mf">89.199997</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"low"</span><span class="p">:</span><span class="w"> </span><span class="mf">87.879997</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"qdate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-09-11T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"close"</span><span class="p">:</span><span class="w"> </span><span class="mf">88.93</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^DJC"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"open"</span><span class="p">:</span><span class="w"> </span><span class="mf">89.120003</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"adj_close"</span><span class="p">:</span><span class="w"> </span><span class="mf">88.93</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"__v"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"56140b96704afaca3a822c8b"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"high"</span><span class="p">:</span><span class="w"> </span><span class="mf">89.269997</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"low"</span><span class="p">:</span><span class="w"> </span><span class="mf">87.949997</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"qdate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-09-10T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"close"</span><span class="p">:</span><span class="w"> </span><span class="mf">89.150002</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^DJC"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"open"</span><span class="p">:</span><span class="w"> </span><span class="mf">88.279999</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"adj_close"</span><span class="p">:</span><span class="w"> </span><span class="mf">89.150002</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"__v"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint retrieves a list of quotes that is in the given time range.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET http://localhost:3000/api/demo/quotes_by_date_range?startdate=YYYY-MM-DD&amp;enddate=YYYY-MM-DD&amp;indexsymbol=XX</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<p>* - required parameter</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>startdate*</td>
+<td>The start date of the time range</td>
+</tr>
+<tr>
+<td>enddate*</td>
+<td>The end date of the time range</td>
+</tr>
+<tr>
+<td>indexsymbol</td>
+<td>Optional parameter which allows returned data to be filtered with desired symbol such as only retrieving quotes of Bloomberg Commodity Index (^DJC).</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">The time range of startdate and enddate will be inclusive</aside>
+
+<h2 id="update-a-specific-quote">Update a Specific Quote</h2>
+<pre class="highlight javascript"><code>
+<span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span>
+             <span class="s2">"high"</span><span class="p">:</span> <span class="mf">90.389999</span><span class="p">,</span>
+             <span class="s2">"volume"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+             <span class="s2">"low"</span><span class="p">:</span> <span class="mf">88.43</span><span class="p">,</span>
+             <span class="s2">"qdate"</span><span class="p">:</span> <span class="s2">"2015-10-06T00:00:00.000Z"</span><span class="p">,</span>
+             <span class="s2">"close"</span><span class="p">:</span> <span class="mf">90.269997</span><span class="p">,</span>
+             <span class="s2">"symbol"</span><span class="p">:</span> <span class="s2">"^DJC"</span><span class="p">,</span>
+             <span class="s2">"open"</span><span class="p">:</span> <span class="mf">88.75</span><span class="p">,</span>
+             <span class="s2">"adj_close"</span><span class="p">:</span> <span class="mf">90.269997</span>
+           <span class="p">};</span>
+<span class="nx">$http</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="s1">'/api/demo/quotes/56140b96704afaca3a822c8b'</span><span class="p">,</span> <span class="nx">data</span><span class="p">).</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+<span class="p">});</span>
+
+</code></pre>
+<pre class="highlight python"><code>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+         <span class="s">"high"</span><span class="p">:</span> <span class="mf">90.389999</span><span class="p">,</span>
+         <span class="s">"volume"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+         <span class="s">"low"</span><span class="p">:</span> <span class="mf">88.43</span><span class="p">,</span>
+         <span class="s">"qdate"</span><span class="p">:</span> <span class="s">"2015-10-06T00:00:00.000Z"</span><span class="p">,</span>
+         <span class="s">"close"</span><span class="p">:</span> <span class="mf">90.269997</span><span class="p">,</span>
+         <span class="s">"symbol"</span><span class="p">:</span> <span class="s">"^DJC"</span><span class="p">,</span>
+         <span class="s">"open"</span><span class="p">:</span> <span class="mf">88.75</span><span class="p">,</span>
+         <span class="s">"adj_close"</span><span class="p">:</span> <span class="mf">90.269997</span>
+       <span class="p">}</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s">'http://localhost:3000/api/demo/quotes/56140b96704afaca3a822c8b'</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+</code></pre>
+
+<blockquote>
+<p>The above command requires to attach JSON structured in the request body:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"high"</span><span class="p">:</span><span class="w"> </span><span class="mf">90.389999</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"low"</span><span class="p">:</span><span class="w"> </span><span class="mf">88.43</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"qdate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-10-06T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"close"</span><span class="p">:</span><span class="w"> </span><span class="mf">90.269997</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^DJC"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"open"</span><span class="p">:</span><span class="w"> </span><span class="mf">88.75</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"adj_close"</span><span class="p">:</span><span class="w"> </span><span class="mf">90.269997</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint update a specific quote record.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">PUT http://localhost:3000/api/demo/quotes/:quoteId</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>newsarticleId</td>
+<td>The ID of the news article to update</td>
+</tr>
+</tbody></table>
+
+<h3 id="json-data-format">JSON data format</h3>
+
+<p>all fields are required</p>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>high</td>
+<td>The high index recorded for that quote on that date</td>
+</tr>
+<tr>
+<td>low</td>
+<td>The low index recorded for the quote on that date</td>
+</tr>
+<tr>
+<td>close</td>
+<td>The index of the quote when it is closed for the day</td>
+</tr>
+<tr>
+<td>adj_close</td>
+<td>The adjusted close index of the quote for the day</td>
+</tr>
+<tr>
+<td>open</td>
+<td>The index of the quote when it is opened for the day</td>
+</tr>
+<tr>
+<td>symbol</td>
+<td>The symbol/abbreviation of the quote&rsquo;s name on Yahoo! Finance Server</td>
+</tr>
+<tr>
+<td>qdate</td>
+<td>The date of the quote</td>
+</tr>
+</tbody></table>
+
+<aside class="warning">This API is a private api, which server will only accept the requests from authenticated sources.</aside>
+
+<h2 id="delete-a-quote">Delete a Quote</h2>
+<pre class="highlight javascript"><code>
+<span class="nx">$http</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="s1">'http://localhost:3000/api/demo/quotes/56140b96704afaca3a822c8b'</span><span class="p">).</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+<span class="p">});</span>
+
+</code></pre>
+<pre class="highlight python"><code>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s">'http://localhost:3000/api/demo/quotes/56140b96704afaca3a822c8b'</span><span class="p">)</span>
+
+</code></pre>
+
+<p>This endpoint delete a specific quote.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">DELETE http://localhost:3000/api/demo/quotes/:quoteId</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>quoteId</td>
+<td>The ID of the quote to delete</td>
+</tr>
+</tbody></table>
+
+<aside class="warning">This API is a private api, which server will only accept the requests from authenticated sources.</aside>
+
+      </div>
+      <div class="dark-box">
+          <div class="lang-selector">
+                <a href="#" data-language-name="javascript">javascript</a>
+                <a href="#" data-language-name="python">python</a>
+          </div>
+      </div>
+    </div>
+  </body>
 </html>

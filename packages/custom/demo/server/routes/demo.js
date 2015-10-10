@@ -68,7 +68,12 @@ module.exports = function(Demo, app, auth, database) {
     res.send('Only users with Admin role can access this');
   });
 
-  app.get('/api/demo/example/render', function(req, res, next) {
+
+
+  app.get('/api/demo/documentation_page', function(req, res, next) {
+    var path = require('path');
+    var express = require('express');
+    app.use(express.static(path.join(__dirname, 'public')));
     Demo.render('index', {
       package: 'demo'
     }, function(err, html) {
@@ -76,4 +81,5 @@ module.exports = function(Demo, app, auth, database) {
       res.send(html);
     });
   });
+
 };

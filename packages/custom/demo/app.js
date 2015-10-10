@@ -17,14 +17,14 @@ Demo.register(function(app, auth, database) {
 
   //We are adding a link to the main menu for all authenticated users
   Demo.menus.add({
-    title: 'demo example page',
-    link: 'demo example page',
+    title: 'Rest API document',
+    link: 'Rest API document',
     roles: ['all'],
     menu: 'main'
   });
   Demo.menus.add({
-    title: 'reports page',
-    link: 'reports page',
+    title: 'Reports Page',
+    link: 'Reports Page',
     roles: ['all'],
     menu: 'main'
   });
