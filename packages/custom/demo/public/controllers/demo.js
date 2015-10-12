@@ -31,7 +31,7 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
     };
 
     $scope.removeNews = function(id) {
-      //console.log($scope.news);
+      
       $http.delete('/api/demo/newsarticles/'+id).success(function(response) {
         console.log(response);
         refresh();
@@ -42,25 +42,40 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
 
 
     $scope.showGraph = function() {
-
+      $scope.config = {};
       $http.get('/api/demo/quotes_by_date_range?startdate='+$scope.quote.startDate+'&enddate='+$scope.quote.endDate+'&indexsymbol='+$scope.quote.symbol).success(function (response) {
         console.log("I got the quotes I requested ");
 
         $scope.quotes = response;
+        var quoteDates = [];
+		quoteDates.push('Dates');
+		
+		var quotePrices = [];
+		quotePrices.push($scope.quote.symbol);
+
+        angular.forEach($scope.quotes, function(quote) {
+		   quoteDates.push(new Date(quote.qdate));
+		});	
+
+        angular.forEach($scope.quotes, function(quote) {
+		   quotePrices.push(quote.close);
+		});			
 
 
 
-
-
+     
       $scope.chart = c3.generate({
-
+        
         data: {
 
-          x: 'x',
-          columns: [
-            ['x', new Date($scope.quotes[0].qdate), new Date($scope.quotes[1].qdate), new Date($scope.quotes[2].qdate), new Date($scope.quotes[3].qdate), new Date($scope.quotes[4].qdate)],
-            [$scope.quote.symbol, $scope.quotes[0].close, $scope.quotes[1].close, $scope.quotes[2].close, $scope.quotes[3].close, $scope.quotes[4].close]
-          ]
+          x: 'Dates',
+		  columns: [ 
+		         quoteDates,
+		         quotePrices
+		         
+				 
+		  ]
+          
 
         },
         axis: {
