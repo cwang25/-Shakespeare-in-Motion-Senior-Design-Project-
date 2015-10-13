@@ -112,7 +112,7 @@ def json_yahoo_to_Infusion(quote):
     #parsed_date = time.strptime(timetext, "%a %b %d %Y %H:%M:%S "+timetext[-14:])
     #datestr_for_infusion = time.strftime("%Y-%m-%d", parsed_date)
     data = {
-        "symbol":urllib.unquote(quote['Symbol']),
+        "qsymbol":urllib.unquote(quote['Symbol']),
         "qdate":quote['Date'],
         "open":quote['Open'],
         "high":quote['High'],

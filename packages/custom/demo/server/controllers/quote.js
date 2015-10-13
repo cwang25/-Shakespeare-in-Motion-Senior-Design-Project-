@@ -7,7 +7,8 @@ var mongoose = require('mongoose'),
     Quote = mongoose.model('Quote'),
     config = require('meanio').loadConfig(),
     _ = require('lodash');
-var ipaddr = require('ipaddr.js');
+var rqChecker = require('./requestChecker');
+
 module.exports = function(Articles) {
 
     return {
@@ -24,54 +25,59 @@ module.exports = function(Articles) {
         },
         /**
          * Create an quote
+         * - private api
          */
         create: function(req, res) {
-            var quote = new Quote(req.body);
-            //console.log(article);
-            quote.save(function(err) {
-                if (err) {
-                    console.log("Failed to store data: "+quote);
-                    return res.status(500).json({
-                        error: 'Cannot save the quote',
-                        message: req.body
-                    });
-                }
-                res.json(quote);
-            });
+            if(rqChecker.check_local(req, res)){
+                var quote = new Quote(req.body);
+                //console.log(article);
+                quote.save(function (err) {
+                    if (err) {
+                        console.log("Failed to store data: " + quote);
+                        console.log(err);
+                        return res.status(500).json({
+                            error: 'Cannot save the quote',
+                            message: req.body
+                        });
+                    }
+                    res.json(quote);
+                });
+            }
         },
         /**
          * Update an quote
+         * -private api
          */
         update: function(req, res) {
-            var quote = req.quote;
-
-            quote = _.extend(quote, req.body);
-
-
-            quote.save(function(err) {
-                if (err) {
-                    return res.status(500).json({
-                        error: 'Cannot update the quote'
-                    });
-                }
-                res.json(quote);
-            });
+            if(rqChecker.check_local(req, rest)){
+                var quote = req.quote;
+                quote = _.extend(quote, req.body);
+                quote.save(function (err) {
+                    if (err) {
+                        return res.status(500).json({
+                            error: 'Cannot update the quote'
+                        });
+                    }
+                    res.json(quote);
+                });
+            }
         },
         /**
          * Delete an quote
+         * -private api
          */
         destroy: function(req, res) {
-            var quote = req.quote;
-
-
-            quote.remove(function(err) {
-                if (err) {
-                    return res.status(500).json({
-                        error: 'Cannot delete the article'
-                    });
-                }
-                res.json(quote);
-            });
+            if (rqChecker.check_local(req, res)) {
+                var quote = req.quote;
+                quote.remove(function (err) {
+                    if (err) {
+                        return res.status(500).json({
+                            error: 'Cannot delete the article'
+                        });
+                    }
+                    res.json(quote);
+                });
+            }
         },
         /**
          * Show an quote
@@ -94,7 +100,7 @@ module.exports = function(Articles) {
                     $gte: date1,
                     $lte: date2
                 },
-                symbol:sym
+                qsymbol:sym
             }).exec(function(err, quotes) {
                 if (err) {
                     return res.status(500).json({
@@ -109,7 +115,6 @@ module.exports = function(Articles) {
          * List of Quotes
          */
         all: function(req, res) {
-            console.log(_.isEqual(ipaddr.process(req.ip), ipaddr.process('127.0.0.1')));
             Quote.find({}).sort('-qdate').exec(function(err, quote) {
                 if (err) {
                     return res.status(500).json({
@@ -130,7 +135,7 @@ module.exports = function(Articles) {
             var sym = req.query.indexsymbol;
             Quote.aggregate({
                 $match:{
-                    symbol:sym
+                    qsymbol:sym
                 }
             }).exec(function(err, quotes){
                 if (err) {
