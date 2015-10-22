@@ -34,6 +34,22 @@ module.exports = function(Demo, app, auth, database) {
   //This is function that always attach record data into request if given
   //record id.  It will help for update, delete, findOne.
   app.param('quoteId', quotes.quote);
+
+  //Week Summary Rest API for week sum
+  var weeksum = require('../controllers/weekSum')(Demo);
+  app.route('/api/demo/weeksum')
+    .get(weeksum.all)
+    .post(weeksum.create);
+  app.route('/api/demo/weeksum/:weeksumId')
+    .get(weeksum.show)
+    .put(weeksum.update)
+    .delete(weeksum.destroy);
+  //This is function that always attach record data into request if given
+  //record id.  It will help for update, delete, findOne.
+  app.param('weeksumId', weeksum.weeksum);
+
+
+
   /**
    * Date range api requries url paramters
    * - startdate
