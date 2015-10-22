@@ -12,7 +12,7 @@ var mongoose = require('mongoose'),
  * NewsArticle Schema
  */
 var QuoteSchema = new Schema({
-  symbol: {
+  qsymbol: {
     type: String,
     required: true,
     trim: true
@@ -54,19 +54,21 @@ var QuoteSchema = new Schema({
 QuoteSchema.pre("save",function(next){
   var self = this;
   mongoose.models["Quote"].findOne({
-    symbol: self.symbol,
+    qsymbol: self.qsymbol,
     qdate: self.qdate
   },function(err, quote){
     if(err){
       next(err);
     }else if(quote){
-      console.log("There is no two same symbol quotes with the same date");
+      console.log("There is no two same symbol quotes with the same date ");
+      console.log(self);
+      console.log(quote);
+      self.invalidate("qsymbol","There is no two same symbol quotes with the same date");
       next(new Error("date must be different for quote with same symbol"));
     }else{
       next();
     }
   });
-  //next();
 });
 
 /**
@@ -82,8 +84,8 @@ QuoteSchema.statics.checkDate = function(d){
     qdate: d
   }).exec(function(err, quote){
     if(err)return handleError(err);
-    if(quote != undefined) return false;
-    return true;
+    if(quote != undefined) return quote;
+    return undefined;
   });
 };
 mongoose.model('Quote', QuoteSchema);

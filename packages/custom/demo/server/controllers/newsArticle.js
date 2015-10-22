@@ -7,6 +7,7 @@ var mongoose = require('mongoose'),
     NewsArticle = mongoose.model('NewsArticle'),
     config = require('meanio').loadConfig(),
     _ = require('lodash');
+var rqChecker = require('./requestChecker');
 
 module.exports = function(Articles) {
 
@@ -22,92 +23,87 @@ module.exports = function(Articles) {
                 next();
             });
         },
-
         /**
          * Create an article
          */
         create: function(req, res) {
-            var article = new NewsArticle(req.body);
-            //console.log(article);
-            article.save(function(err) {
-                if (err) {
-                    console.log("Failed to store data: "+article);
-                    return res.status(500).json({
-                        error: 'Cannot save the article',
-                        message: req.body
-                    });
-                }
+            if(rqChecker.check_local(req, res)){
+                var article = new NewsArticle(req.body);
+                //console.log(article);
+                article.save(function(err) {
+                    if (err) {
+                        console.log("Failed to store data: "+article);
+                        return res.status(500).json({
+                            error: 'Cannot save the article',
+                            message: req.body
+                        });
+                    }
 
-                //Articles.events.publish({
-                //    action: 'created',
-                //    user: {
-                //        name: req.user.name
-                //    },
-                //    url: config.hostname + '/articles/' + article._id,
-                //    name: article.title
-                //});
+                    //Articles.events.publish({
+                    //    action: 'created',
+                    //    user: {
+                    //        name: req.user.name
+                    //    },
+                    //    url: config.hostname + '/articles/' + article._id,
+                    //    name: article.title
+                    //});
 
-                res.json(article);
-            });
+                    res.json(article);
+                });
+            }
         },
         /**
          * Update an article
          */
         update: function(req, res) {
-            var article = req.newsarticle;
-
-            article = _.extend(article, req.body);
-
-
-            article.save(function(err) {
-                if (err) {
-                    return res.status(500).json({
-                        error: 'Cannot update the article'
-                    });
-                }
-
-                //Articles.events.publish({
-                //    action: 'updated',
-                //    user: {
-                //        name: req.user.name
-                //    },
-                //    name: article.title,
-                //    url: config.hostname + '/articles/' + article._id
-                //});
-
-                res.json(article);
-            });
+            if(rqChecker.check_local(req, res)){
+                var article = req.newsarticle;
+                article = _.extend(article, req.body);
+                article.save(function(err) {
+                    if (err) {
+                        return res.status(500).json({
+                            error: 'Cannot update the article'
+                        });
+                    }
+                    //Articles.events.publish({
+                    //    action: 'updated',
+                    //    user: {
+                    //        name: req.user.name
+                    //    },
+                    //    name: article.title,
+                    //    url: config.hostname + '/articles/' + article._id
+                    //});
+                    res.json(article);
+                });
+            }
         },
         /**
          * Delete an article
          */
         destroy: function(req, res) {
-            var article = req.newsarticle;
-
-
-            article.remove(function(err) {
-                if (err) {
-                    return res.status(500).json({
-                        error: 'Cannot delete the article'
-                    });
-                }
-
-                //Articles.events.publish({
-                //    action: 'deleted',
-                //    user: {
-                //        name: req.user.name
-                //    },
-                //    name: article.title
-                //});
-
-                res.json(article);
-            });
+            if(rqChecker.check_local(req, res)){
+                var article = req.newsarticle;
+                article.remove(function(err) {
+                    if (err) {
+                        return res.status(500).json({
+                            error: 'Cannot delete the article'
+                        });
+                    }
+                    //Articles.events.publish({
+                    //    action: 'deleted',
+                    //    user: {
+                    //        name: req.user.name
+                    //    },
+                    //    name: article.title
+                    //});
+                    res.json(article);
+                });
+            }
         },
         /**
          * Show an article
          */
         show: function(req, res) {
-
             //Articles.events.publish({
             //    action: 'viewed',
             //    user: {
@@ -116,7 +112,6 @@ module.exports = function(Articles) {
             //    name: req.article.title,
             //    url: config.hostname + '/articles/' + req.article._id
             //});
-
             res.json(req.newsarticle);
         },
         newsintimerange: function(req, res, next){
@@ -147,7 +142,6 @@ module.exports = function(Articles) {
                         error: 'Cannot list the articles'
                     });
                 }
-
                 res.json(newsarticles)
             });
 
