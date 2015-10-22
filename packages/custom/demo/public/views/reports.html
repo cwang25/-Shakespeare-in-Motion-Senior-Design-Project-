@@ -1,11 +1,26 @@
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
 </head>
 <div ng-app = class="container" data-ng-controller="DemoController">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
     <title>Shakespeare-In-Motion</title>
     <h1>Shakespeare-In-Motion</h1>
+
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button"
+                    id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Chart Type: {{chartType}}
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li ng-repeat="chartType in chartTypes"><a ng-click="switchChartType(chartType)">{{chartType}}</a></li>
+                </ul>
+                </div>
+
     <table class="table">
         <thead>
         <tr>
@@ -26,6 +41,8 @@
         </table>
 
     <div id="chart"></div>
+    <div id="lineChart"></div>
+
 
     <table class="table">
         <thead>
@@ -52,5 +69,8 @@
         </tr>
         </tbody>
     </table>
-    <script>src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"</script>
+    <script>
+
+    </script>
+
 </div>
