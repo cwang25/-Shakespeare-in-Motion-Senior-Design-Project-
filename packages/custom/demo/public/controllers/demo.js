@@ -26,9 +26,71 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
       $scope.switchChartType = function (type) {
           console.log(type);
          $scope.chartType = type;
-      }
+          if(!($scope.quote.symbol.localeCompare("") == 0)) {
+              $scope.showGraph();
+          }
+      };
 
-    $scope.addNews = function () {
+      $scope.openDatePicker = function($event) {
+          $scope.status.openedDatePicker = true;
+      };
+      $scope.status = {
+          openedDatePicker: false
+      };
+
+      $scope.selectWeek = function() {
+
+          if($scope.eventdate.getDay() == 0) {
+
+              $scope.quote.startDate = new Date($scope.eventdate.getTime());
+              $scope.quote.endDate = new Date($scope.eventdate.getTime() + 86400000 * 5);
+
+          }
+          if($scope.eventdate.getDay() == 1) {
+
+              $scope.quote.startDate = new Date($scope.eventdate.getTime() - 86400000);
+              $scope.quote.endDate = new Date($scope.eventdate.getTime() + 86400000 * 4);
+
+          }
+          if($scope.eventdate.getDay() == 2) {
+
+              $scope.quote.startDate = new Date($scope.eventdate.getTime() - 86400000 * 2);
+              $scope.quote.endDate = new Date($scope.eventdate.getTime() + 86400000 * 3);
+
+          }
+          if($scope.eventdate.getDay() == 3) {
+
+              $scope.quote.startDate = new Date($scope.eventdate.getTime() - 86400000 * 3);
+              $scope.quote.endDate = new Date($scope.eventdate.getTime() + 86400000 * 2);
+
+          }
+          if($scope.eventdate.getDay() == 4) {
+
+              $scope.quote.startDate = new Date($scope.eventdate.getTime() - 86400000 * 4);
+              $scope.quote.endDate = new Date($scope.eventdate.getTime() + 86400000);
+
+          }
+          if($scope.eventdate.getDay() == 5) {
+
+              $scope.quote.startDate = new Date($scope.eventdate.getTime() - 86400000 * 5);
+              $scope.quote.endDate = new Date($scope.eventdate.getTime());
+
+          }
+          if($scope.eventdate.getDay() == 6) {
+
+              $scope.quote.startDate = new Date($scope.eventdate.getTime() - 86400000 * 6);
+              $scope.quote.endDate = new Date($scope.eventdate.getTime());
+
+          }
+          if(!($scope.quote.symbol.localeCompare("") == 0)) {
+              $scope.showGraph();
+          }
+
+      };
+
+
+
+      $scope.addNews = function () {
       console.log($scope.news);
       if ($scope.news.newsDate === undefined || $scope.news.newsDate.length < 1) {
         delete $scope.news["newsDate"];
@@ -293,6 +355,29 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
 
 ]);
 
+/** based on code found here: https://groups.google.com/forum/#!topic/twitter-bootstrap-stackoverflow/f21Us8kXFjI */
 
+angular.module('mean.demo').directive('datepicker', function() {
+    return {
+
+        restrict: 'A',
+        // Always use along with an ng-model
+        require: '?ngModel',
+
+        link: function(scope, element, attrs, ngModel) {
+            if (!ngModel) return;
+
+            ngModel.$render = function() {
+                element.datepicker('update', ngModel.$viewValue || '');
+            };
+
+            element.datepicker().on("changeDate",function(event){
+                scope.$apply(function() {
+                    ngModel.$setViewValue(event.date);
+                });
+            });
+        }
+    };
+});
 
 
