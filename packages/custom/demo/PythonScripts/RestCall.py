@@ -25,7 +25,7 @@ class RestCaller:
         """
         r = requests.post(self.connect_url, data)
         print r.text
-        return r.text
+        return r
 
     def get(self, record_id=None):
         """
@@ -34,12 +34,12 @@ class RestCaller:
         :param record_id: (Optional) With article_id will return corresponding id record otherwise return all records in a list.
         :return: Response from server
         """
-        if id is None:
+        if record_id is None:
             r = requests.get(self.connect_url)
         else:
             r = requests.get(self.connect_url+"/"+record_id)
         print r.text
-        return r.text
+        return r
 
     def update(self, record_id, data):
         """
@@ -50,7 +50,7 @@ class RestCaller:
         """
         r = requests.put(self.connect_url+"/"+record_id, data)
         print r.text
-        return r.text
+        return r
 
     def delete(self, record_id):
         """
@@ -60,12 +60,34 @@ class RestCaller:
         """
         r = requests.delete(self.connect_url+"/"+record_id)
         print r.text
-        return r.text
+        return r
+
+
+def send_raw_request(req_type, endpoint_url, body_data=None):
+    """
+    Helper static function to send raw rest request
+    In this function, request type, endpoint url and body data will need to be specified.
+    Body data will be optional depdning on the type of the request and the desired operation.
+    :param req_type: Support "get","post","put","delete"
+    :param endpoint_url: URL to endpoint Rest API
+    :param body_data: Body data that will be attached in request body
+    :return: The response from Rest API endpoint (None if nothing or the type didn't match to support types.)
+    """
+    r = None
+    if req_type == "get":
+        r = requests.get(endpoint_url)
+    elif req_type == "post":
+        r = requests.post(endpoint_url,body_data)
+    elif req_type == "put":
+        r = requests.put(endpoint_url,body_data)
+    elif req_type == "delete":
+        r = requests.delete(endpoint_url)
+    return r
 
 
 def main():
     t = RestCaller()
-    t.delete("55f886ef5f191ffb2fd3b331")
+    print t.get()
 
 if __name__ == '__main__':
     main()

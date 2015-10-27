@@ -55,6 +55,10 @@ module.exports = function(Demo, app, auth, database) {
    * - startdate
    * - enddate
    */
+  //i.e. /api/demo/weeksum_by_date?date=YYYY-MM-DD
+  app.get('/api/demo/weeksum_by_date', function(req, res, next){
+    weeksum.weeksum_by_date(req, res, next);
+  });
   //required startdate and enddate parameter
   //i.e. /api/demo/quotes_in_time_range?startdate=YYYY-MM-DD&enddate=YYYY-MM-DD
   //optional argument: indexsymbol
