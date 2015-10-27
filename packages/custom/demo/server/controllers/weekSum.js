@@ -102,7 +102,7 @@ module.exports = function(Articles) {
             }).exec(function(err, weeksums) {
                 if (err) {
                     return res.status(500).json({
-                        error: 'Cannot list the qutoes'
+                        error: 'Cannot list the weeksum'
                     });
                 }
 

@@ -21,8 +21,7 @@ var WeekSumSchema = new Schema({
     required : true
   },
   bcom_indices:{
-    type: Array,
-    required : true
+    type: Array
   },
   bcom_max:{
     type: Number,

@@ -3,7 +3,7 @@ Created on Sep 21, 2015
 
 @author: hans wang
 """
-from RestCaller import RestCaller
+from RestCall import RestCaller
 import urllib2
 import urllib
 import json
@@ -56,13 +56,19 @@ def daily_process():
     global rest_caller
     rest_caller = RestCaller(mean_server_url)
     while True:
-        for index in indexes_list:
-            raw_quote_list = yql_query(index)
-            converted_list = convert_to_Infusion_JSON_list(raw_quote_list)
-            for item in converted_list:
-                rest_caller.post(item)
-        print "Waiting for next checking period (1hour interval)..."
-        time.sleep(3600)
+        try:
+            for index in indexes_list:
+                raw_quote_list = yql_query(index)
+                converted_list = convert_to_Infusion_JSON_list(raw_quote_list)
+                for item in converted_list:
+                    rest_caller.post(item)
+            print "Waiting for next checking period (1hour interval)..."
+            time.sleep(3600)
+        except Exception:
+            print "Network is not stable... retry in next iteration"
+            pass
+
+
 
 
 def historical_data_process(start, end):
