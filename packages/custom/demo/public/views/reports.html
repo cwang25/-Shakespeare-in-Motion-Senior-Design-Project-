@@ -9,23 +9,44 @@
 </head>
 <div ng-app = class="container" data-ng-controller="DemoController">
 
-
-
     <title>Shakespeare-In-Motion</title>
     <h1>Shakespeare-In-Motion</h1>
 
-        <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button"
-                    id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                Chart Type: {{chartType}}
-            <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-            <li ng-repeat="chartType in chartTypes"><a ng-click="switchChartType(chartType)">{{chartType}}</a></li>
-                </ul>
-                </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Symbol</th>
+            <th>Chart Type</th>
+            <th>Select Date</th>
 
-    <h4>Select Date</h4>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><input class="form-control" ng-model="quote.symbol"></td>
+            <td><div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button"
+                        id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Chart Type: {{chartType}}
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li ng-repeat="chartType in chartTypes"><a ng-click="switchChartType(chartType)">{{chartType}}</a></li>
+                </ul>
+            </div></td>
+            <td><div class="input-append date" uib-datepicker ng-model="eventdate" data-date-format="dd-mm-yyyy">
+
+                <input class="span2" size="20" type="text" required="" />
+        <span class="add-on">
+          <i class="icon-th"></i>
+        </span>
+            </div></td>
+            <td><input class="btn-primary" type="submit" id="submit" value="Submit" ng-click="selectWeek()" /></td>
+        </tr>
+        </tbody>
+    </table>
+
+
     <!--<p class="row">
         <div class="col-md-3">
             <p class="input-group">
@@ -39,20 +60,13 @@
         -->
 
     <!-- based on code found here: https://groups.google.com/forum/#!topic/twitter-bootstrap-stackoverflow/f21Us8kXFjI-->
-    <div class="input-append date" uib-datepicker ng-model="eventdate" data-date-format="dd-mm-yyyy">
-
-        <input class="span2" size="20" type="text" required="" />
-        <span class="add-on">
-          <i class="icon-th"></i>
-        </span>
-    </div>
-    <input class="btn-primary" type="submit" id="submit" value="Submit" ng-click="selectWeek()" />
 
 
-    <table class="table">
+
+    <!--<table class="table">
         <thead>
         <tr>
-            <th>Symbol</th>
+
             <th>Start Date</th>
             <th>End Date</th>
 
@@ -60,13 +74,13 @@
         </thead>
     <tbody>
     <tr>
-        <td><input class="form-control" ng-model="quote.symbol"></td>
+
         <td><input class="form-control" ng-model="quote.startDate"></td>
         <td><input class="form-control" ng-model="quote.endDate"></td>
-        <td><button class="btn btn-primary" ng-click="showGraph()">Display Chart</button></td>
+        <td><button class="btn btn-primary" ng-click="showGraph()">Update Chart</button></td>
     </tr>
     </tbody>
-        </table>
+        </table> -->
 
     <div id="chart"></div>
     <div id="lineChart"></div>
