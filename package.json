@@ -52,16 +52,17 @@
     "view-helpers": "latest"
   },
   "devDependencies": {
+    "bower": "https://registry.npmjs.org/bower/-/bower-1.4.1.tgz",
     "connect-modrewrite": "latest",
     "del": "latest",
     "expect.js": "latest",
-    "gulp": "latest",
+    "gulp": "^3.9.0",
+    "gulp-coffee": "latest",
     "gulp-concat": "latest",
     "gulp-csslint": "latest",
     "gulp-cssmin": "latest",
     "gulp-jshint": "latest",
     "gulp-less": "latest",
-    "gulp-coffee": "latest",
     "gulp-livereload": "latest",
     "gulp-load-plugins": "latest",
     "gulp-mocha": "latest",
@@ -81,7 +82,7 @@
     "karma-requirejs": "latest",
     "karma-script-launcher": "latest",
     "mocha": "latest",
-    "require-dir": "latest",
+    "require-dir": "^0.3.0",
     "requirejs": "latest",
     "supertest": "latest",
     "through": "latest"

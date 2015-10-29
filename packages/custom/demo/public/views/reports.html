@@ -10,9 +10,47 @@
 <div ng-app = class="container" data-ng-controller="DemoController">
 
     <title>Shakespeare-In-Motion</title>
-    <h1>Shakespeare-In-Motion</h1>
 
-    <table class="table">
+
+    <form role="form">
+        <div class="form-group">
+            <div class="col-xs-2">
+                <label for="sym">Symbol</label>
+                <input class="form-control" ng-model="quote.symbol" type="text" id="sym">
+            </div>
+            <div class="col-xs-2">
+                <label for="chartSelect">Chart Type</label>
+            <div class="dropdown">
+
+                <button class="btn btn-default dropdown-toggle" type="button"
+                        id="chartSelect" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    {{chartType}}
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li ng-repeat="chartType in chartTypes"><a ng-click="switchChartType(chartType)">{{chartType}}</a></li>
+                </ul></div>
+                </div>
+            <div class="col-xs-2">
+                <label for="chartSelect">Date</label>
+
+
+                <p class="input-group">
+                    <input type="text" id = "dateSelect" class="form-control" uib-datepicker-popup="{{format}}" ng-model="eventdate" is-open="status.openedDatePicker" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" data-date-format="dd-mm-yyyy">
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="openDatePicker($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+
+                </p>
+            </div>
+            
+            <button class="btn btn-primary" ng-click="selectWeek()" id="display">Display</button>
+
+            </div>
+            </form>
+
+
+    <!--<table class="table">
         <thead>
         <tr>
             <th>Symbol</th>
@@ -23,7 +61,7 @@
         </thead>
         <tbody>
         <tr>
-            <td><input class="form-control" ng-model="quote.symbol"></td>
+            <td><div class = "col-md-10"><input class="form-control" ng-model="quote.symbol" type = "text"></div></td>
             <td><div class="dropdown">
                 <button class="btn btn-default dropdown-toggle" type="button"
                         id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -34,30 +72,32 @@
                     <li ng-repeat="chartType in chartTypes"><a ng-click="switchChartType(chartType)">{{chartType}}</a></li>
                 </ul>
             </div></td>
-            <td><div class="input-append date" uib-datepicker ng-model="eventdate" data-date-format="dd-mm-yyyy">
+            <td><p class="row">
+                <div class="col-md-3">
+                <p class="input-group">
+                    <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="eventdate" is-open="status.openedDatePicker" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" data-date-format="dd-mm-yyyy">
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="openDatePicker($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
 
-                <input class="span2" size="20" type="text" required="" />
-        <span class="add-on">
-          <i class="icon-th"></i>
-        </span>
-            </div></td>
+            </p></div></td>
             <td><input class="btn-primary" type="submit" id="submit" value="Submit" ng-click="selectWeek()" /></td>
         </tr>
         </tbody>
-    </table>
+    </table> -->
 
 
     <!--<p class="row">
         <div class="col-md-3">
             <p class="input-group">
 
-                <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="status.openedDatePicker" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" datepicker ng-model="eventdate" />
+                <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="status.openedDatePicker" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-model="eventdate" />
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="openDatePicker($event)"><i class="glyphicon glyphicon-calendar"></i></button>
               </span>
             </p>
-        </div>
-        -->
+        </div> -->
+
 
     <!-- based on code found here: https://groups.google.com/forum/#!topic/twitter-bootstrap-stackoverflow/f21Us8kXFjI-->
 
@@ -97,7 +137,7 @@
         </thead>
         <tbody>
         <tr>
-            <td><input class="form-control" ng-model="news.newsDate"></td>
+            <td><input class="form-control" ng-model="news.newsDate"</td>
             <td><input class="form-control" ng-model="news.title"></td>
             <td><input class="form-control" ng-model="news.content"></td>
             <td><button class="btn btn-primary" ng-click="addNews()">Add News</button></td>

@@ -136,8 +136,8 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
                 console.log("I got the quotes I requested ");
 
                 $scope.quotes = response;
-                var width = 900;
-                var height = 500;
+                var width = 700;
+                var height = 350;
                 String.prototype.format = function () {
                     var formatted = this;
                     for (var i = 0; i < arguments.length; i++) {
@@ -233,7 +233,7 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
                         .data(data)
                         .enter().append("svg:rect")
                         .attr("x", function (d) {
-                            //return x(dateFormat.parse(d.Date).getTime());
+
                             return x(new Date(d.qdate).getTime());
                         })
                         .attr("y", function (d) {
