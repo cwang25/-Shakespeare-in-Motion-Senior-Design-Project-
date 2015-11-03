@@ -34,6 +34,10 @@ var NewsArticleSchema = new Schema({
   words_capture:{
     type: Array,
     required: false
+  },
+  sentiment:{
+    type: String,
+    required: false
   }
 });
 

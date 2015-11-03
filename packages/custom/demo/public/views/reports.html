@@ -43,7 +43,7 @@
 
                 </p>
             </div>
-            
+
             <button class="btn btn-primary" ng-click="selectWeek()" id="display">Display</button>
 
             </div>
@@ -125,6 +125,26 @@
     <div id="chart"></div>
     <div id="lineChart"></div>
 
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Index Performance</th>
+            <th>News Sentiment</th>
+
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><input class="form-control" ng-model="indexPerfMsg" ></td>
+            <td><input class="form-control" ng-model="sentimentMsg" ></td>
+
+
+
+        </tr>
+
+        </tbody>
+    </table>
 
     <table class="table">
         <thead>
@@ -137,7 +157,7 @@
         </thead>
         <tbody>
         <tr>
-            <td><input class="form-control" ng-model="news.newsDate"</td>
+            <td><input class="form-control" ng-model="news.newsDate" ></td>
             <td><input class="form-control" ng-model="news.title"></td>
             <td><input class="form-control" ng-model="news.content"></td>
             <td><button class="btn btn-primary" ng-click="addNews()">Add News</button></td>
@@ -151,6 +171,8 @@
         </tr>
         </tbody>
     </table>
+
+
 
     <script>
 
