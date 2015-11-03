@@ -31,8 +31,16 @@ var NewsArticleSchema = new Schema({
     required: false,
     trim: true
   },
-  words_capture:{
+  keywords:{
     type: Array,
+    required: false
+  },
+  entities:{
+    type: Array,
+    required: false
+  },
+  sentiment:{
+    type: Number,
     required: false
   }
 });
