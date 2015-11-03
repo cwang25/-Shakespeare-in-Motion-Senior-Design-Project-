@@ -7,8 +7,8 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
     $scope.package = {
       name: 'demo'
     };
-    var refresh = function () {
-      $http.get('/api/demo/newsarticles').success(function (response) {
+    $scope.getNewsArticles = function () {
+      $http.get('/api/demo/newsbydaterange?startdate='+ $scope.quote.startDate + '&enddate=' + $scope.quote.endDate).success(function (response) {
         console.log("I got the data I requested");
         $scope.newsarticles = response;
         $scope.news = "";
@@ -19,7 +19,7 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
       });
 
     };
-    refresh();
+    //refresh();
       $scope.chartTypes = ['Line', 'Candlestick'];
       $scope.chartType = 'Line';
 
@@ -99,6 +99,9 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
           }
           if(!($scope.quote.symbol.localeCompare("") == 0)) {
               $scope.sentimentSummary();
+          }
+          if(!($scope.quote.symbol.localeCompare("") == 0)) {
+              $scope.getNewsArticles();
           }
 
 
