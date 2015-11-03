@@ -155,7 +155,7 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
                 $scope.indexPerfMsg = "+ " + $scope.weeklyPercentChg + "%";
             }
             else {
-                $scope.indexPerfMsg = "- " + $scope.weeklyPercentChg + "%";
+                $scope.indexPerfMsg = $scope.weeklyPercentChg + "%";
             }
 
 
