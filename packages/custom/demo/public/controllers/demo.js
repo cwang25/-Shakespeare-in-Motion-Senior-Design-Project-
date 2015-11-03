@@ -26,9 +26,87 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
       $scope.switchChartType = function (type) {
           console.log(type);
          $scope.chartType = type;
-      }
+          if(!($scope.quote.symbol.localeCompare("") == 0)) {
+              $scope.showGraph();
+          }
+      };
 
-    $scope.addNews = function () {
+      $scope.openDatePicker = function($event) {
+          $scope.status.openedDatePicker = true;
+      };
+      $scope.status = {
+          openedDatePicker: false
+      };
+
+      $scope.selectWeek = function() {
+
+          if($scope.eventdate.getDay() == 0) {
+
+
+              $scope.quote.startDate = new Date($scope.eventdate.getTime());
+              $scope.quote.endDate = new Date($scope.eventdate.getTime() + 86400000 * 5);
+              $scope.quote.prev_week_end_date = new Date($scope.eventdate.getTime() - (86400000 * 3));
+
+          }
+          if($scope.eventdate.getDay() == 1) {
+
+              $scope.quote.startDate = new Date($scope.eventdate.getTime() - 86400000);
+              $scope.quote.endDate = new Date($scope.eventdate.getTime() + 86400000 * 4);
+              $scope.quote.prev_week_end_date = new Date($scope.eventdate.getTime() - (86400000 * 4));
+
+          }
+          if($scope.eventdate.getDay() == 2) {
+
+              $scope.quote.startDate = new Date($scope.eventdate.getTime() - 86400000 * 2);
+              $scope.quote.endDate = new Date($scope.eventdate.getTime() + 86400000 * 3);
+              $scope.quote.prev_week_end_date = new Date( $scope.eventdate.getTime() - (86400000 * 5));
+
+          }
+          if($scope.eventdate.getDay() == 3) {
+
+              $scope.quote.startDate = new Date($scope.eventdate.getTime() - 86400000 * 3);
+              $scope.quote.endDate = new Date($scope.eventdate.getTime() + 86400000 * 2);
+              $scope.quote.prev_week_end_date = new Date($scope.eventdate.getTime() - (86400000 * 6));
+
+          }
+          if($scope.eventdate.getDay() == 4) {
+
+              $scope.quote.startDate = new Date($scope.eventdate.getTime() - 86400000 * 4);
+              $scope.quote.endDate = new Date($scope.eventdate.getTime() + 86400000);
+              $scope.quote.prev_week_end_date = new Date($scope.eventdate.getTime() - (86400000 * 7));
+
+          }
+          if($scope.eventdate.getDay() == 5) {
+
+              $scope.quote.startDate = new Date($scope.eventdate.getTime() - 86400000 * 5);
+              $scope.quote.endDate = new Date($scope.eventdate.getTime());
+              $scope.quote.prev_week_end_date = new Date( $scope.eventdate.getTime() - (86400000 * 8));
+
+          }
+          if($scope.eventdate.getDay() == 6) {
+
+              $scope.quote.startDate = new Date($scope.eventdate.getTime() - 86400000 * 6);
+              $scope.quote.endDate = new Date($scope.eventdate.getTime());
+              $scope.quote.prev_week_end_date = new Date($scope.eventdate.getTime() - (86400000 * 9));
+
+          }
+          if(!($scope.quote.symbol.localeCompare("") == 0)) {
+              $scope.showGraph();
+          }
+
+          if(!($scope.quote.symbol.localeCompare("") == 0)) {
+              $scope.calculatePerformance();
+          }
+          if(!($scope.quote.symbol.localeCompare("") == 0)) {
+              $scope.sentimentSummary();
+          }
+
+
+      };
+
+
+
+      $scope.addNews = function () {
       console.log($scope.news);
       if ($scope.news.newsDate === undefined || $scope.news.newsDate.length < 1) {
         delete $scope.news["newsDate"];
@@ -38,6 +116,51 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
         refresh();
       });
     };
+
+      $scope.sentimentSummary = function() {
+          $http.get('/api/demo/newsbydaterange?startdate='+ $scope.quote.startDate + '&enddate=' + $scope.quote.endDate).success(function(response) {
+              $scope.articles = response;
+              var positiveCount = 0;
+              var negativeCount = 0;
+              for(var i = 0; i < $scope.articles.length; i++) {
+                  if($scope.articles[i].sentiment.localeCompare("Positive") == 0) {
+                      positiveCount++;
+                  }
+                  if($scope.articles[i].sentiment.localeCompare("Negative") == 0) {
+                      negativeCount++;
+                  }
+              }
+              $scope.sentimentMsg = (positiveCount / $scope.articles.length * 100).toFixed(0) + "% Positive, " +
+                                    (negativeCount / $scope.articles.length * 100).toFixed(0) + "% Negative";
+
+
+
+          });
+
+      }
+
+      $scope.calculatePerformance = function() {
+        $http.get('/api/demo/quotes_by_date_range?startdate=' + $scope.quote.prev_week_end_date + '&enddate=' + $scope.quote.endDate + '&indexsymbol=' + $scope.quote.symbol).success(function (response) {
+            $scope.quotes = response;
+            console.log($scope.quotes);
+            var quotePrices = [];
+            angular.forEach($scope.quotes, function (quote) {
+                quotePrices.push(quote.close);
+            });
+
+            $scope.weeklyPercentChg = ((quotePrices[0] - quotePrices[quotePrices.length - 1]) /
+                                        quotePrices[quotePrices.length - 1] * 100).toFixed(2);
+            $scope.indexPerfMsg = "";
+            if($scope.weeklyPercentChg > 0) {
+                $scope.indexPerfMsg = "+ " + $scope.weeklyPercentChg + "%";
+            }
+            else {
+                $scope.indexPerfMsg = "- " + $scope.weeklyPercentChg + "%";
+            }
+
+
+        });
+    }
 
     $scope.removeNews = function (id) {
 
@@ -74,8 +197,8 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
                 console.log("I got the quotes I requested ");
 
                 $scope.quotes = response;
-                var width = 900;
-                var height = 500;
+                var width = 700;
+                var height = 350;
                 String.prototype.format = function () {
                     var formatted = this;
                     for (var i = 0; i < arguments.length; i++) {
@@ -171,7 +294,7 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
                         .data(data)
                         .enter().append("svg:rect")
                         .attr("x", function (d) {
-                            //return x(dateFormat.parse(d.Date).getTime());
+
                             return x(new Date(d.qdate).getTime());
                         })
                         .attr("y", function (d) {
@@ -293,6 +416,29 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
 
 ]);
 
+/** based on code found here: https://groups.google.com/forum/#!topic/twitter-bootstrap-stackoverflow/f21Us8kXFjI */
 
+angular.module('mean.demo').directive('datepicker', function() {
+    return {
+
+        restrict: 'A',
+        // Always use along with an ng-model
+        require: '?ngModel',
+
+        link: function(scope, element, attrs, ngModel) {
+            if (!ngModel) return;
+
+            ngModel.$render = function() {
+                element.datepicker('update', ngModel.$viewValue || '');
+            };
+
+            element.datepicker().on("changeDate",function(event){
+                scope.$apply(function() {
+                    ngModel.$setViewValue(event.date);
+                });
+            });
+        }
+    };
+});
 
 

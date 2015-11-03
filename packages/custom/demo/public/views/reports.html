@@ -3,28 +3,110 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.14.3.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-animate.js"></script>
 
 </head>
 <div ng-app = class="container" data-ng-controller="DemoController">
 
     <title>Shakespeare-In-Motion</title>
-    <h1>Shakespeare-In-Motion</h1>
 
-        <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button"
-                    id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                Chart Type: {{chartType}}
-            <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-            <li ng-repeat="chartType in chartTypes"><a ng-click="switchChartType(chartType)">{{chartType}}</a></li>
-                </ul>
+
+    <form role="form">
+        <div class="form-group">
+            <div class="col-xs-2">
+                <label for="sym">Symbol</label>
+                <input class="form-control" ng-model="quote.symbol" type="text" id="sym">
+            </div>
+            <div class="col-xs-2">
+                <label for="chartSelect">Chart Type</label>
+            <div class="dropdown">
+
+                <button class="btn btn-default dropdown-toggle" type="button"
+                        id="chartSelect" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    {{chartType}}
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li ng-repeat="chartType in chartTypes"><a ng-click="switchChartType(chartType)">{{chartType}}</a></li>
+                </ul></div>
                 </div>
+            <div class="col-xs-2">
+                <label for="chartSelect">Date</label>
 
-    <table class="table">
+
+                <p class="input-group">
+                    <input type="text" id = "dateSelect" class="form-control" uib-datepicker-popup="{{format}}" ng-model="eventdate" is-open="status.openedDatePicker" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" data-date-format="dd-mm-yyyy">
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="openDatePicker($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+
+                </p>
+            </div>
+
+            <button class="btn btn-primary" ng-click="selectWeek()" id="display">Display</button>
+
+            </div>
+            </form>
+
+
+    <!--<table class="table">
         <thead>
         <tr>
             <th>Symbol</th>
+            <th>Chart Type</th>
+            <th>Select Date</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><div class = "col-md-10"><input class="form-control" ng-model="quote.symbol" type = "text"></div></td>
+            <td><div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button"
+                        id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Chart Type: {{chartType}}
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li ng-repeat="chartType in chartTypes"><a ng-click="switchChartType(chartType)">{{chartType}}</a></li>
+                </ul>
+            </div></td>
+            <td><p class="row">
+                <div class="col-md-3">
+                <p class="input-group">
+                    <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="eventdate" is-open="status.openedDatePicker" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" data-date-format="dd-mm-yyyy">
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="openDatePicker($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+
+            </p></div></td>
+            <td><input class="btn-primary" type="submit" id="submit" value="Submit" ng-click="selectWeek()" /></td>
+        </tr>
+        </tbody>
+    </table> -->
+
+
+    <!--<p class="row">
+        <div class="col-md-3">
+            <p class="input-group">
+
+                <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="status.openedDatePicker" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-model="eventdate" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="openDatePicker($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </p>
+        </div> -->
+
+
+    <!-- based on code found here: https://groups.google.com/forum/#!topic/twitter-bootstrap-stackoverflow/f21Us8kXFjI-->
+
+
+
+    <!--<table class="table">
+        <thead>
+        <tr>
+
             <th>Start Date</th>
             <th>End Date</th>
 
@@ -32,17 +114,37 @@
         </thead>
     <tbody>
     <tr>
-        <td><input class="form-control" ng-model="quote.symbol"></td>
+
         <td><input class="form-control" ng-model="quote.startDate"></td>
         <td><input class="form-control" ng-model="quote.endDate"></td>
-        <td><button class="btn btn-primary" ng-click="showGraph()">Display Chart</button></td>
+        <td><button class="btn btn-primary" ng-click="showGraph()">Update Chart</button></td>
     </tr>
     </tbody>
-        </table>
+        </table> -->
 
     <div id="chart"></div>
     <div id="lineChart"></div>
 
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Index Performance</th>
+            <th>News Sentiment</th>
+
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><input class="form-control" ng-model="indexPerfMsg" ></td>
+            <td><input class="form-control" ng-model="sentimentMsg" ></td>
+
+
+
+        </tr>
+
+        </tbody>
+    </table>
 
     <table class="table">
         <thead>
@@ -55,7 +157,7 @@
         </thead>
         <tbody>
         <tr>
-            <td><input class="form-control" ng-model="news.newsDate"></td>
+            <td><input class="form-control" ng-model="news.newsDate" ></td>
             <td><input class="form-control" ng-model="news.title"></td>
             <td><input class="form-control" ng-model="news.content"></td>
             <td><button class="btn btn-primary" ng-click="addNews()">Add News</button></td>
@@ -69,6 +171,9 @@
         </tr>
         </tbody>
     </table>
+
+
+
     <script>
 
     </script>
