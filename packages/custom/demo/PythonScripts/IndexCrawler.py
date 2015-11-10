@@ -69,8 +69,6 @@ def daily_process():
             pass
 
 
-
-
 def historical_data_process(start, end):
     """
     For reqeusting historical index data from yahoo server.

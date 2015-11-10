@@ -6,8 +6,6 @@
  */
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
-
-
 /**
  * NewsArticle Schema
  */
@@ -77,7 +75,7 @@ var WeekSumSchema = new Schema({
   articles:{
     type: Array
   },
-  sum_article_sentiment:{
+  avg_article_sentiment:{
     type: Number
   }
 });
