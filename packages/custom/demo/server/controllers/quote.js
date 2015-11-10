@@ -101,7 +101,7 @@ module.exports = function(Articles) {
                     $lte: date2
                 },
                 qsymbol:sym
-            }).exec(function(err, quotes) {
+            }).sort('-qdate').exec(function(err, quotes) {
                 if (err) {
                     return res.status(500).json({
                         error: 'Cannot list the qutoes'

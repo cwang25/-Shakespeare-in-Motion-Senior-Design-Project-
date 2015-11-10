@@ -68,10 +68,6 @@ var WeekSumSchema = new Schema({
     type: Number,
     required : true
   },
-  bcom_volume:{
-    type: Number,
-    required: true
-  },
   articles:{
     type: Array
   },
@@ -83,7 +79,25 @@ var WeekSumSchema = new Schema({
 /**
  * Validations
  */
-
+WeekSumSchema.pre("save",function(next){
+  var self = this;
+  mongoose.models["WeekSum"].findOne({
+    week_start_date: self.week_start_date,
+    week_end_date: self.week_end_date
+  },function(err, weekSum){
+    if(err){
+      next(err);
+    }else if(weekSum){
+      console.log("There is no two identical week summary");
+      console.log(self);
+      console.log(weekSum);
+      self.invalidate("title","There is no two identical weekSum");
+      next(new Error("WeekSum mush be unique"));
+    }else{
+      next();
+    }
+  });
+});
 
 
 /**
