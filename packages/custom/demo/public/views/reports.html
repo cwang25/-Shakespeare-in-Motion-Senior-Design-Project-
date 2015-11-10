@@ -125,7 +125,10 @@
     <div id="chart"></div>
     <div id="lineChart"></div>
 
-    <table class="table">
+
+
+
+   <table class="table">
         <thead>
         <tr>
             <th>Index Performance</th>
@@ -136,8 +139,8 @@
         </thead>
         <tbody>
         <tr>
-            <td><input class="form-control" ng-model="indexPerfMsg" ></td>
-            <td><input class="form-control" ng-model="sentimentMsg" ></td>
+            <td>{{indexPerfMsg}}</td>
+            <td>{{sentimentMsg}}</td>
 
 
 
@@ -156,18 +159,11 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td><input class="form-control" ng-model="news.newsDate" ></td>
-            <td><input class="form-control" ng-model="news.title"></td>
-            <td><input class="form-control" ng-model="news.content"></td>
-            <td><button class="btn btn-primary" ng-click="addNews()">Add News</button></td>
-
-        </tr>
         <tr ng-repeat="news in newsarticles">
             <td>{{news.newsDate}}</td>
             <td>{{news.title}}</td>
             <td>{{news.content}}</td>
-            <td><button class="btn btn-primary" ng-click="removeNews(news._id)">Remove</button></td>
+
         </tr>
         </tbody>
     </table>
