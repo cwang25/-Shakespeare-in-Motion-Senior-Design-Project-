@@ -1,4 +1,3 @@
-__author__ = 'hanswang'
 from RestCall import RestCaller
 from alchemyapi_python.alchemyapi import AlchemyAPI
 import urllib2
@@ -11,6 +10,7 @@ import requests
 import datetime
 
 
+__author__ = 'hanswang'
 mean_server_url = "http://localhost:3000/api/demo/articles"
 api_key_1 = "7ed25a35adda3ae7dac5d889e70927c7410937f8"
 api_key_2 = "280db58834a1809dff4890e4c64eec5f266766e3"
@@ -19,11 +19,11 @@ s = requests.Session()
 
 def alchemy_news_crawler_today(searchText):
     alchemyURL = 'http://gateway-a.watsonplatform.net/calls/data/GetNews?' \
-                 'apikey='+api_key_2+\
+                 'apikey='+api_key_2 +\
                  '&outputMode=json' \
                  '&start=now-1d&end=now' \
-                 '&maxResults=1' \
-                 '&q.enriched.url.title='+searchText+\
+                 '&maxResults=3' \
+                 '&q.enriched.url.title='+searchText +\
                  '&q.enriched.url.enrichedTitle.taxonomy.taxonomy_.label=finance'\
                  '&return=enriched.url.url,enriched.url.enrichedTitle.docSentiment,enriched.url.title,enriched.url.enrichedTitle.entities,enriched.url.keywords'
     post_data = bytearray()
@@ -44,7 +44,7 @@ def alchemy_news_crawler(searchText, startdate, enddate):
                  '&maxResults=1' \
                  '&q.enriched.url.title='+searchText +\
                  '&q.enriched.url.enrichedTitle.taxonomy.taxonomy_.label=finance'\
-                 '&return=enriched.url.url,enriched.url.enrichedTitle.docSentiment,enriched.url.title,enriched.url.enrichedTitle.entities,enriched.url.keywords'
+                 '&return=enriched.url.url,enriched.url.enrichedTitle.docSentiment,enriched.url.title,enriched.url.text,enriched.url.enrichedTitle.entities,enriched.url.keywords'
     post_data = bytearray()
     r = s.get(url=alchemyURL, data=post_data)
     print alchemyURL
@@ -56,15 +56,18 @@ def alchemy_news_crawler(searchText, startdate, enddate):
 def extract_features_from_url(url):
     pass
 
+
 def extract_features_from_text(content):
     pass
 
-def store_atricle_to_mean(data):
+
+def store_article_to_mean(data):
     pass
 
 
 def ibm_json_to_infusion(article):
     pass
+
 
 def parse_arguments():
     """
@@ -113,7 +116,9 @@ def init():
 
 
 def main():
+    aPI = AlchemyAPI()
     jsonObj = alchemy_news_crawler("gold", "2015-11-02", "2015-11-03")
+    #print aPI.text('url',"http://www.mideasttime.com/analyst-lowers-q4-2016-eps-estimates-for-yamana-gold-auy/592970/")['text'].encode('utf-8')
     print jsonObj["totalTransactions"]
 
 if __name__ == '__main__':
