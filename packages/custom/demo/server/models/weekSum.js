@@ -19,7 +19,8 @@ var WeekSumSchema = new Schema({
     required : true
   },
   bcom_indices:{
-    type: Array
+    type: Array,
+    default: []
   },
   bcom_max:{
     type: Number,
@@ -39,7 +40,7 @@ var WeekSumSchema = new Schema({
      V is the latest price, and Vx is the closing price x number of days ago."
      */
     type: Number,
-    required : true
+    required : false
   },
   bcom_week_rsi:{
     /**
@@ -66,10 +67,11 @@ var WeekSumSchema = new Schema({
      up day value is assigned as 0 on a down day
      */
     type: Number,
-    required : true
+    required : false
   },
   articles:{
-    type: Array
+    type: Array,
+    default: []
   },
   avg_article_sentiment:{
     type: Number
