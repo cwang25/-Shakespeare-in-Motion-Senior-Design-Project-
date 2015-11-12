@@ -126,10 +126,10 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
               var positiveCount = 0;
               var negativeCount = 0;
               for(var i = 0; i < $scope.articles.length; i++) {
-                  if($scope.articles[i].sentiment.localeCompare("Positive") == 0) {
+                  if($scope.articles[i].sentiment > 0) {
                       positiveCount++;
                   }
-                  if($scope.articles[i].sentiment.localeCompare("Negative") == 0) {
+                  if($scope.articles[i].sentiment < 0) {
                       negativeCount++;
                   }
               }
