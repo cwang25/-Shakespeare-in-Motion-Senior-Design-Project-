@@ -284,7 +284,7 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
                         });
 
                     chart.selectAll("text.yrule")
-                        .data(y.ticks(10))
+                        .data(y.ticks(7))
                         .enter().append("svg:text")
                         .attr("class", "yrule")
                         .attr("x", width - margin)
