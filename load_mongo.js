@@ -283,43 +283,42 @@ db.newsarticles.insert({
    title : "Gold Rises",
    content: "Fed Delays Rate Hike",
     newsDate : ISODate('2015-10-05T00:00:00Z'),
-    sentiment : "Positive"
+    sentiment : "0.75"
 });
 
 db.newsarticles.insert({
     title : "Oil Falls",
     content: "Q2 GDP Revised Lower",
     newsDate : ISODate('2015-10-06T00:00:00Z'),
-    sentiment : "Negative"
+    sentiment : "-0.75"
 });
-
 
 db.newsarticles.insert({
     title : "Oil Rebounds",
     content: "Oil Follows Stocks Higher",
     newsDate : ISODate('2015-10-08T00:00:00Z'),
-    sentiment : "Positive"
+    sentiment : "0.3"
 });
 
 db.newsarticles.insert({
     title : "Gold Declines",
     content: "Inflation below expectations",
     newsDate : ISODate('2015-10-09T00:00:00Z'),
-    sentiment : "Negative"
+    sentiment : "-0.3"
 });
 
 db.newsarticles.insert({
     title : "Copper Prices Rise",
     content: "Increased Demand",
     newsDate : ISODate('2015-10-03T00:00:00Z'),
-    sentiment : "Positive"
+    sentiment : "0.14"
 });
 
 db.newsarticles.insert({
     title : "Silver Prices Fall",
     content: "Silver followed gold lower",
     newsDate : ISODate('2015-10-11T00:00:00Z'),
-    sentiment : "Negative"
+    sentiment : "-0.2"
 });
 
 
