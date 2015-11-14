@@ -11,67 +11,64 @@
 
     <title>Shakespeare-In-Motion</title>
 
+
     <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
         Data Selector
     </button>
 
+
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                </div>
+
                 <div class="modal-body">
 
+                    <form role="form">
+                        <div class="form-group">
+                            <div class="col-xs-2">
+                                <label for="sym">Symbol</label>
+                                <input class="form-control" ng-model="quote.symbol" type="text" id="sym">
+                            </div>
+                            <div class="col-xs-3">
+                                <label for="chartSelect">Chart Type</label>
+                                <div class="dropdown">
 
-                    ...
+                                    <button class="btn btn-default dropdown-toggle" type="button"
+                                            id="chartSelect" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        {{chartType}}
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                        <li ng-repeat="chartType in chartTypes"><a ng-click="switchChartType(chartType)">{{chartType}}</a></li>
+                                    </ul></div>
+                            </div>
+                            <div class="col-xs-4">
+                                <label for="chartSelect">Date</label>
+
+
+                                <p class="input-group">
+                                    <input type="text" id = "dateSelect" class="form-control" uib-datepicker-popup="{{format}}" ng-model="eventdate" is-open="status.openedDatePicker" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" data-date-format="dd-mm-yyyy">
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="openDatePicker($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+
+                                </p>
+                            </div>
+
+                            <button class="btn btn-primary" data-dismiss="modal" ng-click="selectWeek()" id="display">Display</button>
+
+                        </div>
+                    </form>
+
+
+
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
+
             </div>
         </div>
     </div>
 
 
-    <form role="form">
-        <div class="form-group">
-            <div class="col-xs-2">
-                <label for="sym">Symbol</label>
-                <input class="form-control" ng-model="quote.symbol" type="text" id="sym">
-            </div>
-            <div class="col-xs-2">
-                <label for="chartSelect">Chart Type</label>
-            <div class="dropdown">
-
-                <button class="btn btn-default dropdown-toggle" type="button"
-                        id="chartSelect" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    {{chartType}}
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li ng-repeat="chartType in chartTypes"><a ng-click="switchChartType(chartType)">{{chartType}}</a></li>
-                </ul></div>
-                </div>
-            <div class="col-xs-2">
-                <label for="chartSelect">Date</label>
-
-
-                <p class="input-group">
-                    <input type="text" id = "dateSelect" class="form-control" uib-datepicker-popup="{{format}}" ng-model="eventdate" is-open="status.openedDatePicker" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" data-date-format="dd-mm-yyyy">
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="openDatePicker($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-              </span>
-
-                </p>
-            </div>
-
-            <button class="btn btn-primary" ng-click="selectWeek()" id="display">Display</button>
-
-            </div>
-            </form>
 
 
     <!--<table class="table">
