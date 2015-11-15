@@ -93,16 +93,17 @@ module.exports = function(Articles) {
          */
         weeksum_by_date: function(req, res, next){
             var date = Date.parse(req.query.date);
-            WeekSum.aggregate({
-                $match: {
-                    $or: [ { $gte: [ "$week_start_date", date ] },
-                        { $lte: [ "$week_end_date", date ] }
-                    ]
+            WeekSum.find({
+                week_start_date: {
+                    $lte: date
+                },
+                week_end_date: {
+                    $gte: date
                 }
             }).exec(function(err, weeksums) {
                 if (err) {
                     return res.status(500).json({
-                        error: 'Cannot list the weeksum'
+                        error: err
                     });
                 }
 

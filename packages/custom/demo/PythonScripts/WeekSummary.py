@@ -19,6 +19,25 @@ week_sum_url = "http://localhost:3000/api/demo/weekSum"
 # class WeekSum:
 #     def __init__(self):
 #         pass
+def parse_arguments():
+    """
+    Parse the command line arguement.
+    :return:
+    """
+    parser = argparse.ArgumentParser(description='Week summary')
+    parser.add_argument('-start', dest='startdate', metavar='startdate', type=str, help='start date of the commodity')
+    parser.add_argument('-end', dest='enddate', metavar='enddate', type=str, help='end date of the commodity')
+    return parser.parse_args()
+
+
+def print_how_to():
+    """
+    Print the usage instruction
+    :return:
+    """
+    print "usage : -start -end"
+    print "-start : start date"
+    print "-end : end date"
 
 
 def get_article_list_by_date_range(startdate, enddate):
@@ -38,7 +57,7 @@ def get_week_summaries(date):
 
 
 def get_quotes_list(startdate, enddate):
-    quote_rest = RestCall.send_raw_request("get", "http://localhost:3000/api/demo/quotes_by_date_range?startdate=" + startdate + "&enddate=" + enddate + "indexsymbol=^DJC")
+    quote_rest = RestCall.send_raw_request("get", "http://localhost:3000/api/demo/quotes_by_date_range?startdate=" + startdate + "&enddate=" + enddate + "&indexsymbol=^DJC")
     quotes = quote_rest.json()
     return quotes
 
@@ -62,8 +81,8 @@ def generate_summary(articles, quotes):
         "articles":None,
         "avg_articles_sentiment":None
     }
-    for q in quotes:
-        print q["qdate"]
+    #for q in quotes:
+    #    print q["qdate"]
     first_q = quotes[-1]
     last_q = quotes[0]
     summary["week_start_date"] = first_q["qdate"]
@@ -90,26 +109,31 @@ def generate_summary(articles, quotes):
     for i, news in enumerate(articles):
         news_id_list.append(news["_id"])
         avg_sentiment += float(news["sentiment"])
-    avg_sentiment /= len(articles)
+    if len(articles) > 0:
+        avg_sentiment /= len(articles)
     summary["articles"] = news_id_list
     summary["avg_articles_sentiment"] = json.dumps(avg_sentiment)
-
     return summary
 
 
-def main():
-    quotes = get_all_quotes_list()
-    #first_q = quotes[0];
-    #last_q = quotes[-1];
-    #start_date = first_q["qdate"];
-    #end_date = last_q["qdate"];
-    articles = get_all_article_list()
-    print generate_summary(articles, quotes)
-    rc = RestCaller(week_sum_url)
-    rc.post(generate_summary(articles, quotes))
+def generate_week_summary_by_dates(startdate, enddate):
+    articles = get_article_list_by_date_range(startdate, enddate)
+    quotes = get_quotes_list(startdate, enddate)
+    if len(quotes) < 1:
+        return
+    #print quotes
+    rst_summary = generate_summary(articles, quotes)
+    r = RestCall.send_raw_request("post", week_sum_url, rst_summary)
+    print r.text
 
-    #print start_date
-    #print end_date
+
+def main():
+    args = parse_arguments()
+    if args.startdate is not None and args.enddate is not None:
+        generate_week_summary_by_dates(args.startdate, args.enddate)
+    else:
+        print_how_to()
+
 
 if __name__ == '__main__':
     main()

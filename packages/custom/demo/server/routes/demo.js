@@ -49,7 +49,50 @@ module.exports = function(Demo, app, auth, database) {
   app.param('weeksumId', weeksum.weeksum);
 
 
-
+  //trigger python scripts
+  //trigger index crawler and articles
+  //get start date and end date arguement.
+  //i.e. /api/demo/analyze_week?startdate=YYYY-MM-DD&enddate=YYYY-MM-DD
+  app.get('/api/demo/analyze_week',function(req, res, next){
+    var pyShell = require('python-shell');
+    var respond_msg = 'Scripts finished running\n';
+    var options = {
+      mode: 'text',
+      scriptPath: 'packages/custom/demo/PythonScripts',
+      args:['-start',req.query.startdate,'-end',req.query.enddate]
+    };
+    options["args"] = ['-start',req.query.startdate,'-end',req.query.enddate, '-index', '^DJC'];
+    pyShell.run('IndexCrawler.py', options, function(err,results){
+      if (err){
+        //console.log(err);
+      }else {
+        //console.log(results);
+        respond_msg += results;
+      }
+    });
+    //pyShell.run('ArticleCrawler.py', options, function(err,results){
+    //  if (err){
+    //    console.log(err);
+    //  }else {
+    //    console.log(results);
+    //    respond_msg += results;
+    //  }
+    //});
+    options["args"] = ['-start',req.query.startdate,'-end',req.query.enddate];
+    options["mode"] = 'json';
+    pyShell.run('WeekSummary.py', options, function(err,results){
+      if (err){
+        console.log(err);
+      }else {
+        console.log(results);
+        res.send(results);
+      }
+      //req.query.date = req.query.startdate;
+      ////res.send(req.query);
+      //weeksum.weeksum_by_date(req, res, next);
+    });
+    //res.send(respond_msg);
+  });
   /**
    * Date range api requries url paramters
    * - startdate

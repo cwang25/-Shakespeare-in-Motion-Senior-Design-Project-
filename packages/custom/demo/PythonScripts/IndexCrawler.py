@@ -159,6 +159,7 @@ def init():
     if(args.daily is False) and (args.startdate is not None and args.enddate is not None):
         rest_caller = RestCaller(mean_server_url)
         indexes_list = args.index.split(',')
+        #add default ^DJC setting
         historical_data_process(args.startdate, args.enddate)
     elif args.daily is True and (args.startdate is None and args.enddate is None):
         rest_caller = RestCaller(mean_server_url)
