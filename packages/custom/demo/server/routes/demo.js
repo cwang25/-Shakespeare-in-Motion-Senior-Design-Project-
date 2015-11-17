@@ -65,9 +65,23 @@ module.exports = function(Demo, app, auth, database) {
     pyShell.run('IndexCrawler.py', options, function(err,results){
       if (err){
         //console.log(err);
+        res.send("Error");
       }else {
         //console.log(results);
         respond_msg += results;
+        options["args"] = ['-start',req.query.startdate,'-end',req.query.enddate];
+        options["mode"] = 'json';
+        pyShell.run('WeekSummary.py', options, function(err,results){
+          if (err){
+            console.log(err);
+          }else {
+            console.log(results);
+            res.send(results);
+          }
+          //req.query.date = req.query.startdate;
+          ////res.send(req.query);
+          //weeksum.weeksum_by_date(req, res, next);
+        });
       }
     });
     //pyShell.run('ArticleCrawler.py', options, function(err,results){
@@ -78,19 +92,7 @@ module.exports = function(Demo, app, auth, database) {
     //    respond_msg += results;
     //  }
     //});
-    options["args"] = ['-start',req.query.startdate,'-end',req.query.enddate];
-    options["mode"] = 'json';
-    pyShell.run('WeekSummary.py', options, function(err,results){
-      if (err){
-        console.log(err);
-      }else {
-        console.log(results);
-        res.send(results);
-      }
-      //req.query.date = req.query.startdate;
-      ////res.send(req.query);
-      //weeksum.weeksum_by_date(req, res, next);
-    });
+
     //res.send(respond_msg);
   });
   /**
