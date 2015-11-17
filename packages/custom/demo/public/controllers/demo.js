@@ -90,6 +90,13 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
               $scope.quote.prev_week_end_date = new Date($scope.eventdate.getTime() - (86400000 * 9));
 
           }
+
+          $http.get('/api/demo/analyze_week?startdate='+$scope.quote.prev_week_end_date + '&enddate=' + $scope.quote.endDate).success(function(response) {
+              
+          });
+
+
+
           if(!($scope.quote.symbol.localeCompare("") == 0)) {
               $scope.showGraph();
           }
@@ -103,6 +110,8 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
           if(!($scope.quote.symbol.localeCompare("") == 0)) {
               $scope.getNewsArticles();
           }
+
+
 
 
       };
