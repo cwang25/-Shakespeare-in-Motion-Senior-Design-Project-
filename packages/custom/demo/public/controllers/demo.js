@@ -91,25 +91,36 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
 
           }
 
-          $http.get('/api/demo/analyze_week?startdate='+$scope.quote.prev_week_end_date + '&enddate=' + $scope.quote.endDate).success(function(response) {
-              
+          Date.prototype.yyyymmdd = function() {
+              var yyyy = this.getFullYear().toString();
+              var mm = (this.getMonth()+1).toString(); // getMonth() is zero-based
+              var dd  = this.getDate().toString();
+              return yyyy +'-' + (mm[1]?mm:"0"+mm[0]) + '-' + (dd[1]?dd:"0"+dd[0]); // padding
+          };
+
+
+
+
+          $http.get('/api/demo/analyze_week?startdate='+$scope.quote.prev_week_end_date.yyyymmdd() + '&enddate=' + $scope.quote.endDate.yyyymmdd()).success(function(response) {
+               var data = response;
+              if(!($scope.quote.symbol.localeCompare("") == 0)) {
+                  $scope.showGraph();
+              }
+
+              if(!($scope.quote.symbol.localeCompare("") == 0)) {
+                  $scope.calculatePerformance();
+              }
+              if(!($scope.quote.symbol.localeCompare("") == 0)) {
+                  $scope.sentimentSummary();
+              }
+              if(!($scope.quote.symbol.localeCompare("") == 0)) {
+                  $scope.getNewsArticles();
+              }
           });
 
 
 
-          if(!($scope.quote.symbol.localeCompare("") == 0)) {
-              $scope.showGraph();
-          }
 
-          if(!($scope.quote.symbol.localeCompare("") == 0)) {
-              $scope.calculatePerformance();
-          }
-          if(!($scope.quote.symbol.localeCompare("") == 0)) {
-              $scope.sentimentSummary();
-          }
-          if(!($scope.quote.symbol.localeCompare("") == 0)) {
-              $scope.getNewsArticles();
-          }
 
 
 
