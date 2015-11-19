@@ -32,7 +32,7 @@ var NewsArticleSchema = new Schema({
     trim: true
   },
   keywords:{
-    type: Array,
+    type: String,
     required: false
   },
   entities:{
@@ -56,25 +56,23 @@ NewsArticleSchema.path('content').validate(function(content) {
   return !!content;
 }, 'Content cannot be blank');
 
-NewsArticleSchema.pre("save",function(next){
-  var self = this;
-  mongoose.models["NewsArticle"].findOne({
-    title: self.title,
-    content: self.content
-  },function(err, news){
-    if(err){
-      next(err);
-    }else if(news){
-      console.log("There is no two identicle articles allowed");
-      console.log(self);
-      console.log(news);
-      self.invalidate("title","There is no two identicle articles allowed");
-      next(new Error("Article mush be unique"));
-    }else{
-      next();
-    }
-  });
-});
+NewsArticleSchema.path('newsDate').validate(function(newsDate) {
+  return !!newsDate;
+}, '1------');
+
+NewsArticleSchema.path('keywords').validate(function(keywords) {
+  return !!keywords;
+}, '2-------');
+
+NewsArticleSchema.path('entities').validate(function(entities) {
+  return !!entities;
+}, '3-------');
+NewsArticleSchema.path('sentiment').validate(function(sentiment) {
+  return !!sentiment;
+}, '3-------');
+NewsArticleSchema.path('url').validate(function(url) {
+  return !!url;
+}, '56456-------');
 /**
  * Statics
  */
