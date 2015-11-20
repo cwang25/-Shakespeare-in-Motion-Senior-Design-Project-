@@ -12,27 +12,27 @@ import datetime
 mean_server_url = "http://localhost:3000/api/demo/newsarticles"
 api_key_1 = "7ed25a35adda3ae7dac5d889e70927c7410937f8"
 api_key_2 = "280db58834a1809dff4890e4c64eec5f266766e3"
-api_key_3 = "9cc7412d4925c54e7aeb182be79018a40ee56a35"
+
 commodity_list = None
+id_list = dict()
 s = requests.Session()
 rest_caller = None
 
 def obtain_articles_someday(start, end):
-    """
-    For reqeusting news articles
-    store to mongo db.
-    :param start: start date
-    :param end: end date
-    :return:
-    """
+    #method to obtain articles for a certain time frame and put them into Mongo
     global commodity_list
     global rest_caller
+    global id_list
     rest_caller = RestCaller(mean_server_url)
     for commodities in commodity_list:
         raw_list = alchemy_news_crawler(commodities, start, end)
         converted_list = convert_to_Infusion_JSON_list(raw_list)
         for item in converted_list:
-            rest_caller.post(item)
+            r = rest_caller.post(item)
+            r_build = json.loads(r.text)
+            #midparse = r.text.find('_id":"')
+            #print text[midparse+6:].split('"')[0]
+            id_list[r_build['_id']] = r_build['url']
 '''
 
 def alchemy_news_crawler_today(searchText):
@@ -56,36 +56,42 @@ def alchemy_news_crawler_today(searchText):
 def alchemy_news_crawler(searchText, startdate, enddate):
     timestamp_start = (datetime.datetime.strptime(startdate, "%Y-%m-%d") - datetime.datetime(1970, 1, 1)).total_seconds()
     timestampe_end = (datetime.datetime.strptime(enddate, "%Y-%m-%d") - datetime.datetime(1970, 1, 1)).total_seconds()
-    alchemyURL = 'http://gateway-a.watsonplatform.net/calls/data/GetNews?' \
-                 'apikey='+api_key_2 +\
+    alchemyURL = 'http://gateway-a.watsonplatform.net/calls/data/GetNews?'\
+                 'apikey='+api_key_1+\
                  '&outputMode=json' \
-                 '&start='+str(int(timestamp_start))+'&end='+str(int(timestampe_end)) +\
-                 '&maxResults=2' \
-                 '&q.enriched.url.title='+searchText +\
-                 '&q.enriched.url.enrichedTitle.taxonomy.taxonomy_.label=finance'\
-                 '&return=enriched.url.url,enriched.url.publicationDate.date,enriched.url.enrichedTitle.docSentiment,enriched.url.text,enriched.url.title,enriched.url.enrichedTitle.entities,enriched.url.keywords'
+                 '&start='+str(int(timestamp_start))+'&end='+str(int(timestampe_end))+\
+                 '&maxResults=1' \
+                 '&q.enriched.url.title='+searchText+\
+                 '&q.enriched.url.enrichedTitle.taxonomy.taxonomy_.label=finance' \
+                 '&return=enriched.url.url,enriched.url.publicationDate.date,enriched.url.enrichedTitle.docSentiment,' \
+                 'enriched.url.title,enriched.url.enrichedTitle.entities,enriched.url.keywords'
     post_data = bytearray()
     r = s.get(url=alchemyURL, data=post_data)
-    print alchemyURL
-    print "---"
     print r.json()
     data = json.loads(r.text)
 
-
-    news_url = data['result']['docs'][0]['source']['enriched']['url']['url']
-    alchemyURL2 = 'http://gateway-a.watsonplatform.net/calls/url/URLGetText?' \
-                 'url='+news_url+\
-                 '&apikey='+api_key_2 +\
-                 '&outputMode=json' \
-                 '&useMetadata=0'
-    post_data2 = bytearray()
-    r2 = s.get(url=alchemyURL2, data=post_data2)
-    text_data = json.loads(r2.text)['text']
-    data['result']['docs'][0]['source']['enriched']['url']['text'] = text_data
+    if data['status'] != 'OK':
+        print "Oops! There was a problem with AlchemyAPI.\nYou may have exceeded your transaction."
+        quit()
 
     return data
-    #return r.json()
+    #dont need this return r.json()
 
+
+def alchemy_text_extraction(id_list_here):
+    global rest_caller
+    for ids in id_list_here:
+        news_url = id_list_here[ids]
+        textURL = 'http://gateway-a.watsonplatform.net/calls/url/URLGetText?' \
+                 'url='+news_url+\
+                 '&apikey='+api_key_1+\
+                 '&outputMode=json' \
+                 '&useMetadata=0'
+        post_data = bytearray()
+        r = s.get(url=textURL, data=post_data)
+
+        text_data = json.loads(r.text)['text']
+        rest_caller.update(ids, {"content":text_data})
 
 def convert_to_Infusion_JSON_list(raw_news):
     """
@@ -119,14 +125,14 @@ def json_alchemy_to_Infusion(news):
     data = {
         "newsDate":datestr_for_infusion,
         "title":news['result']['docs'][0]['source']['enriched']['url']['title'],
-        "content":news['result']['docs'][0]['source']['enriched']['url']['text'],
+        #"content":news['result']['docs'][0]['source']['enriched']['url']['text'],
+        "content":"Full text not available. Please use associated URL to view full text.",
         "url":news['result']['docs'][0]['source']['enriched']['url']['url'],
         "keywords":news['result']['docs'][0]['source']['enriched']['url']['keywords'][0]['text'],
         "entities":news['result']['docs'][0]['source']['enriched']['url']['enrichedTitle']['entities'],
         "sentiment":news['result']['docs'][0]['source']['enriched']['url']['enrichedTitle']['docSentiment']['score']
     }
     print "\n\n\n\n"
-
     print data
     print "\n\n\n\n"
     return data
@@ -161,7 +167,7 @@ def print_how_to():
     Print the usage instruction
     :return:
     """
-    print "usage 1: -start -end -commodity"
+    print "usage 1: -start <date> -end <date> -commodity <commodity>"
     print "usage 2: -start -end -commodity -result_amount"
     print "-start : start date for retrieving news articles, format YYYY-MM-DD"
     print "-end : end date for retrieving news articles, format YYYY-MM-DD"
@@ -174,6 +180,7 @@ def print_how_to():
 def init():
     global commodity_list
     global rest_caller
+    global id_list
     args = parse_arguments()
     if args.commodity is None:
         print_how_to()
@@ -182,6 +189,7 @@ def init():
         rest_caller = RestCaller(mean_server_url)
         commodity_list = args.commodity.split(',')
         obtain_articles_someday(args.startdate, args.enddate)
+        alchemy_text_extraction(id_list)
     else:
         print_how_to()
         quit()
