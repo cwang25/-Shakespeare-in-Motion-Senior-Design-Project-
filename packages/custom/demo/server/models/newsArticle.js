@@ -32,7 +32,7 @@ var NewsArticleSchema = new Schema({
     trim: true
   },
   keywords:{
-    type: String,
+    type: Array,
     required: false
   },
   entities:{
