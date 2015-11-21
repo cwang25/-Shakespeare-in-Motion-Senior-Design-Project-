@@ -2,7 +2,7 @@
 
 /**
  * Module dependencies.
- * Author: Chi-Han Wang
+ * Author: Chi-Han Wang, Anna Dubovitskaya
  */
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema;

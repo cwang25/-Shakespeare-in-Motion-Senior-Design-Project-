@@ -15,10 +15,28 @@ api_key_2 = "280db58834a1809dff4890e4c64eec5f266766e3"
 
 commodity_list = None
 id_list = dict()
-s = requests.Session()
 rest_caller = None
 
-def obtain_articles_someday(start, end):
+s = requests.Session()
+
+
+def obtain_past_articles(start, end):
+    #method to obtain articles for a certain time frame and put them into Mongo
+    global commodity_list
+    global rest_caller
+    global id_list
+    rest_caller = RestCaller(mean_server_url)
+    for commodities in commodity_list:
+        raw_list = alchemy_news_crawler(commodities, start, end)
+        converted_list = convert_to_Infusion_JSON_list(raw_list)
+        for item in converted_list:
+            r = rest_caller.post(item)
+            r_build = json.loads(r.text)
+            id_list[r_build['_id']] = r_build['url']
+
+
+def obtain_todays_articles():
+    #TODO
     #method to obtain articles for a certain time frame and put them into Mongo
     global commodity_list
     global rest_caller
@@ -33,25 +51,7 @@ def obtain_articles_someday(start, end):
             #midparse = r.text.find('_id":"')
             #print text[midparse+6:].split('"')[0]
             id_list[r_build['_id']] = r_build['url']
-'''
 
-def alchemy_news_crawler_today(searchText):
-    alchemyURL = 'http://gateway-a.watsonplatform.net/calls/data/GetNews?' \
-                 'apikey='+api_key_1+\
-                 '&outputMode=json' \
-                 '&start=now-1d&end=now' \
-                 '&maxResults=1' \
-                 '&q.enriched.url.title='+searchText+\
-                 '&q.enriched.url.enrichedTitle.taxonomy.taxonomy_.label=finance'\
-                 '&return=enriched.url.url,enriched.url.enrichedTitle.docSentiment,enriched.url.title,enriched.url.enrichedTitle.entities,enriched.url.keywords'
-    post_data = bytearray()
-    r = s.get(url=alchemyURL, data=post_data)
-    print alchemyURL
-    print "---"
-    print r.text
-    data = json.loads(r.json())
-    return data
-'''
 
 def alchemy_news_crawler(searchText, startdate, enddate):
     timestamp_start = (datetime.datetime.strptime(startdate, "%Y-%m-%d") - datetime.datetime(1970, 1, 1)).total_seconds()
@@ -75,7 +75,6 @@ def alchemy_news_crawler(searchText, startdate, enddate):
         quit()
 
     return data
-    #dont need this return r.json()
 
 
 def alchemy_text_extraction(id_list_here):
@@ -93,7 +92,8 @@ def alchemy_text_extraction(id_list_here):
         text_data = json.loads(r.text)['text']
         rest_caller.update(ids, {"content":text_data})
 
-def convert_to_Infusion_JSON_list(raw_news):
+
+def convert_to_Infusion_JSON_list(raw_news_doc_list):
     """
     Convert JSON list from Alchemy into our mean server's json format.
     :param raw_quotes:
@@ -101,12 +101,12 @@ def convert_to_Infusion_JSON_list(raw_news):
     """
     converted_list = []
     #print raw_news
-    if raw_news is not None:
-        if isinstance(raw_news, list):
-            for q in raw_news:
+    if raw_news_doc_list is not None:
+        if isinstance(raw_news_doc_list, list):
+            for q in raw_news_doc_list:
                 converted_list.append(json_alchemy_to_Infusion(q))
         else:
-            converted_list.append(json_alchemy_to_Infusion(raw_news))
+            converted_list.append(json_alchemy_to_Infusion(raw_news_doc_list))
     return converted_list
 
 
@@ -116,18 +116,15 @@ def json_alchemy_to_Infusion(news):
     :param quote:
     :return: Formatted JSON.
     """
-    # date time string is in different format
-    # has to parse it separately
     timetext = time.strptime(news['result']['docs'][0]['source']['enriched']['url']['publicationDate']['date'],"%Y%m%dT%H%M%S")
-    #parsed_date = time.strptime(timetext, "%a %b %d %Y %H:%M:%S "+timetext[-14:])
     datestr_for_infusion = time.strftime("%Y-%m-%d", timetext)
+    lazy_url = news['result']['docs'][0]['source']['enriched']['url']['url']
 
     data = {
         "newsDate":datestr_for_infusion,
         "title":news['result']['docs'][0]['source']['enriched']['url']['title'],
-        #"content":news['result']['docs'][0]['source']['enriched']['url']['text'],
-        "content":"Full text not available. Please use associated URL to view full text.",
-        "url":news['result']['docs'][0]['source']['enriched']['url']['url'],
+        "content":"Full text not available. Please use associated URL to view full text:"+lazy_url,
+        "url":lazy_url,
         "keywords":news['result']['docs'][0]['source']['enriched']['url']['keywords'][0]['text'],
         "entities":news['result']['docs'][0]['source']['enriched']['url']['enrichedTitle']['entities'],
         "sentiment":news['result']['docs'][0]['source']['enriched']['url']['enrichedTitle']['docSentiment']['score']
@@ -137,18 +134,6 @@ def json_alchemy_to_Infusion(news):
     print "\n\n\n\n"
     return data
 
-def extract_features_from_url(url):
-    pass
-
-def extract_features_from_text(content):
-    pass
-
-def store_atricle_to_mean(data):
-    pass
-
-
-def ibm_json_to_infusion(article):
-    pass
 
 def parse_arguments():
     """
@@ -176,7 +161,6 @@ def print_how_to():
     print "-commodity can support multiple commodities by separating by ','"
     print "i.e. oil,gold for oil and gold commodities"
 
-
 def init():
     global commodity_list
     global rest_caller
@@ -188,15 +172,13 @@ def init():
     if(args.startdate is not None and args.enddate is not None):
         rest_caller = RestCaller(mean_server_url)
         commodity_list = args.commodity.split(',')
-        obtain_articles_someday(args.startdate, args.enddate)
+        obtain_past_articles(args.startdate, args.enddate)
         alchemy_text_extraction(id_list)
     else:
         print_how_to()
         quit()
 
-
 def main():
-    global commodity_list
     init()
 
 if __name__ == '__main__':
