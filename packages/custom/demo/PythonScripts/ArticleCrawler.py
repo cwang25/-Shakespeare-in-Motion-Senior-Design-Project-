@@ -30,7 +30,11 @@ def obtain_past_articles(start, end):
     rest_caller = RestCaller(mean_server_url)
     for commodities in commodity_list:
         raw_list = alchemy_news_crawler(commodities, start, end)
+
+        #nconver to infusion is the doc parser, needs to be updated
         converted_list = convert_to_Infusion_JSON_list(raw_list)
+
+        #parses over all docs
         for item in converted_list:
             r = rest_caller.post(item)
             r_build = json.loads(r.text)
@@ -74,11 +78,10 @@ def alchemy_news_crawler(searchText, startdate, enddate):
     data = json.loads(r.text)
 
     if data['status'] != 'OK':
-        print "Oops! There was a problem with AlchemyAPI.\nYou may have exceeded your transaction."
+        print "Oops! There was a problem with AlchemyAPI.\nYou may have exceeded your transaction limit."
         quit()
 
     return data
-
 
 def alchemy_text_extraction(id_list_here):
     global rest_caller
@@ -95,6 +98,7 @@ def alchemy_text_extraction(id_list_here):
         text_data = json.loads(r.text)['text']
         rest_caller.update(ids, {"content":text_data})
 
+
 def alchemy_keyword_formatting(raw_data):
     keywords = []
     for words in raw_data:
@@ -110,13 +114,15 @@ def convert_to_Infusion_JSON_list(raw_news_doc_list):
     :return:
     """
     converted_list = []
-    #print raw_news
+
     if raw_news_doc_list is not None:
         if isinstance(raw_news_doc_list, list):
-            for q in raw_news_doc_list:
-                converted_list.append(json_alchemy_to_Infusion(q))
+            for doc in raw_news_doc_list:
+                converted_list.append(json_alchemy_to_Infusion(doc))
+                json_alchemy_entities(doc)
         else:
             converted_list.append(json_alchemy_to_Infusion(raw_news_doc_list))
+            json_alchemy_entities(raw_news_doc_list)
     return converted_list
 
 
@@ -128,6 +134,7 @@ def json_alchemy_to_Infusion(news):
     """
     timetext = time.strptime(news['result']['docs'][0]['source']['enriched']['url']['publicationDate']['date'],"%Y%m%dT%H%M%S")
     datestr_for_infusion = time.strftime("%Y-%m-%d", timetext)
+    
     lazy_url = news['result']['docs'][0]['source']['enriched']['url']['url']
     prepared_keywords = (alchemy_keyword_formatting(news['result']['docs'][0]['source']['enriched']['url']['keywords']))
 
@@ -137,13 +144,31 @@ def json_alchemy_to_Infusion(news):
         "content":"Full text not available. Please use associated URL to view full text:"+lazy_url,
         "url":lazy_url,
         "keywords":prepared_keywords,
-        "entities":news['result']['docs'][0]['source']['enriched']['url']['enrichedTitle']['entities'],
+        #"entities":news['result']['docs'][0]['source']['enriched']['url']['enrichedTitle']['entities'],
         "sentiment":news['result']['docs'][0]['source']['enriched']['url']['enrichedTitle']['docSentiment']['score']
     }
     print "\n\n\n\n"
     print data
     print "\n\n\n\n"
     return data
+
+def json_alchemy_entities(entity_unparsed):
+    global entity_rest_caller
+    entity_rest_caller = RestCaller(mean_server_entity_url)
+
+    timetext = time.strptime(entity_unparsed['result']['docs'][0]['source']['enriched']['url']['publicationDate']['date'],"%Y%m%dT%H%M%S")
+    datestr_for_infusion = time.strftime("%Y-%m-%d", timetext)
+
+    entity_list = entity_unparsed['result']['docs'][0]['source']['enriched']['url']['enrichedTitle']['entities']
+
+    for entity in entity_list:
+        data = {
+            "entityDate":datestr_for_infusion,
+            "text":entity['text'],
+            "count":entity['count'],
+            "sentiment":entity['sentiment']['score']
+        }
+        entity_rest_caller.post(data)
 
 
 def parse_arguments():
