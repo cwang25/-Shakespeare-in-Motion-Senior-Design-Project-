@@ -1,21 +1,23 @@
 'use strict';
 
 /* jshint -W098 */
-angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'Demo', '$http',
-  function($scope, Global, Demo, $http) {
+angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'Demo', '$http', '$timeout',
+  function($scope, Global, Demo, $http, $timeout) {
     $scope.global = Global;
     $scope.package = {
       name: 'demo'
     };
+    $scope.$watch("newsarticles", function(){
+      $timeout(function() {
+        console.log('newsarticles updated.');
+        window.$(".articlebody").readmore();
+      });
+    })
     $scope.getNewsArticles = function () {
       $http.get('/api/demo/newsbydaterange?startdate='+ $scope.quote.startDate + '&enddate=' + $scope.quote.endDate).success(function (response) {
         console.log("I got the data I requested");
         $scope.newsarticles = response;
         $scope.news = "";
-
-
-
-
       });
 
     };

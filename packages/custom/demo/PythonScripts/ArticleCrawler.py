@@ -13,6 +13,7 @@ mean_server_url = "http://localhost:3000/api/demo/newsarticles"
 mean_server_entity_url = "http://localhost:3000/api/demo/entity"
 api_key_1 = "7ed25a35adda3ae7dac5d889e70927c7410937f8"
 api_key_2 = "280db58834a1809dff4890e4c64eec5f266766e3"
+api_key_3 = "9cc7412d4925c54e7aeb182be79018a40ee56a35"
 
 commodity_list = None
 id_list = dict()
@@ -65,7 +66,7 @@ def alchemy_news_crawler(searchText, startdate, enddate):
     timestamp_start = (datetime.datetime.strptime(startdate, "%Y-%m-%d") - datetime.datetime(1970, 1, 1)).total_seconds()
     timestampe_end = (datetime.datetime.strptime(enddate, "%Y-%m-%d") - datetime.datetime(1970, 1, 1)).total_seconds()
     alchemyURL = 'http://gateway-a.watsonplatform.net/calls/data/GetNews?'\
-                 'apikey='+api_key_2+\
+                 'apikey='+api_key_3+\
                  '&outputMode=json' \
                  '&start='+str(int(timestamp_start))+'&end='+str(int(timestampe_end))+\
                  '&maxResults=5' \
@@ -93,7 +94,7 @@ def alchemy_text_extraction(id_list_here):
         news_url = id_list_here[ids]
         textURL = 'http://gateway-a.watsonplatform.net/calls/url/URLGetText?' \
                  'url='+news_url+\
-                 '&apikey='+api_key_2+\
+                 '&apikey='+api_key_3+\
                  '&outputMode=json' \
                  '&useMetadata=0'
         post_data = bytearray()
@@ -207,7 +208,6 @@ def parse_arguments():
     parser.add_argument('-end', dest='enddate', metavar='enddate', type=str, help='end date of the commodity')
     parser.add_argument('-commodity', dest='commodity', metavar='commodity', type=str, help='commodity')
     return parser.parse_args()
-
 
 def print_how_to():
     """
