@@ -7,12 +7,12 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
     $scope.package = {
       name: 'demo'
     };
-    $scope.$watch("newsarticles", function(){
-      $timeout(function() {
-        console.log('newsarticles updated.');
-        window.$(".articlebody").readmore();
-      });
-    })
+    //$scope.$watch("newsarticles", function(){
+    //  $timeout(function() {
+    //    console.log('newsarticles updated.');
+    //    window.$(".articlebody").readmore();
+    //  });
+   // })
     $scope.getNewsArticles = function () {
       $http.get('/api/demo/newsbydaterange?startdate='+ $scope.quote.startDate + '&enddate=' + $scope.quote.endDate).success(function (response) {
         console.log("I got the data I requested");
@@ -465,5 +465,14 @@ angular.module('mean.demo').directive('datepicker', function() {
         }
     };
 });
-
+angular.module('mean.demo').directive('readmore', ['$timeout', function($timeout) {
+        return {
+            restrict: 'CA',
+            link: function(scope, element, attributes) {
+                $timeout(function(){
+                    angular.element(element).readmore(attributes);
+                });
+            }
+        };  
+    }]);
 
