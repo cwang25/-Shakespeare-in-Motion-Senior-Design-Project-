@@ -170,6 +170,15 @@
         </tbody>
     </table>
 
+    <script>
+        Date.prototype.yyyymmdd = function () {
+            var yyyy = this.getFullYear().toString();
+            var mm = (this.getMonth() + 1).toString(); // getMonth() is zero-based
+            var dd = this.getDate().toString();
+            return yyyy + '-' + (mm[1] ? mm : "0" + mm[0]) + '-' + (dd[1] ? dd : "0" + dd[0]); // padding
+        };
+    </script>
+
     <table class="table">
         <thead>
         <tr>
@@ -181,7 +190,7 @@
         </thead>
         <tbody>
         <tr ng-repeat="news in newsarticles">
-            <td>{{news.newsDate}}</td>
+            <td>{{news.newsDate.toString().substring(0, 10)}}</td>
             <td>{{news.title}}</td>
             <td>{{news.content}}</td>
 
@@ -191,8 +200,5 @@
 
 
 
-    <script>
-
-    </script>
 
 </div>
