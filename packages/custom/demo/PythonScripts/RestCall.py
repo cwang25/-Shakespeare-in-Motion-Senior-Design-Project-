@@ -2,6 +2,7 @@
 Created on Sep 21, 2015
 
 @author: hans wang
+@author: Anna Dubovitskaya
 """
 import requests
 # import json

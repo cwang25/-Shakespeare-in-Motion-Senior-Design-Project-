@@ -4,6 +4,26 @@
 // The Package is past automatically as first parameter
 module.exports = function(Demo, app, auth, database) {
 
+  var entities = require('../controllers/entity')(Demo);
+  //news article rest api
+  app.route('/api/demo/entity')
+    .get(entities.all)
+    .post(entities.create);
+  app.route('/api/demo/entity/:entityId')
+    .get(entities.show)
+    .put(entities.update)
+    .delete(entities.destroy);
+  //This is function that always attach record data into request if given
+  //record id.  It will help for update, delete, findOne.
+  app.param('entityId', entities.entity);
+  //
+  app.get('/api/demo/entitiesbydaterange', function(req, res, next){
+    entities.entitiesintimerange(req, res, next);
+  });
+
+
+
+
   var newsarticles = require('../controllers/newsArticle')(Demo);
   //news article rest api
   app.route('/api/demo/newsarticles')
