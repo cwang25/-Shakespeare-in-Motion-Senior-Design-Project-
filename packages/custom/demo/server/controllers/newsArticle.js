@@ -34,7 +34,7 @@ module.exports = function(Articles) {
                     if (err) {
                         console.log("Failed to store data: "+article);
                         return res.status(500).json({
-                            error: 'Cannot save the article',
+                            error: err,
                             message: req.body
                         });
                     }

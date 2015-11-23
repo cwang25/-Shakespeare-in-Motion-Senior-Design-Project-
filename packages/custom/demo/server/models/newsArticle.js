@@ -35,10 +35,6 @@ var NewsArticleSchema = new Schema({
     type: Array,
     required: false
   },
-  entities:{
-    type: Array,
-    required: false
-  },
   sentiment:{
     type: Number,
     required: false
@@ -55,7 +51,7 @@ NewsArticleSchema.path('title').validate(function(title) {
 NewsArticleSchema.path('content').validate(function(content) {
   return !!content;
 }, 'Content cannot be blank');
-
+/**
 NewsArticleSchema.path('newsDate').validate(function(newsDate) {
   return !!newsDate;
 }, '1------');
@@ -63,16 +59,12 @@ NewsArticleSchema.path('newsDate').validate(function(newsDate) {
 NewsArticleSchema.path('keywords').validate(function(keywords) {
   return !!keywords;
 }, '2-------');
-
-NewsArticleSchema.path('entities').validate(function(entities) {
-  return !!entities;
-}, '3-------');
 NewsArticleSchema.path('sentiment').validate(function(sentiment) {
   return !!sentiment;
 }, '3-------');
 NewsArticleSchema.path('url').validate(function(url) {
   return !!url;
-}, '56456-------');
+}, '56456-------');**/
 /**
  * Statics
  */
