@@ -48,6 +48,8 @@ def init():
 
     if missing_content:
         alchemy_text_extraction(missing_content)
+        print "\n\n"
+
     else:
         print "No text extractions needed!"
 

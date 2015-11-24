@@ -184,8 +184,8 @@
         </thead>
         <tbody>
         <tr ng-repeat="news in newsarticles">
-            <td>{{news.newsDate.toString().substring(0, 10)}}</td>
-            <td>{{news.title}}</td>
+            <td style="width:auto;text-align:center;">{{news.newsDate.toString().substring(5, 10) + "\n" + news.newsDate.toString().substring(0, 4)}}</td>
+            <td style="width:17%;">{{news.title}}</td>
             <!--td class="articlebody" style="height:auto">{{news.content}}</td-->
             <td><article readmore>{{news.content}}</article></td>
 

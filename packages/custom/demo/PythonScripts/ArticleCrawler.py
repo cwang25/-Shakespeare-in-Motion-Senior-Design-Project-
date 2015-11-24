@@ -66,7 +66,7 @@ def alchemy_news_crawler(searchText, startdate, enddate):
                  'apikey='+api_key_1+\
                  '&outputMode=json' \
                  '&start='+str(int(timestamp_start))+'&end='+str(int(timestampe_end))+\
-                 '&maxResults=5' \
+                 '&maxResults=20' \
                  '&q.enriched.url.title='+searchText+\
                  '&q.enriched.url.enrichedTitle.taxonomy.taxonomy_.label=finance' \
                  '&return=enriched.url.url,enriched.url.publicationDate.date,enriched.url.enrichedTitle.docSentiment,' \
@@ -234,7 +234,7 @@ def init():
         entity_rest_caller = RestCaller(mean_server_entity_url)
         commodity_list = args.commodity.split(',')
         obtain_past_articles(args.startdate, args.enddate)
-        alchemy_text_extraction(id_list)
+        #alchemy_text_extraction(id_list)
     else:
         print_how_to()
         quit()
