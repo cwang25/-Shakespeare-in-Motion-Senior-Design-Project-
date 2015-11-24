@@ -185,7 +185,7 @@
         <tbody>
         <tr ng-repeat="news in newsarticles">
             <td style="width:auto;text-align:center;">{{news.newsDate.toString().substring(5, 10) + "\n" + news.newsDate.toString().substring(0, 4)}}</td>
-            <td style="width:17%;">{{news.title}}</td>
+            <td style="width:17%;">{{news.title.substring(0, 200)}}</td>
             <!--td class="articlebody" style="height:auto">{{news.content}}</td-->
             <td><article readmore>{{news.content}}</article></td>
 
@@ -197,14 +197,16 @@
         <thead>
         <tr>
             <th>Entities</th>
+            <th>This Week's Top 10 Keywords</th>
         </tr>
         </thead>
         <tbody>
         <tr>
             <td id="entity_div" style="font-weight:bold;"></td>
+            <td style="width:35%;"><table id="key_div" class="table"></table></td>
         </tr>
 
         </tbody>
-    </table>
+
 
 </div>

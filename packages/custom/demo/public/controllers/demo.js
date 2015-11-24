@@ -121,15 +121,10 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
               if(!($scope.quote.symbol.localeCompare("") == 0)) {
                   $scope.entitySummary();
               }
+              if(!($scope.quote.symbol.localeCompare("") == 0)) {
+                  $scope.keywordSummary();
+              }
           });
-
-
-
-
-
-
-
-
       };
 
 
@@ -160,13 +155,45 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
               }
               $scope.sentimentMsg = (positiveCount / $scope.articles.length * 100).toFixed(0) + "% Positive, " +
                                     (negativeCount / $scope.articles.length * 100).toFixed(0) + "% Negative";
+          });
+      }
 
+      $scope.keywordSummary = function() {
+          $http.get('/api/demo/newsbydaterange?startdate='+ $scope.quote.startDate + '&enddate=' + $scope.quote.endDate).success(function(response) {
+              $scope.articles = response;
+              $('#key_div').empty();
 
+              var weekly_keywords = [];
+              var text_box = document.getElementById("key_div");
+
+              for(var i = 0; i < $scope.articles.length; i++) {
+                  weekly_keywords = weekly_keywords.concat($scope.articles[i].keywords);
+              }
+
+              var counts = _.countBy(weekly_keywords, _.identity);
+              for(var i = 0; i < 10; i++){
+                if(weekly_keywords.length == 0){
+                  break;
+                }
+                var new_row = document.createElement("tr");
+                var words_dt = document.createElement("td");
+                var values_dt = document.createElement("td");
+
+                var mx = _.max(weekly_keywords, function(keyword){ return counts[keyword]; });
+                words_dt.appendChild(document.createTextNode((i+1).toString() + ") " + mx));
+                values_dt.appendChild(document.createTextNode("mentioned " + counts[mx].toString() + " times"));
+
+                weekly_keywords = _.without(weekly_keywords, mx);
+                new_row.appendChild(words_dt)
+                new_row.appendChild(values_dt)
+                text_box.appendChild(new_row)
+                
+                  
+              }
 
           });
-
       }
-//to do
+
       $scope.entitySummary = function() {
           $http.get('/api/demo/entitiesbydaterange?startdate='+ $scope.quote.startDate + '&enddate=' + $scope.quote.endDate).success(function(response) {
               $scope.entity = response;
@@ -176,40 +203,23 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
               var neg_entity_list = [];
               var pos_entity_list = [];
               var text_box = document.getElementById("entity_div");
-              //var neg_div = document.createElement("div"); 
-              //var pos_div = document.createElement("div"); 
-              //text_box.appendChild(pos_div);
-              //text_box.appendChild(neg_div);
 
-
-              //document.getElementById("entity_div").style.color = "#ff0000";
-
-              //var str = "Hello World!";
-              //var result = str.fontcolor("green");
 
               for(var i = 0; i < $scope.entity.length; i++) {
                 if($scope.entity[i].sentiment >= 0) {
                       var pos_div = document.createElement("div");
                       pos_div.style.color = "rgb(0," + Math.round(255 * $scope.entity[i].sentiment).toString() + ",0)";
-                      //pos_div.style.color = "hsl(0," + Math.round(100*$scope.entity[i].sentiment).toString() + "%,0)";
-                      //pos_entity_list.push($scope.entity[i].text);
-                      pos_div.appendChild(document.createTextNode($scope.entity[i].text));       // Create a text node
-                      //setAttribute("STYLE","color:red'");
+                      pos_div.appendChild(document.createTextNode($scope.entity[i].text));
                       text_box.appendChild(pos_div);
                   }
                 if($scope.entity[i].sentiment < 0) {
                       var neg_div = document.createElement("div");
                       neg_div.style.color = "rgb(" + Math.round(-255 * $scope.entity[i].sentiment).toString() + ",0,0)";
-                      //neg_entity_list.push($scope.entity[i].text);
                       neg_div.appendChild(document.createTextNode($scope.entity[i].text));
                       text_box.appendChild(neg_div);
                   }
 
               }
-              
-              //$scope.entitySentMsg = "This week's positive entities:   " + pos_entity_list[0] + "    This week's negative entities:   " +
-              //              neg_entity_list;
-              //$scope.entitySentMsg = "ok";
           });
 
       }
