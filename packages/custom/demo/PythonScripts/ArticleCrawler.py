@@ -21,8 +21,6 @@ entity_rest_caller = None
 default_date = None
 
 s = requests.Session()
-#a,b = blah
-
 
 def obtain_past_articles(start, end):
     #method to obtain articles for a certain time frame and put them into Mongo
