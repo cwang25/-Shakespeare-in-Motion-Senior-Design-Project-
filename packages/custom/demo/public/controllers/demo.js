@@ -118,6 +118,9 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
               if(!($scope.quote.symbol.localeCompare("") == 0)) {
                   $scope.getNewsArticles();
               }
+              if(!($scope.quote.symbol.localeCompare("") == 0)) {
+                  $scope.entitySummary();
+              }
           });
 
 
@@ -160,6 +163,53 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
 
 
 
+          });
+
+      }
+//to do
+      $scope.entitySummary = function() {
+          $http.get('/api/demo/entitiesbydaterange?startdate='+ $scope.quote.startDate + '&enddate=' + $scope.quote.endDate).success(function(response) {
+              $scope.entity = response;
+              $('#entity_div').empty();
+              var positiveCount = 0;
+              var negativeCount = 0;
+              var neg_entity_list = [];
+              var pos_entity_list = [];
+              var text_box = document.getElementById("entity_div");
+              //var neg_div = document.createElement("div"); 
+              //var pos_div = document.createElement("div"); 
+              //text_box.appendChild(pos_div);
+              //text_box.appendChild(neg_div);
+
+
+              //document.getElementById("entity_div").style.color = "#ff0000";
+
+              //var str = "Hello World!";
+              //var result = str.fontcolor("green");
+
+              for(var i = 0; i < $scope.entity.length; i++) {
+                if($scope.entity[i].sentiment >= 0) {
+                      var pos_div = document.createElement("div");
+                      pos_div.style.color = "rgb(0," + Math.round(255 * $scope.entity[i].sentiment).toString() + ",0)";
+                      //pos_div.style.color = "hsl(0," + Math.round(100*$scope.entity[i].sentiment).toString() + "%,0)";
+                      //pos_entity_list.push($scope.entity[i].text);
+                      pos_div.appendChild(document.createTextNode($scope.entity[i].text));       // Create a text node
+                      //setAttribute("STYLE","color:red'");
+                      text_box.appendChild(pos_div);
+                  }
+                if($scope.entity[i].sentiment < 0) {
+                      var neg_div = document.createElement("div");
+                      neg_div.style.color = "rgb(" + Math.round(-255 * $scope.entity[i].sentiment).toString() + ",0,0)";
+                      //neg_entity_list.push($scope.entity[i].text);
+                      neg_div.appendChild(document.createTextNode($scope.entity[i].text));
+                      text_box.appendChild(neg_div);
+                  }
+
+              }
+              
+              //$scope.entitySentMsg = "This week's positive entities:   " + pos_entity_list[0] + "    This week's negative entities:   " +
+              //              neg_entity_list;
+              //$scope.entitySentMsg = "ok";
           });
 
       }
