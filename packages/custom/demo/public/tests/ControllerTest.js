@@ -56,8 +56,12 @@ describe('<Unit Test>', function () {
 
             it('should correctly identify the boundaries of a Mon-Fri date range', inject(function ($http) {
                 $scope.eventDate = new Date("2015-10-04");
+                $scope.symbol = "";
                 $scope.selectWeek();
-                expect($scope.startDate.getDay()).toEqual(0);
+                expect($scope.startDate.getDay()).toEqual(0);    // In order for the REST API calls to return data for Monday-Friday,
+                expect($scope.endDate.getDay()).toEqual(4);     // the date range in the URL parameters must have Sunday as its first date
+                expect($scope.prevWeekEndDate.getDay()).toEqual(4);   // and Thursday as its last date. This was verified via acceptance tests.
+
             }));
 
 

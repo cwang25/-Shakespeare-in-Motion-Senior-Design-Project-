@@ -51,7 +51,8 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
               $scope.startDate = new Date($scope.eventDate.getTime());
 
               $scope.endDate = new Date($scope.eventDate.getTime() + 86400000 * 5);
-              $scope.prev_week_end_date = new Date($scope.eventDate.getTime() - (86400000 * 3));
+              console.log($scope.endDate.getDay());
+              $scope.prevWeekEndDate = new Date($scope.eventDate.getTime() - (86400000 * 3));
 
 
           }
@@ -59,42 +60,42 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
 
               $scope.startDate = new Date($scope.eventDate.getTime() - 86400000);
               $scope.endDate = new Date($scope.eventDate.getTime() + 86400000 * 4);
-              $scope.prev_week_end_date = new Date($scope.eventDate.getTime() - (86400000 * 4));
+              $scope.prevWeekEndDate = new Date($scope.eventDate.getTime() - (86400000 * 4));
 
           }
           if ($scope.eventDate.getDay() == 2) {
 
               $scope.startDate = new Date($scope.eventDate.getTime() - 86400000 * 2);
               $scope.endDate = new Date($scope.eventDate.getTime() + 86400000 * 3);
-              $scope.prev_week_end_date = new Date($scope.eventDate.getTime() - (86400000 * 5));
+              $scope.prevWeekEndDate = new Date($scope.eventDate.getTime() - (86400000 * 5));
 
           }
           if ($scope.eventDate.getDay() == 3) {
 
               $scope.startDate = new Date($scope.eventDate.getTime() - 86400000 * 3);
               $scope.endDate = new Date($scope.eventDate.getTime() + 86400000 * 2);
-              $scope.prev_week_end_date = new Date($scope.eventDate.getTime() - (86400000 * 6));
+              $scope.prevWeekEndDate = new Date($scope.eventDate.getTime() - (86400000 * 6));
 
           }
           if ($scope.eventDate.getDay() == 4) {
 
               $scope.startDate = new Date($scope.eventDate.getTime() - 86400000 * 4);
               $scope.endDate = new Date($scope.eventDate.getTime() + 86400000);
-              $scope.prev_week_end_date = new Date($scope.eventDate.getTime() - (86400000 * 7));
+              $scope.prevWeekEndDate = new Date($scope.eventDate.getTime() - (86400000 * 7));
 
           }
           if ($scope.eventDate.getDay() == 5) {
 
               $scope.startDate = new Date($scope.eventDate.getTime() - 86400000 * 5);
               $scope.endDate = new Date($scope.eventDate.getTime());
-              $scope.prev_week_end_date = new Date($scope.eventDate.getTime() - (86400000 * 8));
+              $scope.prevWeekEndDate = new Date($scope.eventDate.getTime() - (86400000 * 8));
 
           }
           if ($scope.eventDate.getDay() == 6) {
 
               $scope.startDate = new Date($scope.eventDate.getTime() - 86400000 * 6);
               $scope.endDate = new Date($scope.eventDate.getTime());
-              $scope.prev_week_end_date = new Date($scope.eventDate.getTime() - (86400000 * 9));
+              $scope.prevWeekEndDate = new Date($scope.eventDate.getTime() - (86400000 * 9));
 
           }
 
@@ -130,7 +131,7 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
 
 
       $scope.runYQLAndAlchemyScripts = function () {
-          $http.get('/api/demo/analyze_week?startdate=' + $scope.prev_week_end_date.yyyymmdd() +
+          $http.get('/api/demo/analyze_week?startdate=' + $scope.prevWeekEndDate.yyyymmdd() +
               '&enddate=' + $scope.endDate.yyyymmdd()).success(function (response) {
               var data = response;
           });
@@ -222,7 +223,7 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
       }
 
       $scope.calculatePerformance = function() {
-          $http.get('/api/demo/quotes_by_date_range?startdate=' + $scope.prev_week_end_date + '&enddate=' + $scope.endDate + '&indexsymbol=' + $scope.symbol).success(function (response) {
+          $http.get('/api/demo/quotes_by_date_range?startdate=' + $scope.prevWeekEndDate + '&enddate=' + $scope.endDate + '&indexsymbol=' + $scope.symbol).success(function (response) {
             $scope.quotes = response;
             console.log($scope.quotes);
             var quotePrices = [];
