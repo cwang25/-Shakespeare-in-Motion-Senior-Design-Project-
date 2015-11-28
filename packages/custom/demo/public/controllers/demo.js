@@ -7,12 +7,7 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
     $scope.package = {
       name: 'demo'
     };
-    //$scope.$watch("newsarticles", function(){
-    //  $timeout(function() {
-    //    console.log('newsarticles updated.');
-    //    window.$(".articlebody").readmore();
-    //  });
-   // })
+
     $scope.getNewsArticles = function () {
       $http.get('/api/demo/newsbydaterange?startdate='+ $scope.quote.startDate + '&enddate=' + $scope.quote.endDate).success(function (response) {
         console.log("I got the data I requested");
@@ -124,6 +119,9 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
               if(!($scope.quote.symbol.localeCompare("") == 0)) {
                   $scope.keywordSummary();
               }
+              if(!($scope.quote.symbol.localeCompare("") == 0)) {
+                  $scope.textWordCloud();
+              }
           });
       };
 
@@ -198,12 +196,7 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
           $http.get('/api/demo/entitiesbydaterange?startdate='+ $scope.quote.startDate + '&enddate=' + $scope.quote.endDate).success(function(response) {
               $scope.entity = response;
               $('#entity_div').empty();
-              var positiveCount = 0;
-              var negativeCount = 0;
-              var neg_entity_list = [];
-              var pos_entity_list = [];
               var text_box = document.getElementById("entity_div");
-
 
               for(var i = 0; i < $scope.entity.length; i++) {
                 if($scope.entity[i].sentiment >= 0) {
@@ -222,6 +215,68 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
               }
           });
 
+      }
+
+     $scope.textWordCloud = function() {
+          $http.get('/api/demo/newsbydaterange?startdate='+ $scope.quote.startDate + '&enddate=' + $scope.quote.endDate).success(function(response) {
+              $scope.articles = response;
+              $('#cloud_div').empty();
+
+              var weekly_text = [];
+
+              for(var i = 0; i < $scope.articles.length; i++) {
+                  weekly_text = weekly_text.concat($scope.articles[i].content);
+              }
+              var weekly_keywords = [];
+
+              for(var i = 0; i < $scope.articles.length; i++) {
+                  weekly_keywords = weekly_keywords.concat($scope.articles[i].keywords);
+              }
+              var counts = _.countBy(weekly_keywords, _.identity);
+
+
+              var color = d3.scale.linear()
+                  .domain([0,1,2,3,4,5,6,10,15,20,100])
+                  .range(["#ddd", "#ccc", "#bbb", "#aaa", "#999", "#888", "#777", "#666", "#555", "#444", "#333", "#222"]);
+
+              var fill = d3.scale.category20();
+              //weekly_keywords = week_set.values();
+              
+              var dh = $("#cloud_div").height();
+              var dw = $("#cloud_div").width();
+
+              
+              d3.layout.cloud().size([dw, dh])
+                  .words(_.keys(counts).map(function(d) {
+                    return {text: d, size: counts[d] * 10};
+                  }))
+                  .rotate(0)
+                  .font("Impact")
+                  .fontSize(function(d) { return d.size; })
+                  .padding(1)
+                  .on("end", draw)
+                  .start();
+
+              function draw(words) {
+                d3.select("#cloud_div").append("svg")
+                    .attr("width", dw)
+                    .attr("height", dh)
+                  .append("g")
+                    .attr("transform", "translate("+Math.round((dw/2)).toString()+","+Math.round((dh/2)).toString()+")")
+                  .selectAll("text")
+                    .data(words)
+                  .enter().append("text")
+                    .style("font-size", function(d) { return d.size + "px"; })
+                    .style("font-family", "Impact")
+                    .style("fill", function(d, i) { return color(i); })
+                    .attr("text-anchor", "middle")
+                    .attr("transform", function(d) {
+                      return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                    })
+                    .text(function(d) { return d.text; });
+              }
+
+          });
       }
 
       $scope.calculatePerformance = function() {
@@ -525,6 +580,8 @@ angular.module('mean.demo').directive('datepicker', function() {
         }
     };
 });
+
+//modified from the github issues page of readmore about angularJS compatibility
 angular.module('mean.demo').directive('readmore', ['$timeout', function($timeout) {
         return {
             restrict: 'CA',
@@ -535,4 +592,3 @@ angular.module('mean.demo').directive('readmore', ['$timeout', function($timeout
             }
         };  
     }]);
-
