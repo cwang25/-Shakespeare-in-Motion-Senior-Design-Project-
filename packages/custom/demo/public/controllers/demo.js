@@ -228,19 +228,27 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
                   weekly_text = weekly_text.concat($scope.articles[i].content);
               }
               var weekly_keywords = [];
+              var top_words = [];
 
-              for(var i = 0; i < $scope.articles.length; i++) {
-                  weekly_keywords = weekly_keywords.concat($scope.articles[i].keywords);
+              for(var j = 0; j < $scope.articles.length; j++) {
+                  weekly_keywords = weekly_keywords.concat($scope.articles[j].keywords);
               }
               var counts = _.countBy(weekly_keywords, _.identity);
 
+              for(var k = 0; k < 30; k++){
+                if(weekly_keywords.length == 0){
+                  break;
+                }
+                var mx = _.max(weekly_keywords, function(keyword){ return counts[keyword]; });
+                top_words = top_words.concat(mx);
+                weekly_keywords = _.without(weekly_keywords, mx);
+              }
 
               var color = d3.scale.linear()
                   .domain([0,1,2,3,4,5,6,10,15,20,100])
                   .range(["#ddd", "#ccc", "#bbb", "#aaa", "#999", "#888", "#777", "#666", "#555", "#444", "#333", "#222"]);
 
               var fill = d3.scale.category20();
-              //weekly_keywords = week_set.values();
               
               var dh = $("#cloud_div").height();
               var dw = $("#cloud_div").width();
