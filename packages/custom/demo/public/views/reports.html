@@ -33,7 +33,7 @@
                         <div class="form-group">
                             <div class="col-xs-2">
                                 <label for="sym">Symbol</label>
-                                <input class="form-control" ng-model="quote.symbol" type="text" id="sym">
+                                <input class="form-control" ng-model="symbol" type="text" id="sym">
                             </div>
                             <div class="col-xs-3">
                                 <label for="chartSelect">Chart Type</label>
@@ -53,7 +53,11 @@
 
 
                                 <p class="input-group">
-                                    <input type="text" id = "dateSelect" class="form-control" uib-datepicker-popup="{{format}}" ng-model="eventdate" is-open="status.openedDatePicker" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" data-date-format="dd-mm-yyyy">
+                                    <input type="text" id="dateSelect" class="form-control"
+                                           uib-datepicker-popup="{{format}}" ng-model="eventDate"
+                                           is-open="status.openedDatePicker" min-date="minDate" max-date="maxDate"
+                                           datepicker-options="dateOptions" date-disabled="disabled(date, mode)"
+                                           ng-required="true" close-text="Close" data-date-format="dd-mm-yyyy">
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="openDatePicker($event)"><i class="glyphicon glyphicon-calendar"></i></button>
               </span>
@@ -102,7 +106,7 @@
             <td><p class="row">
                 <div class="col-md-3">
                 <p class="input-group">
-                    <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="eventdate" is-open="status.openedDatePicker" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" data-date-format="dd-mm-yyyy">
+                    <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="eventDate" is-open="status.openedDatePicker" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" data-date-format="dd-mm-yyyy">
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="openDatePicker($event)"><i class="glyphicon glyphicon-calendar"></i></button>
               </span>
@@ -118,7 +122,7 @@
         <div class="col-md-3">
             <p class="input-group">
 
-                <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="status.openedDatePicker" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-model="eventdate" />
+                <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="status.openedDatePicker" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-model="eventDate" />
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="openDatePicker($event)"><i class="glyphicon glyphicon-calendar"></i></button>
               </span>

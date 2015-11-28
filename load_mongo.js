@@ -1,4 +1,4 @@
-db.quotes.remove({});
+/**db.quotes.remove({});
 
 db.quotes.insert({
     high : 89.019997,
@@ -274,6 +274,8 @@ db.quotes.insert({
     qsymbol : '^DJC',
     open : 85.989998
 });
+
+ */
 
 
 
