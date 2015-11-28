@@ -21,9 +21,6 @@ module.exports = function(Demo, app, auth, database) {
     entities.entitiesintimerange(req, res, next);
   });
 
-
-
-
   var newsarticles = require('../controllers/newsArticle')(Demo);
   //news article rest api
   app.route('/api/demo/newsarticles')

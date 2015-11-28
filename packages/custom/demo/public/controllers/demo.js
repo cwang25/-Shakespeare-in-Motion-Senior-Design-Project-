@@ -7,19 +7,11 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
     $scope.package = {
       name: 'demo'
     };
-    //$scope.$watch("newsarticles", function(){
-    //  $timeout(function() {
-    //    console.log('newsarticles updated.');
-    //    window.$(".articlebody").readmore();
-    //  });
-   // })
-    $scope.getNewsArticles = function () {
 
-        $http.get('/api/demo/newsbydaterange?startdate=' + $scope.startDate + '&enddate=' + $scope.endDate).success(function (response) {
-            $scope.testNumber = 4;
+    $scope.getNewsArticles = function () {
+      $http.get('/api/demo/newsbydaterange?startdate='+ $scope.quote.startDate + '&enddate=' + $scope.quote.endDate).success(function (response) {
         console.log("I got the data I requested");
         $scope.newsarticles = response;
-
         $scope.news = "";
       });
 
@@ -31,7 +23,7 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
       $scope.switchChartType = function (type) {
           console.log(type);
          $scope.chartType = type;
-          if (!($scope.symbol.localeCompare("") == 0)) {
+          if(!($scope.quote.symbol.localeCompare("") == 0)) {
               $scope.showGraph();
           }
       };
@@ -45,57 +37,54 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
 
       $scope.selectWeek = function() {
 
-          if ($scope.eventDate.getDay() == 0) {
+          if($scope.eventdate.getDay() == 0) {
 
 
-              $scope.startDate = new Date($scope.eventDate.getTime());
-
-              $scope.endDate = new Date($scope.eventDate.getTime() + 86400000 * 5);
-              console.log($scope.endDate.getDay());
-              $scope.prevWeekEndDate = new Date($scope.eventDate.getTime() - (86400000 * 3));
-
+              $scope.quote.startDate = new Date($scope.eventdate.getTime());
+              $scope.quote.endDate = new Date($scope.eventdate.getTime() + 86400000 * 5);
+              $scope.quote.prev_week_end_date = new Date($scope.eventdate.getTime() - (86400000 * 3));
 
           }
-          if ($scope.eventDate.getDay() == 1) {
+          if($scope.eventdate.getDay() == 1) {
 
-              $scope.startDate = new Date($scope.eventDate.getTime() - 86400000);
-              $scope.endDate = new Date($scope.eventDate.getTime() + 86400000 * 4);
-              $scope.prevWeekEndDate = new Date($scope.eventDate.getTime() - (86400000 * 4));
-
-          }
-          if ($scope.eventDate.getDay() == 2) {
-
-              $scope.startDate = new Date($scope.eventDate.getTime() - 86400000 * 2);
-              $scope.endDate = new Date($scope.eventDate.getTime() + 86400000 * 3);
-              $scope.prevWeekEndDate = new Date($scope.eventDate.getTime() - (86400000 * 5));
+              $scope.quote.startDate = new Date($scope.eventdate.getTime() - 86400000);
+              $scope.quote.endDate = new Date($scope.eventdate.getTime() + 86400000 * 4);
+              $scope.quote.prev_week_end_date = new Date($scope.eventdate.getTime() - (86400000 * 4));
 
           }
-          if ($scope.eventDate.getDay() == 3) {
+          if($scope.eventdate.getDay() == 2) {
 
-              $scope.startDate = new Date($scope.eventDate.getTime() - 86400000 * 3);
-              $scope.endDate = new Date($scope.eventDate.getTime() + 86400000 * 2);
-              $scope.prevWeekEndDate = new Date($scope.eventDate.getTime() - (86400000 * 6));
-
-          }
-          if ($scope.eventDate.getDay() == 4) {
-
-              $scope.startDate = new Date($scope.eventDate.getTime() - 86400000 * 4);
-              $scope.endDate = new Date($scope.eventDate.getTime() + 86400000);
-              $scope.prevWeekEndDate = new Date($scope.eventDate.getTime() - (86400000 * 7));
+              $scope.quote.startDate = new Date($scope.eventdate.getTime() - 86400000 * 2);
+              $scope.quote.endDate = new Date($scope.eventdate.getTime() + 86400000 * 3);
+              $scope.quote.prev_week_end_date = new Date( $scope.eventdate.getTime() - (86400000 * 5));
 
           }
-          if ($scope.eventDate.getDay() == 5) {
+          if($scope.eventdate.getDay() == 3) {
 
-              $scope.startDate = new Date($scope.eventDate.getTime() - 86400000 * 5);
-              $scope.endDate = new Date($scope.eventDate.getTime());
-              $scope.prevWeekEndDate = new Date($scope.eventDate.getTime() - (86400000 * 8));
+              $scope.quote.startDate = new Date($scope.eventdate.getTime() - 86400000 * 3);
+              $scope.quote.endDate = new Date($scope.eventdate.getTime() + 86400000 * 2);
+              $scope.quote.prev_week_end_date = new Date($scope.eventdate.getTime() - (86400000 * 6));
 
           }
-          if ($scope.eventDate.getDay() == 6) {
+          if($scope.eventdate.getDay() == 4) {
 
-              $scope.startDate = new Date($scope.eventDate.getTime() - 86400000 * 6);
-              $scope.endDate = new Date($scope.eventDate.getTime());
-              $scope.prevWeekEndDate = new Date($scope.eventDate.getTime() - (86400000 * 9));
+              $scope.quote.startDate = new Date($scope.eventdate.getTime() - 86400000 * 4);
+              $scope.quote.endDate = new Date($scope.eventdate.getTime() + 86400000);
+              $scope.quote.prev_week_end_date = new Date($scope.eventdate.getTime() - (86400000 * 7));
+
+          }
+          if($scope.eventdate.getDay() == 5) {
+
+              $scope.quote.startDate = new Date($scope.eventdate.getTime() - 86400000 * 5);
+              $scope.quote.endDate = new Date($scope.eventdate.getTime());
+              $scope.quote.prev_week_end_date = new Date( $scope.eventdate.getTime() - (86400000 * 8));
+
+          }
+          if($scope.eventdate.getDay() == 6) {
+
+              $scope.quote.startDate = new Date($scope.eventdate.getTime() - 86400000 * 6);
+              $scope.quote.endDate = new Date($scope.eventdate.getTime());
+              $scope.quote.prev_week_end_date = new Date($scope.eventdate.getTime() - (86400000 * 9));
 
           }
 
@@ -107,39 +96,50 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
           };
 
 
-          if (!($scope.symbol.localeCompare("") == 0)) {
+
+
+          $http.get('/api/demo/analyze_week?startdate='+$scope.quote.prev_week_end_date.yyyymmdd() + '&enddate=' + $scope.quote.endDate.yyyymmdd()).success(function(response) {
+               var data = response;
+              if(!($scope.quote.symbol.localeCompare("") == 0)) {
                   $scope.showGraph();
               }
 
-          if (!($scope.symbol.localeCompare("") == 0)) {
+              if(!($scope.quote.symbol.localeCompare("") == 0)) {
                   $scope.calculatePerformance();
               }
-          if (!($scope.symbol.localeCompare("") == 0)) {
+              if(!($scope.quote.symbol.localeCompare("") == 0)) {
                   $scope.sentimentSummary();
               }
-          if (!($scope.symbol.localeCompare("") == 0)) {
+              if(!($scope.quote.symbol.localeCompare("") == 0)) {
                   $scope.getNewsArticles();
               }
-          if (!($scope.symbol.localeCompare("") == 0)) {
+              if(!($scope.quote.symbol.localeCompare("") == 0)) {
                   $scope.entitySummary();
               }
-          if (!($scope.symbol.localeCompare("") == 0)) {
+              if(!($scope.quote.symbol.localeCompare("") == 0)) {
                   $scope.keywordSummary();
               }
-
-      };
-
-
-      $scope.runYQLAndAlchemyScripts = function () {
-          $http.get('/api/demo/analyze_week?startdate=' + $scope.prevWeekEndDate.yyyymmdd() +
-              '&enddate=' + $scope.endDate.yyyymmdd()).success(function (response) {
-              var data = response;
+              if(!($scope.quote.symbol.localeCompare("") == 0)) {
+                  $scope.textWordCloud();
+              }
           });
-
       };
+
+
+
+      $scope.addNews = function () {
+      console.log($scope.news);
+      if ($scope.news.newsDate === undefined || $scope.news.newsDate.length < 1) {
+        delete $scope.news["newsDate"];
+      }
+      $http.post('/api/demo/newsarticles', $scope.news).success(function (response) {
+        console.log(response);
+        refresh();
+      });
+    };
 
       $scope.sentimentSummary = function() {
-          $http.get('/api/demo/newsbydaterange?startdate=' + $scope.startDate + '&enddate=' + $scope.endDate).success(function (response) {
+          $http.get('/api/demo/newsbydaterange?startdate='+ $scope.quote.startDate + '&enddate=' + $scope.quote.endDate).success(function(response) {
               $scope.articles = response;
               var positiveCount = 0;
               var negativeCount = 0;
@@ -157,7 +157,7 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
       }
 
       $scope.keywordSummary = function() {
-          $http.get('/api/demo/newsbydaterange?startdate=' + $scope.startDate + '&enddate=' + $scope.endDate).success(function (response) {
+          $http.get('/api/demo/newsbydaterange?startdate='+ $scope.quote.startDate + '&enddate=' + $scope.quote.endDate).success(function(response) {
               $scope.articles = response;
               $('#key_div').empty();
 
@@ -185,23 +185,18 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
                 new_row.appendChild(words_dt)
                 new_row.appendChild(values_dt)
                 text_box.appendChild(new_row)
-
-
+                
+                  
               }
 
           });
       }
 
       $scope.entitySummary = function() {
-          $http.get('/api/demo/entitiesbydaterange?startdate=' + $scope.startDate + '&enddate=' + $scope.endDate).success(function (response) {
+          $http.get('/api/demo/entitiesbydaterange?startdate='+ $scope.quote.startDate + '&enddate=' + $scope.quote.endDate).success(function(response) {
               $scope.entity = response;
               $('#entity_div').empty();
-              var positiveCount = 0;
-              var negativeCount = 0;
-              var neg_entity_list = [];
-              var pos_entity_list = [];
               var text_box = document.getElementById("entity_div");
-
 
               for(var i = 0; i < $scope.entity.length; i++) {
                 if($scope.entity[i].sentiment >= 0) {
@@ -222,8 +217,70 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
 
       }
 
+     $scope.textWordCloud = function() {
+          $http.get('/api/demo/newsbydaterange?startdate='+ $scope.quote.startDate + '&enddate=' + $scope.quote.endDate).success(function(response) {
+              $scope.articles = response;
+              $('#cloud_div').empty();
+
+              var weekly_text = [];
+
+              for(var i = 0; i < $scope.articles.length; i++) {
+                  weekly_text = weekly_text.concat($scope.articles[i].content);
+              }
+              var weekly_keywords = [];
+
+              for(var i = 0; i < $scope.articles.length; i++) {
+                  weekly_keywords = weekly_keywords.concat($scope.articles[i].keywords);
+              }
+              var counts = _.countBy(weekly_keywords, _.identity);
+
+
+              var color = d3.scale.linear()
+                  .domain([0,1,2,3,4,5,6,10,15,20,100])
+                  .range(["#ddd", "#ccc", "#bbb", "#aaa", "#999", "#888", "#777", "#666", "#555", "#444", "#333", "#222"]);
+
+              var fill = d3.scale.category20();
+              //weekly_keywords = week_set.values();
+              
+              var dh = $("#cloud_div").height();
+              var dw = $("#cloud_div").width();
+
+              
+              d3.layout.cloud().size([dw, dh])
+                  .words(_.keys(counts).map(function(d) {
+                    return {text: d, size: counts[d] * 10};
+                  }))
+                  .rotate(0)
+                  .font("Impact")
+                  .fontSize(function(d) { return d.size; })
+                  .padding(1)
+                  .on("end", draw)
+                  .start();
+
+              function draw(words) {
+                d3.select("#cloud_div").append("svg")
+                    .attr("width", dw)
+                    .attr("height", dh)
+                  .append("g")
+                    .attr("transform", "translate("+Math.round((dw/2)).toString()+","+Math.round((dh/2)).toString()+")")
+                  .selectAll("text")
+                    .data(words)
+                  .enter().append("text")
+                    .style("font-size", function(d) { return d.size + "px"; })
+                    .style("font-family", "Impact")
+                    .style("fill", function(d, i) { return color(i); })
+                    .attr("text-anchor", "middle")
+                    .attr("transform", function(d) {
+                      return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                    })
+                    .text(function(d) { return d.text; });
+              }
+
+          });
+      }
+
       $scope.calculatePerformance = function() {
-          $http.get('/api/demo/quotes_by_date_range?startdate=' + $scope.prevWeekEndDate + '&enddate=' + $scope.endDate + '&indexsymbol=' + $scope.symbol).success(function (response) {
+        $http.get('/api/demo/quotes_by_date_range?startdate=' + $scope.quote.prev_week_end_date + '&enddate=' + $scope.quote.endDate + '&indexsymbol=' + $scope.quote.symbol).success(function (response) {
             $scope.quotes = response;
             console.log($scope.quotes);
             var quotePrices = [];
@@ -244,6 +301,14 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
 
         });
     }
+
+    $scope.removeNews = function (id) {
+
+      $http.delete('/api/demo/newsarticles/' + id).success(function (response) {
+        console.log(response);
+        refresh();
+      });
+    };
 
     $scope.chart = null;
 
@@ -268,7 +333,7 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
                 $scope.chart = null;
             }
             //d3.select(".body").selectAll("svg").remove();
-            $http.get('/api/demo/quotes_by_date_range?startdate=' + $scope.startDate + '&enddate=' + $scope.endDate + '&indexsymbol=' + $scope.symbol).success(function (response) {
+            $http.get('/api/demo/quotes_by_date_range?startdate=' + $scope.quote.startDate + '&enddate=' + $scope.quote.endDate + '&indexsymbol=' + $scope.quote.symbol).success(function (response) {
                 console.log("I got the quotes I requested ");
 
                 $scope.quotes = response;
@@ -427,7 +492,7 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
         function showLineChart() {
             d3.select("svg").remove();
             $scope.config = {};
-            $http.get('/api/demo/quotes_by_date_range?startdate=' + $scope.startDate + '&enddate=' + $scope.endDate + '&indexsymbol=' + $scope.symbol).success(function (response) {
+            $http.get('/api/demo/quotes_by_date_range?startdate=' + $scope.quote.startDate + '&enddate=' + $scope.quote.endDate + '&indexsymbol=' + $scope.quote.symbol).success(function (response) {
                 console.log("I got the quotes I requested ");
 
 
@@ -437,7 +502,7 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
                 quoteDates.push('Dates');
 
                 var quotePrices = [];
-                quotePrices.push($scope.symbol);
+                quotePrices.push($scope.quote.symbol);
 
                 angular.forEach($scope.quotes, function (quote) {
                     quoteDates.push(new Date(quote.qdate));
@@ -515,6 +580,8 @@ angular.module('mean.demo').directive('datepicker', function() {
         }
     };
 });
+
+//modified from the github issues page of readmore about angularJS compatibility
 angular.module('mean.demo').directive('readmore', ['$timeout', function($timeout) {
         return {
             restrict: 'CA',
@@ -525,4 +592,3 @@ angular.module('mean.demo').directive('readmore', ['$timeout', function($timeout
             }
         };  
     }]);
-
