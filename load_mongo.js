@@ -1,4 +1,4 @@
-/**db.quotes.remove({});
+db.quotes.remove({});
 
 db.quotes.insert({
     high : 89.019997,
@@ -55,7 +55,7 @@ db.quotes.insert({
 
 });
 
-db.quotes.insert({
+/**db.quotes.insert({
     high : 91.68,
     volume : 0,
     low : 90.040001,
@@ -109,6 +109,8 @@ db.quotes.insert({
     open : 89.949997
 
 });
+
+ */
 
 db.quotes.insert({
     high : 89.629997,
@@ -275,7 +277,6 @@ db.quotes.insert({
     open : 85.989998
 });
 
- */
 
 
 
@@ -312,7 +313,7 @@ db.newsarticles.insert({
 db.newsarticles.insert({
     title : "Copper Prices Rise",
     content: "Increased Demand",
-    newsDate : ISODate('2015-10-03T00:00:00Z'),
+    newsDate: ISODate('2015-10-04T00:00:00Z'),
     sentiment : 0.14
 });
 
@@ -321,6 +322,31 @@ db.newsarticles.insert({
     content: "Silver followed gold lower",
     newsDate : ISODate('2015-10-11T00:00:00Z'),
     sentiment : -0.2
+});
+
+db.newsarticles.insert({
+    title: "Silver Prices Fall",
+    content: "Silver followed gold lower",
+    newsDate: ISODate('2015-10-11T00:00:00Z'),
+    sentiment: -0.2
+});
+
+db.entities.remove({});
+
+db.entities.insert({
+    entityDate: ISODate('2015-10-05T00:00:00Z'),
+    text: "Gold",
+    count: 2,
+    sentiment: 0.5
+
+});
+
+db.entities.insert({
+    entityDate: ISODate('2015-10-07T00:00:00Z'),
+    text: "Oil",
+    count: 1,
+    sentiment: -0.25
+
 });
 
 
