@@ -31,19 +31,6 @@ describe('<Unit Test>', function () {
             });
 
 
-            it('should return 4 news articles', inject(function ($http) {
-
-                $scope.startDate = new Date("2015-10-05"); //1443931200000
-                $scope.endDate = new Date("2015-10-09"); //1443931200000 + 86400000 * 5
-                $httpBackend.whenGET('/api/demo/newsbydaterange?startdate=' + $scope.startDate + '&enddate=' +
-                    $scope.endDate).respond([{}, {}, {}, {}]);
-                $scope.getNewsArticles();
-                $httpBackend.flush();
-                expect($scope.newsarticles.length).toEqual(4);
-
-
-            }));
-
             it('should set chart type to Candlestick', inject(function ($http) {
                 expect($scope.chartTypes[0]).toEqual("Line");
                 expect($scope.chartTypes[1]).toEqual("Candlestick");
@@ -54,13 +41,34 @@ describe('<Unit Test>', function () {
 
             }));
 
-            it('should correctly identify the boundaries of a Mon-Fri date range', inject(function ($http) {
-                $scope.eventDate = new Date("2015-10-04");
-                $scope.symbol = "";
-                $scope.selectWeek();
-                expect($scope.startDate.getDay()).toEqual(0);    // In order for the REST API calls to return data for Monday-Friday,
-                expect($scope.endDate.getDay()).toEqual(4);     // the date range in the URL parameters must have Sunday as its first date
-                expect($scope.prevWeekEndDate.getDay()).toEqual(4);   // and Thursday as its last date. This was verified via acceptance tests.
+            it('should get appropriate data for week 10/05/2015 - 10-09-2015', inject(function ($http) {
+                $scope.eventDate = new Date("2015-10-07");
+                $scope.symbol = "^DJC";
+                $httpBackend.whenGET('/api/demo/weeksum_by_date?date=' + $scope.endDate).respond(function (weeksum) {
+                    $httpBackend.whenGET('/api/demo/quotes_by_date_range?startdate=' + $scope.startDate +
+                        '&enddate=' + $scope.endDate + '&indexsymbol=' + $scope.symbol).respond(function (quotes) {
+                        $httpBackend.whenGET('/api/demo/newsbydaterange?startdate=' + $scope.startDate +
+                            '&enddate=' + $scope.endDate).respond(function (newsarticles) {
+                            $httpBackend.whenGET('/api/demo/entitiesbydaterange?startdate=' + $scope.startDate +
+                                '&enddate=' + $scope.endDate).respond(function (entities) {
+                                $scope.getData();
+                                $httpBackend.flush();
+                                $httpBackend.flush();
+                                expect($scope.quotes.length).toEqual(5);
+                                $httpBackend.flush();
+                                expect($scope.articles.length).toEqual(4);
+                                $httpBackend.flush();
+                                expect($scope.entity.length).toEqual(2);
+
+
+                            });
+                        });
+                    });
+                });
+
+
+
+
 
             }));
 

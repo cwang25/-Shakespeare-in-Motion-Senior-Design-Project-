@@ -12,511 +12,570 @@
  */
 !function(t){"function"==typeof define&&define.amd?define(["jquery"],t):"object"==typeof exports?module.exports=t(require("jquery")):t(jQuery)}(function(t){"use strict";function e(t,e,i){var a;return function(){var n=this,o=arguments,r=function(){a=null,i||t.apply(n,o)},s=i&&!a;clearTimeout(a),a=setTimeout(r,e),s&&t.apply(n,o)}}function i(t){var e=++h;return String(null==t?"rmjs-":t)+e}function a(t){var e=t.clone().css({height:"auto",width:t.width(),maxHeight:"none",overflow:"hidden"}).insertAfter(t),i=e.outerHeight(),a=parseInt(e.css({maxHeight:""}).css("max-height").replace(/[^-\d\.]/g,""),10),n=t.data("defaultHeight");e.remove();var o=a||t.data("collapsedHeight")||n;t.data({expandedHeight:i,maxHeight:a,collapsedHeight:o}).css({maxHeight:"none"})}function n(t){if(!d[t.selector]){var e=" ";t.embedCSS&&""!==t.blockCSS&&(e+=t.selector+" + [data-readmore-toggle], "+t.selector+"[data-readmore]{"+t.blockCSS+"}"),e+=t.selector+"[data-readmore]{transition: height "+t.speed+"ms;overflow: hidden;}",function(t,e){var i=t.createElement("style");i.type="text/css",i.styleSheet?i.styleSheet.cssText=e:i.appendChild(t.createTextNode(e)),t.getElementsByTagName("head")[0].appendChild(i)}(document,e),d[t.selector]=!0}}function o(e,i){this.element=e,this.options=t.extend({},s,i),n(this.options),this._defaults=s,this._name=r,this.init(),window.addEventListener?(window.addEventListener("load",l),window.addEventListener("resize",l)):(window.attachEvent("load",l),window.attachEvent("resize",l))}var r="readmore",s={speed:100,collapsedHeight:200,heightMargin:16,moreLink:'<a href="#">Read More</a>',lessLink:'<a href="#">Close</a>',embedCSS:!0,blockCSS:"display: block; width: 100%;",startOpen:!1,beforeToggle:function(){},afterToggle:function(){}},d={},h=0,l=e(function(){t("[data-readmore]").each(function(){var e=t(this),i="true"===e.attr("aria-expanded");a(e),e.css({height:e.data(i?"expandedHeight":"collapsedHeight")})})},100);o.prototype={init:function(){var e=t(this.element);e.data({defaultHeight:this.options.collapsedHeight,heightMargin:this.options.heightMargin}),a(e);var n=e.data("collapsedHeight"),o=e.data("heightMargin");if(e.outerHeight(!0)<=n+o)return!0;var r=e.attr("id")||i(),s=this.options.startOpen?this.options.lessLink:this.options.moreLink;e.attr({"data-readmore":"","aria-expanded":this.options.startOpen,id:r}),e.after(t(s).on("click",function(t){return function(i){t.toggle(this,e[0],i)}}(this)).attr({"data-readmore-toggle":"","aria-controls":r})),this.options.startOpen||e.css({height:n})},toggle:function(e,i,a){a&&a.preventDefault(),e||(e=t('[aria-controls="'+_this.element.id+'"]')[0]),i||(i=_this.element);var n=t(i),o="",r="",s=!1,d=n.data("collapsedHeight");n.height()<=d?(o=n.data("expandedHeight")+"px",r="lessLink",s=!0):(o=d,r="moreLink"),this.options.beforeToggle(e,n,!s),n.css({height:o}),n.on("transitionend",function(i){return function(){i.options.afterToggle(e,n,s),t(this).attr({"aria-expanded":s}).off("transitionend")}}(this)),t(e).replaceWith(t(this.options[r]).on("click",function(t){return function(e){t.toggle(this,i,e)}}(this)).attr({"data-readmore-toggle":"","aria-controls":n.attr("id")}))},destroy:function(){t(this.element).each(function(){var e=t(this);e.attr({"data-readmore":null,"aria-expanded":null}).css({maxHeight:"",height:""}).next("[data-readmore-toggle]").remove(),e.removeData()})}},t.fn.readmore=function(e){var i=arguments,a=this.selector;return e=e||{},"object"==typeof e?this.each(function(){if(t.data(this,"plugin_"+r)){var i=t.data(this,"plugin_"+r);i.destroy.apply(i)}e.selector=a,t.data(this,"plugin_"+r,new o(this,e))}):"string"==typeof e&&"_"!==e[0]&&"init"!==e?this.each(function(){var a=t.data(this,"plugin_"+r);a instanceof o&&"function"==typeof a[e]&&a[e].apply(a,Array.prototype.slice.call(i,1))}):void 0}});
     </script>
-    <script>(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g=(g.d3||(g.d3 = {}));g=(g.layout||(g.layout = {}));g.cloud = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+    <script>(function (f) {
+      if (typeof exports === "object" && typeof module !== "undefined") {
+        module.exports = f()
+      } else if (typeof define === "function" && define.amd) {
+        define([], f)
+      } else {
+        var g;
+        if (typeof window !== "undefined") {
+          g = window
+        } else if (typeof global !== "undefined") {
+          g = global
+        } else if (typeof self !== "undefined") {
+          g = self
+        } else {
+          g = this
+        }
+        g = (g.d3 || (g.d3 = {}));
+        g = (g.layout || (g.layout = {}));
+        g.cloud = f()
+      }
+    })(function () {
+      var define, module, exports;
+      return (function e(t, n, r) {
+        function s(o, u) {
+          if (!n[o]) {
+            if (!t[o]) {
+              var a = typeof require == "function" && require;
+              if (!u && a)return a(o, !0);
+              if (i)return i(o, !0);
+              var f = new Error("Cannot find module '" + o + "'");
+              throw f.code = "MODULE_NOT_FOUND", f
+            }
+            var l = n[o] = {exports: {}};
+            t[o][0].call(l.exports, function (e) {
+              var n = t[o][1][e];
+              return s(n ? n : e)
+            }, l, l.exports, e, t, n, r)
+          }
+          return n[o].exports
+        }
+
+        var i = typeof require == "function" && require;
+        for (var o = 0; o < r.length; o++)s(r[o]);
+        return s
+      })({
+        1: [function (require, module, exports) {
 // Word cloud layout by Jason Davies, https://www.jasondavies.com/wordcloud/
 // Algorithm due to Jonathan Feinberg, http://static.mrfeinberg.com/bv_ch03.pdf
 
-var dispatch = require("d3-dispatch").dispatch;
+          var dispatch = require("d3-dispatch").dispatch;
 
-var cloudRadians = Math.PI / 180,
-    cw = 1 << 11 >> 5,
-    ch = 1 << 11;
+          var cloudRadians = Math.PI / 180,
+                  cw = 1 << 11 >> 5,
+                  ch = 1 << 11;
 
-module.exports = function() {
-  var size = [256, 256],
-      text = cloudText,
-      font = cloudFont,
-      fontSize = cloudFontSize,
-      fontStyle = cloudFontNormal,
-      fontWeight = cloudFontNormal,
-      rotate = cloudRotate,
-      padding = cloudPadding,
-      spiral = archimedeanSpiral,
-      words = [],
-      timeInterval = Infinity,
-      event = dispatch("word", "end"),
-      timer = null,
-      random = Math.random,
-      cloud = {},
-      canvas = cloudCanvas;
+          module.exports = function () {
+            var size = [256, 256],
+                    text = cloudText,
+                    font = cloudFont,
+                    fontSize = cloudFontSize,
+                    fontStyle = cloudFontNormal,
+                    fontWeight = cloudFontNormal,
+                    rotate = cloudRotate,
+                    padding = cloudPadding,
+                    spiral = archimedeanSpiral,
+                    words = [],
+                    timeInterval = Infinity,
+                    event = dispatch("word", "end"),
+                    timer = null,
+                    random = Math.random,
+                    cloud = {},
+                    canvas = cloudCanvas;
 
-  cloud.canvas = function(_) {
-    return arguments.length ? (canvas = functor(_), cloud) : canvas;
-  };
+            cloud.canvas = function (_) {
+              return arguments.length ? (canvas = functor(_), cloud) : canvas;
+            };
 
-  cloud.start = function() {
-    var contextAndRatio = getContext(canvas()),
-        board = zeroArray((size[0] >> 5) * size[1]),
-        bounds = null,
-        n = words.length,
-        i = -1,
-        tags = [],
-        data = words.map(function(d, i) {
-          d.text = text.call(this, d, i);
-          d.font = font.call(this, d, i);
-          d.style = fontStyle.call(this, d, i);
-          d.weight = fontWeight.call(this, d, i);
-          d.rotate = rotate.call(this, d, i);
-          d.size = ~~fontSize.call(this, d, i);
-          d.padding = padding.call(this, d, i);
-          return d;
-        }).sort(function(a, b) { return b.size - a.size; });
+            cloud.start = function () {
+              var contextAndRatio = getContext(canvas()),
+                      board = zeroArray((size[0] >> 5) * size[1]),
+                      bounds = null,
+                      n = words.length,
+                      i = -1,
+                      tags = [],
+                      data = words.map(function (d, i) {
+                        d.text = text.call(this, d, i);
+                        d.font = font.call(this, d, i);
+                        d.style = fontStyle.call(this, d, i);
+                        d.weight = fontWeight.call(this, d, i);
+                        d.rotate = rotate.call(this, d, i);
+                        d.size = ~~fontSize.call(this, d, i);
+                        d.padding = padding.call(this, d, i);
+                        return d;
+                      }).sort(function (a, b) {
+                        return b.size - a.size;
+                      });
 
-    if (timer) clearInterval(timer);
-    timer = setInterval(step, 0);
-    step();
+              if (timer) clearInterval(timer);
+              timer = setInterval(step, 0);
+              step();
 
-    return cloud;
+              return cloud;
 
-    function step() {
-      var start = Date.now();
-      while (Date.now() - start < timeInterval && ++i < n && timer) {
-        var d = data[i];
-        d.x = (size[0] * (random() + .5)) >> 1;
-        d.y = (size[1] * (random() + .5)) >> 1;
-        cloudSprite(contextAndRatio, d, data, i);
-        if (d.hasText && place(board, d, bounds)) {
-          tags.push(d);
-          event.word(d);
-          if (bounds) cloudBounds(bounds, d);
-          else bounds = [{x: d.x + d.x0, y: d.y + d.y0}, {x: d.x + d.x1, y: d.y + d.y1}];
-          // Temporary hack
-          d.x -= size[0] >> 1;
-          d.y -= size[1] >> 1;
-        }
-      }
-      if (i >= n) {
-        cloud.stop();
-        event.end(tags, bounds);
-      }
-    }
-  }
-
-  cloud.stop = function() {
-    if (timer) {
-      clearInterval(timer);
-      timer = null;
-    }
-    return cloud;
-  };
-
-  function getContext(canvas) {
-    canvas.width = canvas.height = 1;
-    var ratio = Math.sqrt(canvas.getContext("2d").getImageData(0, 0, 1, 1).data.length >> 2);
-    canvas.width = (cw << 5) / ratio;
-    canvas.height = ch / ratio;
-
-    var context = canvas.getContext("2d");
-    context.fillStyle = context.strokeStyle = "red";
-    context.textAlign = "center";
-
-    return {context: context, ratio: ratio};
-  }
-
-  function place(board, tag, bounds) {
-    var perimeter = [{x: 0, y: 0}, {x: size[0], y: size[1]}],
-        startX = tag.x,
-        startY = tag.y,
-        maxDelta = Math.sqrt(size[0] * size[0] + size[1] * size[1]),
-        s = spiral(size),
-        dt = random() < .5 ? 1 : -1,
-        t = -dt,
-        dxdy,
-        dx,
-        dy;
-
-    while (dxdy = s(t += dt)) {
-      dx = ~~dxdy[0];
-      dy = ~~dxdy[1];
-
-      if (Math.min(Math.abs(dx), Math.abs(dy)) >= maxDelta) break;
-
-      tag.x = startX + dx;
-      tag.y = startY + dy;
-
-      if (tag.x + tag.x0 < 0 || tag.y + tag.y0 < 0 ||
-          tag.x + tag.x1 > size[0] || tag.y + tag.y1 > size[1]) continue;
-      // TODO only check for collisions within current bounds.
-      if (!bounds || !cloudCollide(tag, board, size[0])) {
-        if (!bounds || collideRects(tag, bounds)) {
-          var sprite = tag.sprite,
-              w = tag.width >> 5,
-              sw = size[0] >> 5,
-              lx = tag.x - (w << 4),
-              sx = lx & 0x7f,
-              msx = 32 - sx,
-              h = tag.y1 - tag.y0,
-              x = (tag.y + tag.y0) * sw + (lx >> 5),
-              last;
-          for (var j = 0; j < h; j++) {
-            last = 0;
-            for (var i = 0; i <= w; i++) {
-              board[x + i] |= (last << msx) | (i < w ? (last = sprite[j * w + i]) >>> sx : 0);
+              function step() {
+                var start = Date.now();
+                while (Date.now() - start < timeInterval && ++i < n && timer) {
+                  var d = data[i];
+                  d.x = (size[0] * (random() + .5)) >> 1;
+                  d.y = (size[1] * (random() + .5)) >> 1;
+                  cloudSprite(contextAndRatio, d, data, i);
+                  if (d.hasText && place(board, d, bounds)) {
+                    tags.push(d);
+                    event.word(d);
+                    if (bounds) cloudBounds(bounds, d);
+                    else bounds = [{x: d.x + d.x0, y: d.y + d.y0}, {x: d.x + d.x1, y: d.y + d.y1}];
+                    // Temporary hack
+                    d.x -= size[0] >> 1;
+                    d.y -= size[1] >> 1;
+                  }
+                }
+                if (i >= n) {
+                  cloud.stop();
+                  event.end(tags, bounds);
+                }
+              }
             }
-            x += sw;
+
+            cloud.stop = function () {
+              if (timer) {
+                clearInterval(timer);
+                timer = null;
+              }
+              return cloud;
+            };
+
+            function getContext(canvas) {
+              canvas.width = canvas.height = 1;
+              var ratio = Math.sqrt(canvas.getContext("2d").getImageData(0, 0, 1, 1).data.length >> 2);
+              canvas.width = (cw << 5) / ratio;
+              canvas.height = ch / ratio;
+
+              var context = canvas.getContext("2d");
+              context.fillStyle = context.strokeStyle = "red";
+              context.textAlign = "center";
+
+              return {context: context, ratio: ratio};
+            }
+
+            function place(board, tag, bounds) {
+              var perimeter = [{x: 0, y: 0}, {x: size[0], y: size[1]}],
+                      startX = tag.x,
+                      startY = tag.y,
+                      maxDelta = Math.sqrt(size[0] * size[0] + size[1] * size[1]),
+                      s = spiral(size),
+                      dt = random() < .5 ? 1 : -1,
+                      t = -dt,
+                      dxdy,
+                      dx,
+                      dy;
+
+              while (dxdy = s(t += dt)) {
+                dx = ~~dxdy[0];
+                dy = ~~dxdy[1];
+
+                if (Math.min(Math.abs(dx), Math.abs(dy)) >= maxDelta) break;
+
+                tag.x = startX + dx;
+                tag.y = startY + dy;
+
+                if (tag.x + tag.x0 < 0 || tag.y + tag.y0 < 0 ||
+                        tag.x + tag.x1 > size[0] || tag.y + tag.y1 > size[1]) continue;
+                // TODO only check for collisions within current bounds.
+                if (!bounds || !cloudCollide(tag, board, size[0])) {
+                  if (!bounds || collideRects(tag, bounds)) {
+                    var sprite = tag.sprite,
+                            w = tag.width >> 5,
+                            sw = size[0] >> 5,
+                            lx = tag.x - (w << 4),
+                            sx = lx & 0x7f,
+                            msx = 32 - sx,
+                            h = tag.y1 - tag.y0,
+                            x = (tag.y + tag.y0) * sw + (lx >> 5),
+                            last;
+                    for (var j = 0; j < h; j++) {
+                      last = 0;
+                      for (var i = 0; i <= w; i++) {
+                        board[x + i] |= (last << msx) | (i < w ? (last = sprite[j * w + i]) >>> sx : 0);
+                      }
+                      x += sw;
+                    }
+                    delete tag.sprite;
+                    return true;
+                  }
+                }
+              }
+              return false;
+            }
+
+            cloud.timeInterval = function (_) {
+              return arguments.length ? (timeInterval = _ == null ? Infinity : _, cloud) : timeInterval;
+            };
+
+            cloud.words = function (_) {
+              return arguments.length ? (words = _, cloud) : words;
+            };
+
+            cloud.size = function (_) {
+              return arguments.length ? (size = [+_[0], +_[1]], cloud) : size;
+            };
+
+            cloud.font = function (_) {
+              return arguments.length ? (font = functor(_), cloud) : font;
+            };
+
+            cloud.fontStyle = function (_) {
+              return arguments.length ? (fontStyle = functor(_), cloud) : fontStyle;
+            };
+
+            cloud.fontWeight = function (_) {
+              return arguments.length ? (fontWeight = functor(_), cloud) : fontWeight;
+            };
+
+            cloud.rotate = function (_) {
+              return arguments.length ? (rotate = functor(_), cloud) : rotate;
+            };
+
+            cloud.text = function (_) {
+              return arguments.length ? (text = functor(_), cloud) : text;
+            };
+
+            cloud.spiral = function (_) {
+              return arguments.length ? (spiral = spirals[_] || _, cloud) : spiral;
+            };
+
+            cloud.fontSize = function (_) {
+              return arguments.length ? (fontSize = functor(_), cloud) : fontSize;
+            };
+
+            cloud.padding = function (_) {
+              return arguments.length ? (padding = functor(_), cloud) : padding;
+            };
+
+            cloud.random = function (_) {
+              return arguments.length ? (random = _, cloud) : random;
+            };
+
+            cloud.on = function () {
+              var value = event.on.apply(event, arguments);
+              return value === event ? cloud : value;
+            };
+
+            return cloud;
+          };
+
+          function cloudText(d) {
+            return d.text;
           }
-          delete tag.sprite;
-          return true;
-        }
-      }
-    }
-    return false;
-  }
 
-  cloud.timeInterval = function(_) {
-    return arguments.length ? (timeInterval = _ == null ? Infinity : _, cloud) : timeInterval;
-  };
+          function cloudFont() {
+            return "serif";
+          }
 
-  cloud.words = function(_) {
-    return arguments.length ? (words = _, cloud) : words;
-  };
+          function cloudFontNormal() {
+            return "normal";
+          }
 
-  cloud.size = function(_) {
-    return arguments.length ? (size = [+_[0], +_[1]], cloud) : size;
-  };
+          function cloudFontSize(d) {
+            return Math.sqrt(d.value);
+          }
 
-  cloud.font = function(_) {
-    return arguments.length ? (font = functor(_), cloud) : font;
-  };
+          function cloudRotate() {
+            return (~~(Math.random() * 6) - 3) * 30;
+          }
 
-  cloud.fontStyle = function(_) {
-    return arguments.length ? (fontStyle = functor(_), cloud) : fontStyle;
-  };
-
-  cloud.fontWeight = function(_) {
-    return arguments.length ? (fontWeight = functor(_), cloud) : fontWeight;
-  };
-
-  cloud.rotate = function(_) {
-    return arguments.length ? (rotate = functor(_), cloud) : rotate;
-  };
-
-  cloud.text = function(_) {
-    return arguments.length ? (text = functor(_), cloud) : text;
-  };
-
-  cloud.spiral = function(_) {
-    return arguments.length ? (spiral = spirals[_] || _, cloud) : spiral;
-  };
-
-  cloud.fontSize = function(_) {
-    return arguments.length ? (fontSize = functor(_), cloud) : fontSize;
-  };
-
-  cloud.padding = function(_) {
-    return arguments.length ? (padding = functor(_), cloud) : padding;
-  };
-
-  cloud.random = function(_) {
-    return arguments.length ? (random = _, cloud) : random;
-  };
-
-  cloud.on = function() {
-    var value = event.on.apply(event, arguments);
-    return value === event ? cloud : value;
-  };
-
-  return cloud;
-};
-
-function cloudText(d) {
-  return d.text;
-}
-
-function cloudFont() {
-  return "serif";
-}
-
-function cloudFontNormal() {
-  return "normal";
-}
-
-function cloudFontSize(d) {
-  return Math.sqrt(d.value);
-}
-
-function cloudRotate() {
-  return (~~(Math.random() * 6) - 3) * 30;
-}
-
-function cloudPadding() {
-  return 1;
-}
+          function cloudPadding() {
+            return 1;
+          }
 
 // Fetches a monochrome sprite bitmap for the specified text.
 // Load in batches for speed.
-function cloudSprite(contextAndRatio, d, data, di) {
-  if (d.sprite) return;
-  var c = contextAndRatio.context,
-      ratio = contextAndRatio.ratio;
+          function cloudSprite(contextAndRatio, d, data, di) {
+            if (d.sprite) return;
+            var c = contextAndRatio.context,
+                    ratio = contextAndRatio.ratio;
 
-  c.clearRect(0, 0, (cw << 5) / ratio, ch / ratio);
-  var x = 0,
-      y = 0,
-      maxh = 0,
-      n = data.length;
-  --di;
-  while (++di < n) {
-    d = data[di];
-    c.save();
-    c.font = d.style + " " + d.weight + " " + ~~((d.size + 1) / ratio) + "px " + d.font;
-    var w = c.measureText(d.text + "m").width * ratio,
-        h = d.size << 1;
-    if (d.rotate) {
-      var sr = Math.sin(d.rotate * cloudRadians),
-          cr = Math.cos(d.rotate * cloudRadians),
-          wcr = w * cr,
-          wsr = w * sr,
-          hcr = h * cr,
-          hsr = h * sr;
-      w = (Math.max(Math.abs(wcr + hsr), Math.abs(wcr - hsr)) + 0x1f) >> 5 << 5;
-      h = ~~Math.max(Math.abs(wsr + hcr), Math.abs(wsr - hcr));
-    } else {
-      w = (w + 0x1f) >> 5 << 5;
-    }
-    if (h > maxh) maxh = h;
-    if (x + w >= (cw << 5)) {
-      x = 0;
-      y += maxh;
-      maxh = 0;
-    }
-    if (y + h >= ch) break;
-    c.translate((x + (w >> 1)) / ratio, (y + (h >> 1)) / ratio);
-    if (d.rotate) c.rotate(d.rotate * cloudRadians);
-    c.fillText(d.text, 0, 0);
-    if (d.padding) c.lineWidth = 2 * d.padding, c.strokeText(d.text, 0, 0);
-    c.restore();
-    d.width = w;
-    d.height = h;
-    d.xoff = x;
-    d.yoff = y;
-    d.x1 = w >> 1;
-    d.y1 = h >> 1;
-    d.x0 = -d.x1;
-    d.y0 = -d.y1;
-    d.hasText = true;
-    x += w;
-  }
-  var pixels = c.getImageData(0, 0, (cw << 5) / ratio, ch / ratio).data,
-      sprite = [];
-  while (--di >= 0) {
-    d = data[di];
-    if (!d.hasText) continue;
-    var w = d.width,
-        w32 = w >> 5,
-        h = d.y1 - d.y0;
-    // Zero the buffer
-    for (var i = 0; i < h * w32; i++) sprite[i] = 0;
-    x = d.xoff;
-    if (x == null) return;
-    y = d.yoff;
-    var seen = 0,
-        seenRow = -1;
-    for (var j = 0; j < h; j++) {
-      for (var i = 0; i < w; i++) {
-        var k = w32 * j + (i >> 5),
-            m = pixels[((y + j) * (cw << 5) + (x + i)) << 2] ? 1 << (31 - (i % 32)) : 0;
-        sprite[k] |= m;
-        seen |= m;
-      }
-      if (seen) seenRow = j;
-      else {
-        d.y0++;
-        h--;
-        j--;
-        y++;
-      }
-    }
-    d.y1 = d.y0 + seenRow;
-    d.sprite = sprite.slice(0, (d.y1 - d.y0) * w32);
-  }
-}
+            c.clearRect(0, 0, (cw << 5) / ratio, ch / ratio);
+            var x = 0,
+                    y = 0,
+                    maxh = 0,
+                    n = data.length;
+            --di;
+            while (++di < n) {
+              d = data[di];
+              c.save();
+              c.font = d.style + " " + d.weight + " " + ~~((d.size + 1) / ratio) + "px " + d.font;
+              var w = c.measureText(d.text + "m").width * ratio,
+                      h = d.size << 1;
+              if (d.rotate) {
+                var sr = Math.sin(d.rotate * cloudRadians),
+                        cr = Math.cos(d.rotate * cloudRadians),
+                        wcr = w * cr,
+                        wsr = w * sr,
+                        hcr = h * cr,
+                        hsr = h * sr;
+                w = (Math.max(Math.abs(wcr + hsr), Math.abs(wcr - hsr)) + 0x1f) >> 5 << 5;
+                h = ~~Math.max(Math.abs(wsr + hcr), Math.abs(wsr - hcr));
+              } else {
+                w = (w + 0x1f) >> 5 << 5;
+              }
+              if (h > maxh) maxh = h;
+              if (x + w >= (cw << 5)) {
+                x = 0;
+                y += maxh;
+                maxh = 0;
+              }
+              if (y + h >= ch) break;
+              c.translate((x + (w >> 1)) / ratio, (y + (h >> 1)) / ratio);
+              if (d.rotate) c.rotate(d.rotate * cloudRadians);
+              c.fillText(d.text, 0, 0);
+              if (d.padding) c.lineWidth = 2 * d.padding, c.strokeText(d.text, 0, 0);
+              c.restore();
+              d.width = w;
+              d.height = h;
+              d.xoff = x;
+              d.yoff = y;
+              d.x1 = w >> 1;
+              d.y1 = h >> 1;
+              d.x0 = -d.x1;
+              d.y0 = -d.y1;
+              d.hasText = true;
+              x += w;
+            }
+            var pixels = c.getImageData(0, 0, (cw << 5) / ratio, ch / ratio).data,
+                    sprite = [];
+            while (--di >= 0) {
+              d = data[di];
+              if (!d.hasText) continue;
+              var w = d.width,
+                      w32 = w >> 5,
+                      h = d.y1 - d.y0;
+              // Zero the buffer
+              for (var i = 0; i < h * w32; i++) sprite[i] = 0;
+              x = d.xoff;
+              if (x == null) return;
+              y = d.yoff;
+              var seen = 0,
+                      seenRow = -1;
+              for (var j = 0; j < h; j++) {
+                for (var i = 0; i < w; i++) {
+                  var k = w32 * j + (i >> 5),
+                          m = pixels[((y + j) * (cw << 5) + (x + i)) << 2] ? 1 << (31 - (i % 32)) : 0;
+                  sprite[k] |= m;
+                  seen |= m;
+                }
+                if (seen) seenRow = j;
+                else {
+                  d.y0++;
+                  h--;
+                  j--;
+                  y++;
+                }
+              }
+              d.y1 = d.y0 + seenRow;
+              d.sprite = sprite.slice(0, (d.y1 - d.y0) * w32);
+            }
+          }
 
 // Use mask-based collision detection.
-function cloudCollide(tag, board, sw) {
-  sw >>= 5;
-  var sprite = tag.sprite,
-      w = tag.width >> 5,
-      lx = tag.x - (w << 4),
-      sx = lx & 0x7f,
-      msx = 32 - sx,
-      h = tag.y1 - tag.y0,
-      x = (tag.y + tag.y0) * sw + (lx >> 5),
-      last;
-  for (var j = 0; j < h; j++) {
-    last = 0;
-    for (var i = 0; i <= w; i++) {
-      if (((last << msx) | (i < w ? (last = sprite[j * w + i]) >>> sx : 0))
-          & board[x + i]) return true;
-    }
-    x += sw;
-  }
-  return false;
-}
+          function cloudCollide(tag, board, sw) {
+            sw >>= 5;
+            var sprite = tag.sprite,
+                    w = tag.width >> 5,
+                    lx = tag.x - (w << 4),
+                    sx = lx & 0x7f,
+                    msx = 32 - sx,
+                    h = tag.y1 - tag.y0,
+                    x = (tag.y + tag.y0) * sw + (lx >> 5),
+                    last;
+            for (var j = 0; j < h; j++) {
+              last = 0;
+              for (var i = 0; i <= w; i++) {
+                if (((last << msx) | (i < w ? (last = sprite[j * w + i]) >>> sx : 0))
+                        & board[x + i]) return true;
+              }
+              x += sw;
+            }
+            return false;
+          }
 
-function cloudBounds(bounds, d) {
-  var b0 = bounds[0],
-      b1 = bounds[1];
-  if (d.x + d.x0 < b0.x) b0.x = d.x + d.x0;
-  if (d.y + d.y0 < b0.y) b0.y = d.y + d.y0;
-  if (d.x + d.x1 > b1.x) b1.x = d.x + d.x1;
-  if (d.y + d.y1 > b1.y) b1.y = d.y + d.y1;
-}
+          function cloudBounds(bounds, d) {
+            var b0 = bounds[0],
+                    b1 = bounds[1];
+            if (d.x + d.x0 < b0.x) b0.x = d.x + d.x0;
+            if (d.y + d.y0 < b0.y) b0.y = d.y + d.y0;
+            if (d.x + d.x1 > b1.x) b1.x = d.x + d.x1;
+            if (d.y + d.y1 > b1.y) b1.y = d.y + d.y1;
+          }
 
-function collideRects(a, b) {
-  return a.x + a.x1 > b[0].x && a.x + a.x0 < b[1].x && a.y + a.y1 > b[0].y && a.y + a.y0 < b[1].y;
-}
+          function collideRects(a, b) {
+            return a.x + a.x1 > b[0].x && a.x + a.x0 < b[1].x && a.y + a.y1 > b[0].y && a.y + a.y0 < b[1].y;
+          }
 
-function archimedeanSpiral(size) {
-  var e = size[0] / size[1];
-  return function(t) {
-    return [e * (t *= .1) * Math.cos(t), t * Math.sin(t)];
-  };
-}
+          function archimedeanSpiral(size) {
+            var e = size[0] / size[1];
+            return function (t) {
+              return [e * (t *= .1) * Math.cos(t), t * Math.sin(t)];
+            };
+          }
 
-function rectangularSpiral(size) {
-  var dy = 4,
-      dx = dy * size[0] / size[1],
-      x = 0,
-      y = 0;
-  return function(t) {
-    var sign = t < 0 ? -1 : 1;
-    // See triangular numbers: T_n = n * (n + 1) / 2.
-    switch ((Math.sqrt(1 + 4 * sign * t) - sign) & 3) {
-      case 0:  x += dx; break;
-      case 1:  y += dy; break;
-      case 2:  x -= dx; break;
-      default: y -= dy; break;
-    }
-    return [x, y];
-  };
-}
+          function rectangularSpiral(size) {
+            var dy = 4,
+                    dx = dy * size[0] / size[1],
+                    x = 0,
+                    y = 0;
+            return function (t) {
+              var sign = t < 0 ? -1 : 1;
+              // See triangular numbers: T_n = n * (n + 1) / 2.
+              switch ((Math.sqrt(1 + 4 * sign * t) - sign) & 3) {
+                case 0:
+                  x += dx;
+                  break;
+                case 1:
+                  y += dy;
+                  break;
+                case 2:
+                  x -= dx;
+                  break;
+                default:
+                  y -= dy;
+                  break;
+              }
+              return [x, y];
+            };
+          }
 
 // TODO reuse arrays?
-function zeroArray(n) {
-  var a = [],
-      i = -1;
-  while (++i < n) a[i] = 0;
-  return a;
-}
-
-function cloudCanvas() {
-  return document.createElement("canvas");
-}
-
-function functor(d) {
-  return typeof d === "function" ? d : function() { return d; };
-}
-
-var spirals = {
-  archimedean: archimedeanSpiral,
-  rectangular: rectangularSpiral
-};
-
-},{"d3-dispatch":2}],2:[function(require,module,exports){
-(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-  typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  factory((global.dispatch = {}));
-}(this, function (exports) { 'use strict';
-
-  function Dispatch(types) {
-    var i = -1,
-        n = types.length,
-        callbacksByType = {},
-        callbackByName = {},
-        type,
-        that = this;
-
-    that.on = function(type, callback) {
-      type = parseType(type);
-
-      // Return the current callback, if any.
-      if (arguments.length < 2) {
-        return (callback = callbackByName[type.name]) && callback.value;
-      }
-
-      // If a type was specified…
-      if (type.type) {
-        var callbacks = callbacksByType[type.type],
-            callback0 = callbackByName[type.name],
-            i;
-
-        // Remove the current callback, if any, using copy-on-remove.
-        if (callback0) {
-          callback0.value = null;
-          i = callbacks.indexOf(callback0);
-          callbacksByType[type.type] = callbacks = callbacks.slice(0, i).concat(callbacks.slice(i + 1));
-          delete callbackByName[type.name];
-        }
-
-        // Add the new callback, if any.
-        if (callback) {
-          callback = {value: callback};
-          callbackByName[type.name] = callback;
-          callbacks.push(callback);
-        }
-      }
-
-      // Otherwise, if a null callback was specified, remove all callbacks with the given name.
-      else if (callback == null) {
-        for (var otherType in callbacksByType) {
-          if (callback = callbackByName[otherType + type.name]) {
-            callback.value = null;
-            var callbacks = callbacksByType[otherType], i = callbacks.indexOf(callback);
-            callbacksByType[otherType] = callbacks.slice(0, i).concat(callbacks.slice(i + 1));
-            delete callbackByName[callback.name];
+          function zeroArray(n) {
+            var a = [],
+                    i = -1;
+            while (++i < n) a[i] = 0;
+            return a;
           }
-        }
-      }
 
-      return that;
-    };
-
-    while (++i < n) {
-      type = types[i] + "";
-      if (!type || (type in that)) throw new Error("illegal or duplicate type: " + type);
-      callbacksByType[type] = [];
-      that[type] = applier(type);
-    }
-
-    function parseType(type) {
-      var i = (type += "").indexOf("."), name = type;
-      if (i >= 0) type = type.slice(0, i); else name += ".";
-      if (type && !callbacksByType.hasOwnProperty(type)) throw new Error("unknown type: " + type);
-      return {type: type, name: name};
-    }
-
-    function applier(type) {
-      return function() {
-        var callbacks = callbacksByType[type], // Defensive reference; copy-on-remove.
-            callback,
-            callbackValue,
-            i = -1,
-            n = callbacks.length;
-
-        while (++i < n) {
-          if (callbackValue = (callback = callbacks[i]).value) {
-            callbackValue.apply(this, arguments);
+          function cloudCanvas() {
+            return document.createElement("canvas");
           }
-        }
 
-        return that;
-      };
-    }
-  }
+          function functor(d) {
+            return typeof d === "function" ? d : function () {
+              return d;
+            };
+          }
 
-  function dispatch() {
-    return new Dispatch(arguments);
-  }
+          var spirals = {
+            archimedean: archimedeanSpiral,
+            rectangular: rectangularSpiral
+          };
 
-  dispatch.prototype = Dispatch.prototype; // allow instanceof
+        }, {"d3-dispatch": 2}], 2: [function (require, module, exports) {
+          (function (global, factory) {
+            typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+                    typeof define === 'function' && define.amd ? define(['exports'], factory) :
+                            factory((global.dispatch = {}));
+          }(this, function (exports) {
+            'use strict';
 
-  exports.dispatch = dispatch;
+            function Dispatch(types) {
+              var i = -1,
+                      n = types.length,
+                      callbacksByType = {},
+                      callbackByName = {},
+                      type,
+                      that = this;
 
-}));
-},{}]},{},[1])(1)
-});</script>
+              that.on = function (type, callback) {
+                type = parseType(type);
+
+                // Return the current callback, if any.
+                if (arguments.length < 2) {
+                  return (callback = callbackByName[type.name]) && callback.value;
+                }
+
+                // If a type was specified…
+                if (type.type) {
+                  var callbacks = callbacksByType[type.type],
+                          callback0 = callbackByName[type.name],
+                          i;
+
+                  // Remove the current callback, if any, using copy-on-remove.
+                  if (callback0) {
+                    callback0.value = null;
+                    i = callbacks.indexOf(callback0);
+                    callbacksByType[type.type] = callbacks = callbacks.slice(0, i).concat(callbacks.slice(i + 1));
+                    delete callbackByName[type.name];
+                  }
+
+                  // Add the new callback, if any.
+                  if (callback) {
+                    callback = {value: callback};
+                    callbackByName[type.name] = callback;
+                    callbacks.push(callback);
+                  }
+                }
+
+                // Otherwise, if a null callback was specified, remove all callbacks with the given name.
+                else if (callback == null) {
+                  for (var otherType in callbacksByType) {
+                    if (callback = callbackByName[otherType + type.name]) {
+                      callback.value = null;
+                      var callbacks = callbacksByType[otherType], i = callbacks.indexOf(callback);
+                      callbacksByType[otherType] = callbacks.slice(0, i).concat(callbacks.slice(i + 1));
+                      delete callbackByName[callback.name];
+                    }
+                  }
+                }
+
+                return that;
+              };
+
+              while (++i < n) {
+                type = types[i] + "";
+                if (!type || (type in that)) throw new Error("illegal or duplicate type: " + type);
+                callbacksByType[type] = [];
+                that[type] = applier(type);
+              }
+
+              function parseType(type) {
+                var i = (type += "").indexOf("."), name = type;
+                if (i >= 0) type = type.slice(0, i); else name += ".";
+                if (type && !callbacksByType.hasOwnProperty(type)) throw new Error("unknown type: " + type);
+                return {type: type, name: name};
+              }
+
+              function applier(type) {
+                return function () {
+                  var callbacks = callbacksByType[type], // Defensive reference; copy-on-remove.
+                          callback,
+                          callbackValue,
+                          i = -1,
+                          n = callbacks.length;
+
+                  while (++i < n) {
+                    if (callbackValue = (callback = callbacks[i]).value) {
+                      callbackValue.apply(this, arguments);
+                    }
+                  }
+
+                  return that;
+                };
+              }
+            }
+
+            function dispatch() {
+              return new Dispatch(arguments);
+            }
+
+            dispatch.prototype = Dispatch.prototype; // allow instanceof
+
+            exports.dispatch = dispatch;
+
+          }));
+        }, {}]
+      }, {}, [1])(1)
+    });</script>
 
 
 
@@ -526,16 +585,7 @@ var spirals = {
     <title>Shakespeare-In-Motion YO YO</title>
 
 
-    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-        Data Selector
-    </button>
-
-
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-
-                <div class="modal-body">
+  <div>
 
                     <form role="form">
                         <div class="form-group">
@@ -543,7 +593,7 @@ var spirals = {
                                 <label for="sym">Symbol</label>
                                 <input class="form-control" ng-model="symbol" type="text" id="sym">
                             </div>
-                            <div class="col-xs-3">
+                          <div class="col-xs-2">
                                 <label for="chartSelect">Chart Type</label>
                                 <div class="dropdown">
 
@@ -556,7 +606,7 @@ var spirals = {
                                         <li ng-repeat="chartType in chartTypes"><a ng-click="switchChartType(chartType)">{{chartType}}</a></li>
                                     </ul></div>
                             </div>
-                            <div class="col-xs-4">
+                          <div class="col-xs-2">
                                 <label for="chartSelect">Date</label>
 
 
@@ -573,93 +623,15 @@ var spirals = {
                                 </p>
                             </div>
 
-                            <button class="btn btn-primary" data-dismiss="modal" ng-click="selectWeek()" id="display">Display</button>
+                          <button class="btn btn-primary" data-dismiss="modal" ng-click="getData()" id="display">
+                            Display
+                          </button>
 
                         </div>
                     </form>
-
-
-
                 </div>
 
-            </div>
-        </div>
-    </div>
 
-
-
-
-    <!--<table class="table">
-        <thead>
-        <tr>
-            <th>Symbol</th>
-            <th>Chart Type</th>
-            <th>Select Date</th>
-
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td><div class = "col-md-10"><input class="form-control" ng-model="quote.symbol" type = "text"></div></td>
-            <td><div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button"
-                        id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    Chart Type: {{chartType}}
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li ng-repeat="chartType in chartTypes"><a ng-click="switchChartType(chartType)">{{chartType}}</a></li>
-                </ul>
-            </div></td>
-            <td><p class="row">
-                <div class="col-md-3">
-                <p class="input-group">
-                    <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="eventDate" is-open="status.openedDatePicker" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" data-date-format="dd-mm-yyyy">
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="openDatePicker($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-              </span>
-
-            </p></div></td>
-            <td><input class="btn-primary" type="submit" id="submit" value="Submit" ng-click="selectWeek()" /></td>
-        </tr>
-        </tbody>
-    </table> -->
-
-
-    <!--<p class="row">
-        <div class="col-md-3">
-            <p class="input-group">
-
-                <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="status.openedDatePicker" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-model="eventDate" />
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="openDatePicker($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-              </span>
-            </p>
-        </div> -->
-
-
-    <!-- based on code found here: https://groups.google.com/forum/#!topic/twitter-bootstrap-stackoverflow/f21Us8kXFjI-->
-
-
-
-    <!--<table class="table">
-        <thead>
-        <tr>
-
-            <th>Start Date</th>
-            <th>End Date</th>
-
-        </tr>
-        </thead>
-    <tbody>
-    <tr>
-
-        <td><input class="form-control" ng-model="quote.startDate"></td>
-        <td><input class="form-control" ng-model="quote.endDate"></td>
-        <td><button class="btn btn-primary" ng-click="showGraph()">Update Chart</button></td>
-    </tr>
-    </tbody>
-        </table> -->
 
     <div id="chart"></div>
     <div id="lineChart"></div>
@@ -695,7 +667,7 @@ var spirals = {
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="news in newsarticles">
+        <tr ng-repeat="news in articles">
             <td style="width:auto;text-align:center;">{{news.newsDate.toString().substring(5, 10) + "\n" + news.newsDate.toString().substring(0, 4)}}</td>
             <td style="width:17%;">{{news.title.substring(0, 200)}}</td>
             <!--td class="articlebody" style="height:auto">{{news.content}}</td-->
@@ -721,19 +693,19 @@ var spirals = {
         </tbody>
     </table>
 
-        <table class="table">
-        <thead>
-        <tr>
-            <th>Word Cloud</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td id="cloud_div" style="width:auto;height:500px;"></td>
-        </tr>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Word Cloud</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td id="cloud_div" style="width:auto;height:500px;"></td>
+    </tr>
 
-        </tbody>
-    </table>
+    </tbody>
+  </table>
 
 
 </div>
