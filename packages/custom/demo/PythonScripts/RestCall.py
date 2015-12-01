@@ -25,7 +25,7 @@ class RestCaller:
         :return: Response from server
         """
         r = requests.post(self.connect_url, data)
-        print r.text
+        #print r.text
         return r
 
     def get(self, record_id=None):
@@ -39,7 +39,7 @@ class RestCaller:
             r = requests.get(self.connect_url)
         else:
             r = requests.get(self.connect_url+"/"+record_id)
-        print r.text
+        #print r.text
         return r
 
     def update(self, record_id, data):
@@ -50,7 +50,7 @@ class RestCaller:
         :return: Response from server
         """
         r = requests.put(self.connect_url+"/"+record_id, data)
-        print r.text
+        #print r.text
         return r
 
     def delete(self, record_id):
@@ -60,7 +60,7 @@ class RestCaller:
         :return: Response from server
         """
         r = requests.delete(self.connect_url+"/"+record_id)
-        print r.text
+        #print r.text
         return r
 
 
@@ -88,7 +88,7 @@ def send_raw_request(req_type, endpoint_url, body_data=None):
 
 def main():
     t = RestCaller()
-    print t.get()
+    #print t.get()
 
 if __name__ == '__main__':
     main()
