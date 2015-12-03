@@ -11,8 +11,8 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
       $scope.FRIDAY = 5;
       $scope.MONDAY = 1;
       $scope.SUNDAY = 0;
-      $scope.MILISECONDS_PER_DAY = 86400000;
-      $scope.MILISECONDS_PER_HOUR = 3600000;
+      $scope.MILLISECONDS_PER_DAY = 86400000;
+      $scope.MILLISECONDS_PER_HOUR = 3600000;
 
 
       //refresh();
@@ -36,25 +36,25 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
 
       $scope.selectWeek = function () {
           var day = $scope.eventDate.getDay();
-          var timeInMiliseconds = $scope.eventDate.getTime();
-          if ($scope.eventDate.getDay() == $scope.SUNDAY) {
+          var timeInMilliseconds = $scope.eventDate.getTime();
+          if (day == $scope.SUNDAY) {
 
 
-              $scope.startDate = new Date(timeInMiliseconds + $scope.MILISECONDS_PER_DAY);
-              $scope.endDate = new Date(timeInMiliseconds + ($scope.MILISECONDS_PER_DAY *
-                  $scope.FRIDAY) + $scope.MILISECONDS_PER_HOUR);
+              $scope.startDate = new Date(timeInMilliseconds + $scope.MILLISECONDS_PER_DAY);
+              $scope.endDate = new Date(timeInMilliseconds + ($scope.MILLISECONDS_PER_DAY *
+                  $scope.FRIDAY) + $scope.MILLISECONDS_PER_HOUR);
 
           }
           if (day >= $scope.MONDAY && day <= $scope.FRIDAY) {
-              $scope.startDate = new Date(timeInMiliseconds - ((day - $scope.MONDAY) * $scope.MILISECONDS_PER_DAY));
-              $scope.endDate = new Date(timeInMiliseconds + (($scope.FRIDAY - day) * $scope.MILISECONDS_PER_DAY));
+              $scope.startDate = new Date(timeInMilliseconds - ((day - $scope.MONDAY) * $scope.MILLISECONDS_PER_DAY));
+              $scope.endDate = new Date(timeInMilliseconds + (($scope.FRIDAY - day) * $scope.MILLISECONDS_PER_DAY));
 
           }
 
           if (day == $scope.SATURDAY) {
 
-              $scope.startDate = new Date(timeInMiliseconds - ($scope.MILISECONDS_PER_DAY * 5));
-              $scope.endDate = new Date(timeInMiliseconds - $scope.MILISECONDS_PER_DAY);
+              $scope.startDate = new Date(timeInMilliseconds - ($scope.MILLISECONDS_PER_DAY * 5));
+              $scope.endDate = new Date(timeInMilliseconds - $scope.MILLISECONDS_PER_DAY);
 
           }
 
@@ -76,63 +76,45 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
           // If the weeksum was available, make the get-rest calls to get the data from the database
           $http.get('/api/demo/weeksum_by_date?date=' + $scope.endDate.yyyymmdd()).success(function (response) {
               if (response.length > 0) {
-                  $http.get('/api/demo/quotes_by_date_range?startdate=' + $scope.startDate.yyyymmdd() +
-                      '&enddate=' + $scope.endDate.yyyymmdd() + '&indexsymbol=' + $scope.symbol).success(function (response) {
-                      $scope.quotes = response;
-                      if (!($scope.symbol.localeCompare("") == 0)) {
-                          $scope.showGraph();
-                          $scope.calculatePerformance();
-                      }
-                  });
-
-                  $http.get('/api/demo/newsbydaterange?startdate=' + $scope.startDate +
-                      '&enddate=' + $scope.endDate).success(function (response) {
-                      $scope.articles = response;
-                      $scope.sentimentSummary();
-                      $scope.keywordSummary();
-                      $scope.textWordCloud();
-                  });
-                  $http.get('/api/demo/entitiesbydaterange?startdate=' + $scope.startDate +
-                          '&enddate=' + $scope.endDate).success(function (response) {
-                      $scope.entity = response;
-                      $scope.entitySummary();
-
-
-                      });
+                  $scope.generateDataDisplay();
 
               }
               else {
                   $http.get('/api/demo/analyze_week?startdate=' + $scope.startDate.yyyymmdd() + '&enddate=' +
                       $scope.endDate.yyyymmdd()).success(function (response) {
-                      $http.get('/api/demo/quotes_by_date_range?startdate=' + $scope.startDate.yyyymmdd() +
-                          '&enddate=' + $scope.endDate.yyyymmdd() + '&indexsymbol=' + $scope.symbol).success(function (response) {
-                          $scope.quotes = response;
-                          if (!($scope.symbol.localeCompare("") == 0)) {
-                              $scope.showGraph();
-                              $scope.calculatePerformance();
-                          }
-                      });
-
-                      $http.get('/api/demo/newsbydaterange?startdate=' + $scope.startDate +
-                          '&enddate=' + $scope.endDate).success(function (response) {
-                          $scope.articles = response;
-                          $scope.sentimentSummary();
-                          $scope.keywordSummary();
-                          $scope.textWordCloud();
-                      });
-
-                      $http.get('/api/demo/entitiesbydaterange?startdate=' + $scope.startDate +
-                          '&enddate=' + $scope.endDate).success(function (response) {
-                          $scope.entity = response;
-                          $scope.entitySummary();
-
-
-                      });
+                      $scope.generateDataDisplay();
 
 
                   });
 
               }
+
+
+          });
+
+      }
+
+      $scope.generateDataDisplay = function () {
+          $http.get('/api/demo/quotes_by_date_range?startdate=' + $scope.startDate.yyyymmdd() +
+              '&enddate=' + $scope.endDate.yyyymmdd() + '&indexsymbol=' + $scope.symbol).success(function (response) {
+              $scope.quotes = response;
+              if (!($scope.symbol.localeCompare("") == 0)) {
+                  $scope.showGraph();
+                  $scope.calculatePerformance();
+              }
+          });
+
+          $http.get('/api/demo/newsbydaterange?startdate=' + $scope.startDate +
+              '&enddate=' + $scope.endDate).success(function (response) {
+              $scope.articles = response;
+              $scope.sentimentSummary();
+              $scope.keywordSummary();
+              $scope.textWordCloud();
+          });
+          $http.get('/api/demo/entitiesbydaterange?startdate=' + $scope.startDate +
+              '&enddate=' + $scope.endDate).success(function (response) {
+              $scope.entity = response;
+              $scope.entitySummary();
 
 
           });
