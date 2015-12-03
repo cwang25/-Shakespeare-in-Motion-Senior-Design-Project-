@@ -22,13 +22,15 @@ describe('<Unit Test>', function () {
         });
 
 
-        describe('$scope.getNewsArticles', function () {
+        describe('$scope.switchChartType', function () {
             var $scope, controller;
 
             beforeEach(function () {
                 $scope = {};
                 controller = $controller('DemoController', {$scope: $scope});
+
             });
+
 
 
             it('should set chart type to Candlestick', inject(function ($http) {
@@ -40,6 +42,14 @@ describe('<Unit Test>', function () {
                 expect($scope.chartType).toEqual("Candlestick");
 
             }));
+        });
+        describe('$scope.getData', function () {
+            var $scope, controller;
+
+            beforeEach(function () {
+                $scope = {};
+                controller = $controller('DemoController', {$scope: $scope});
+            });
 
             it('should get appropriate data for week 10/05/2015 - 10-09-2015', inject(function ($http) {
                 $scope.eventDate = new Date("2015-10-07");
@@ -67,16 +77,13 @@ describe('<Unit Test>', function () {
                 });
 
 
-
-
-
             }));
-
-
         });
 
 
     });
+
+
 });
 
 
