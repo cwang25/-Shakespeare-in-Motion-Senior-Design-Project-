@@ -25,6 +25,8 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
           if (!($scope.symbol.localeCompare("") == 0)) {
               $scope.showGraph();
           }
+
+          $scope.textWordCloud();
       };
 
       $scope.openDatePicker = function ($event) {
@@ -63,6 +65,9 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
 
       //This function is called when the user clicks "Display" on the html page
       $scope.getData = function () {
+          if (($scope.symbol.localeCompare("") == 0)) {
+              return;
+          }
           $scope.selectWeek();
           Date.prototype.yyyymmdd = function () {
               var yyyy = this.getFullYear().toString();
@@ -74,14 +79,15 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
           // First check to see if there is a weeksum in the database for the requested week.
           // If a weeksum cannot be found, call analyze week to get the data.
           // If the weeksum was available, make the get-rest calls to get the data from the database
-          $http.get('/api/demo/weeksum_by_date?date=' + $scope.endDate.yyyymmdd()).success(function (response) {
+          $http.get('/api/demo/quotes_by_date_range?startdate=' + $scope.startDate.yyyymmdd() +
+              '&enddate=' + $scope.endDate.yyyymmdd() + '&indexsymbol=' + $scope.symbol).success(function (response) {
               if (response.length > 0) {
                   $scope.generateDataDisplay();
 
               }
               else {
-                  $http.get('/api/demo/analyze_week?startdate=' + $scope.startDate.yyyymmdd() + '&enddate=' +
-                      $scope.endDate.yyyymmdd()).success(function (response) {
+                  $http.get('/api/demo/get_market_quotes_from_yahoo?startdate=' + $scope.startDate.yyyymmdd() + '&enddate=' +
+                      $scope.endDate.yyyymmdd() + '&indexsymbol=' + $scope.symbol).success(function (response) {
                       $scope.generateDataDisplay();
 
 
@@ -104,16 +110,17 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
               }
           });
 
-          $http.get('/api/demo/newsbydaterange?startdate=' + $scope.startDate +
-              '&enddate=' + $scope.endDate).success(function (response) {
+          $http.get('/api/demo/newsbydaterange?startdate=' + $scope.startDate.yyyymmdd() +
+              '&enddate=' + $scope.endDate.yyyymmdd()).success(function (response) {
               $scope.articles = response;
               $scope.sentimentSummary();
               $scope.keywordSummary();
               $scope.textWordCloud();
           });
-          $http.get('/api/demo/entitiesbydaterange?startdate=' + $scope.startDate +
-              '&enddate=' + $scope.endDate).success(function (response) {
+          $http.get('/api/demo/entitiesbydaterange?startdate=' + $scope.startDate.yyyymmdd() +
+              '&enddate=' + $scope.endDate.yyyymmdd()).success(function (response) {
               $scope.entity = response;
+
               $scope.entitySummary();
 
 
@@ -124,8 +131,8 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
 
       $scope.sentimentSummary = function () {
 
-              var positiveCount = 0;
-              var negativeCount = 0;
+          var positiveCount = 0;
+          var negativeCount = 0;
           for (var i = 0; i < $scope.articles.length; i++) {
               if ($scope.articles[i].sentiment > 0) {
                       positiveCount++;

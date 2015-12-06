@@ -70,7 +70,7 @@ module.exports = function(Demo, app, auth, database) {
   //trigger index crawler and articles
   //get start date and end date arguement.
   //i.e. /api/demo/analyze_week?startdate=YYYY-MM-DD&enddate=YYYY-MM-DD
-  app.get('/api/demo/analyze_week',function(req, res, next){
+  app.get('/api/demo/get_market_quotes_from_yahoo', function (req, res, next) {
     var pyShell = require('python-shell');
     var respond_msg = 'Scripts finished running\n';
     var options = {
