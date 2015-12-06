@@ -81,18 +81,20 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
           // If the weeksum was available, make the get-rest calls to get the data from the database
           $http.get('/api/demo/weeksum_by_date_index?date=' + $scope.startDate.yyyymmdd() + '&qsymbol=' + $scope.symbol).success(function (response) {
               if (response.length > 0) {
+                  $scope.weekSummary = response;
                   $scope.generateDataDisplay();
-
               }
               else {
                   $http.get('/api/demo/crawl_and_generate_week_summary?startdate=' + $scope.startDate.yyyymmdd() + '&enddate=' +
                       $scope.endDate.yyyymmdd() + '&qsymbol=' + $scope.symbol).success(function (response) {
+                      $scope.weekSummary = response;
                       $scope.generateDataDisplay();
 
 
                   });
 
               }
+
 
           });
 
@@ -107,7 +109,6 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
                   $scope.calculatePerformance();
               }
           });
-
           $http.get('/api/demo/newsbydaterange?startdate=' + $scope.startDate.yyyymmdd() +
               '&enddate=' + $scope.endDate.yyyymmdd()).success(function (response) {
               $scope.articles = response;
@@ -120,8 +121,16 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
               $scope.entity = response;
 
               $scope.entitySummary();
-
-
+          });
+          //Disply Week summary data.
+          $http.get('/api/demo/weeksum_by_date_index?date=' + $scope.startDate.yyyymmdd() + '&qsymbol=' + $scope.symbol).success(function (response) {
+              $scope.weekSummary = response;
+              //Populate weeksum data
+              $scope.weekSumIndex = "Current Index: "+ $scope.weekSummary[0].week_index;
+              $scope.weekSumMax = "Max: "+$scope.weekSummary[0].bcom_max;
+              $scope.weekSumMin = "Min: "+$scope.weekSummary[0].bcom_min;
+              $scope.weekSumMomentum = "This week Momentum (Mon. - Fri.): "+$scope.weekSummary[0].bcom_week_momentum;
+              $scope.weekSumRSI = "RSI(Relative Strength Index): "+$scope.weekSummary[0].bcom_week_rsi;
           });
 
       }
@@ -291,14 +300,13 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
 
           $scope.weeklyPercentChg = (((weekClose - weekOpen) /
           weekOpen) * 100).toFixed(2);
-          $scope.indexPerfMsg = "";
+          $scope.indexPerfMsg = "Index grown: ";
           if ($scope.weeklyPercentChg > 0) {
-              $scope.indexPerfMsg = "+ " + $scope.weeklyPercentChg + "%";
+              $scope.indexPerfMsg += "+ " + $scope.weeklyPercentChg + "%";
           }
           else {
-              $scope.indexPerfMsg = $scope.weeklyPercentChg + "%";
+              $scope.indexPerfMsg += $scope.weeklyPercentChg + "%";
           }
-
 
       }
 

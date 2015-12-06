@@ -96,6 +96,9 @@ def generate_summary(articles, quotes, quote):
     q_min = 999999999999.9
     total_diff = 0.0
     for i, quote in enumerate(quotes):
+        if i == 0:
+            q_max = float(quote["close"])
+            q_min = float(quote["close"])
         if quote["close"] > q_max: q_max = float(quote["close"])
         if quote["close"] < q_min: q_min = float(quote["close"])
         if i > 0:
@@ -131,6 +134,11 @@ def generate_summary(articles, quotes, quote):
     # print "RS: " + str(RS)
     # print "RSI: " + str(RSI)
     # print "---------------"
+
+    #calculate Momentum
+    summary["bcom_week_momentum"] = float(last_q["close"]) - float(first_q["close"])
+
+
     #article summary
     avg_sentiment = 0.0
     news_id_list = []
