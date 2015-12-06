@@ -69,8 +69,12 @@ module.exports = function(Demo, app, auth, database) {
   //trigger python scripts
   //trigger index crawler and articles
   //get start date and end date arguement.
-  //i.e. /api/demo/analyze_week?startdate=YYYY-MM-DD&enddate=YYYY-MM-DD
-  app.get('/api/demo/get_market_quotes_from_yahoo', function (req, res, next) {
+  //i.e. /api/demo/crawl_and_generate_week_summary?startdate=YYYY-MM-DD&enddate=YYYY-MM-DD&qsymbol=^DJC
+  app.get('/api/demo/crawl_and_generate_week_summary', function (req, res, next) {
+    var quoteSymbol = req.query.qsymbol;
+    if(quoteSymbol == null){
+      quoteSymbol = "^DJC";
+    }
     var pyShell = require('python-shell');
     var respond_msg = 'Scripts finished running\n';
     var options = {
@@ -78,16 +82,16 @@ module.exports = function(Demo, app, auth, database) {
       scriptPath: 'packages/custom/demo/PythonScripts',
       args:['-start',req.query.startdate,'-end',req.query.enddate]
     };
-    options["args"] = ['-start',req.query.startdate,'-end',req.query.enddate, '-index', '^DJC'];
+    options["args"] = ['-start',req.query.startdate,'-end',req.query.enddate, '-index', quoteSymbol];
     pyShell.run('IndexCrawler.py', options, function(err,results){
       if (err){
         //console.log(err);
         res.send("Error");
       }else {
         //console.log(results);
-        respond_msg += results;
-        options["args"] = ['-start',req.query.startdate,'-end',req.query.enddate];
-        options["mode"] = 'json';
+        //respond_msg += results;
+        options["args"] = ['-start',req.query.startdate,'-end',req.query.enddate, '-index', quoteSymbol];
+        options["mode"] = 'text';
         pyShell.run('WeekSummary.py', options, function(err,results){
           if (err){
             console.log(err);
@@ -101,26 +105,20 @@ module.exports = function(Demo, app, auth, database) {
         });
       }
     });
-    //pyShell.run('ArticleCrawler.py', options, function(err,results){
-    //  if (err){
-    //    console.log(err);
-    //  }else {
-    //    console.log(results);
-    //    respond_msg += results;
-    //  }
-    //});
-
     //res.send(respond_msg);
   });
+
+
   /**
    * Date range api requries url paramters
    * - startdate
    * - enddate
    */
-  //i.e. /api/demo/weeksum_by_date?date=YYYY-MM-DD
-  app.get('/api/demo/weeksum_by_date', function(req, res, next){
+  //i.e. /api/demo/weeksum_by_date?date=YYYY-MM-DD&qsymbol="^DJC"
+  app.get('/api/demo/weeksum_by_date_index', function(req, res, next){
     weeksum.weeksum_by_date(req, res, next);
   });
+
   //required startdate and enddate parameter
   //i.e. /api/demo/quotes_in_time_range?startdate=YYYY-MM-DD&enddate=YYYY-MM-DD
   //optional argument: indexsymbol

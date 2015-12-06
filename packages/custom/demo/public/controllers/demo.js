@@ -79,22 +79,20 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
           // First check to see if there is a weeksum in the database for the requested week.
           // If a weeksum cannot be found, call analyze week to get the data.
           // If the weeksum was available, make the get-rest calls to get the data from the database
-          $http.get('/api/demo/quotes_by_date_range?startdate=' + $scope.startDate.yyyymmdd() +
-              '&enddate=' + $scope.endDate.yyyymmdd() + '&indexsymbol=' + $scope.symbol).success(function (response) {
+          $http.get('/api/demo/weeksum_by_date_index?date=' + $scope.startDate.yyyymmdd() + '&qsymbol=' + $scope.symbol).success(function (response) {
               if (response.length > 0) {
                   $scope.generateDataDisplay();
 
               }
               else {
-                  $http.get('/api/demo/get_market_quotes_from_yahoo?startdate=' + $scope.startDate.yyyymmdd() + '&enddate=' +
-                      $scope.endDate.yyyymmdd() + '&indexsymbol=' + $scope.symbol).success(function (response) {
+                  $http.get('/api/demo/crawl_and_generate_week_summary?startdate=' + $scope.startDate.yyyymmdd() + '&enddate=' +
+                      $scope.endDate.yyyymmdd() + '&qsymbol=' + $scope.symbol).success(function (response) {
                       $scope.generateDataDisplay();
 
 
                   });
 
               }
-
 
           });
 

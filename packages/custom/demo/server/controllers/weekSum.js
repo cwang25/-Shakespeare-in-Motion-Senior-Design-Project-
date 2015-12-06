@@ -99,7 +99,8 @@ module.exports = function(Articles) {
                 },
                 week_end_date: {
                     $gte: date
-                }
+                },
+                week_index: req.query.qsymbol
             }).exec(function(err, weeksums) {
                 if (err) {
                     return res.status(500).json({

@@ -18,6 +18,10 @@ var WeekSumSchema = new Schema({
     type: Date,
     required : true
   },
+  week_index:{
+    type: String,
+    default: "^DJC"
+  },
   bcom_indices:{
     type: Array,
     default: []
@@ -85,7 +89,8 @@ WeekSumSchema.pre("save",function(next){
   var self = this;
   mongoose.models["WeekSum"].findOne({
     week_start_date: self.week_start_date,
-    week_end_date: self.week_end_date
+    week_end_date: self.week_end_date,
+    week_index: self.week_index
   },function(err, weekSum){
     if(err){
       next(err);
