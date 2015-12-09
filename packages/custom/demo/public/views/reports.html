@@ -627,6 +627,51 @@
                             Display
                           </button>
 
+                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                            Call Alchemy
+                          </button>
+
+
+                          <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+
+                                <div class="modal-body">
+
+                                  <form role="form">
+                                    <div class="form-group">
+                                      <div class="col-xs-3">
+                                        <label for="sym">Commodity</label>
+                                        <input class="form-control" ng-model="commodity" type="text" id="commodity">
+                                      </div>
+                                      <div class="col-xs-3">
+                                        <label for="chartSelect">Alchemy Keys</label>
+                                        <div class="dropdown">
+
+                                          <button class="btn btn-default dropdown-toggle" type="button"
+                                                  id="chartSelect" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+
+                                            <span class="caret"></span>
+                                          </button>
+                                          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                            <li ng-repeat="key in alchemyKeys"><a ng-model="alchemyKey">{{key}}</a></li>
+                                          </ul></div>
+                                      </div>
+
+
+                                      <button class="btn btn-primary" data-dismiss="modal" ng-click="callAlchemy()" id="getNews">Get News</button>
+
+                                    </div>
+                                  </form>
+
+
+
+                                </div>
+
+                              </div>
+                            </div>
+                          </div>
+
                         </div>
                     </form>
                 </div>
@@ -636,88 +681,104 @@
     <div id="chart"></div>
     <div id="lineChart"></div>
 
+  <div>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Index Performance</th>
+      <th>News Sentiment</th>
 
 
-   <table class="table">
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>{{indexPerfMsg}}</td>
+      <td>{{sentimentMsg}}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+  <div>
+    <h3>{{noNewsMessage}}</h3>
+    <h3>{{noQuotesMessage}}</h3>
+  </div>
+
+
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#newsArticles">News Articles</a></li>
+    <li><a data-toggle="tab" href="#entities">Entities</a></li>
+    <li><a data-toggle="tab" href="#technicalAnalysis">Market Technical Analysis</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="newsArticles" class="tab-pane fade in active">
+      <table class="table">
         <thead>
         <tr>
-            <th>Index Performance</th>
-            <th>News Sentiment</th>
-
-
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>
-            <table class="subtable">
-                <tr>
-                    <td>{{weekSumIndex}}</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>{{indexPerfMsg}}</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>{{weekSumMax}}</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>{{weekSumMin}}</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>{{weekSumMomentum}}</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>{{weekSumRSI}}</td>
-                    <td></td>
-                </tr>
-            </table>
-            </td>
-            <td>{{sentimentMsg}}</td>
-        </tr>
-        </tbody>
-    </table>
-    
-
-    <table class="table">
-        <thead>
-        <tr>
-            <th>News Date</th>
-            <th>Title</th>
-            <th>Content</th>
+          <th>News Date</th>
+          <th>Title</th>
+          <th>Content</th>
 
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="news in articles">
-            <td style="width:auto;text-align:center;">{{news.newsDate.toString().substring(5, 10) + "\n" + news.newsDate.toString().substring(0, 4)}}</td>
-            <td style="width:17%;">{{news.title.substring(0, 200)}}</td>
-            <!--td class="articlebody" style="height:auto">{{news.content}}</td-->
-            <td><article readmore>{{news.content}}</article></td>
+          <td style="width:auto;text-align:center;">{{news.newsDate.toString().substring(5, 10) + "\n" + news.newsDate.toString().substring(0, 4)}}</td>
+          <td style="width:17%;">{{news.title.substring(0, 200)}}</td>
+          <!--td class="articlebody" style="height:auto">{{news.content}}</td-->
+          <td><article readmore>{{news.content}}</article></td>
 
         </tr>
         </tbody>
-    </table>
+      </table>
 
-    <table class="table">
+    </div>
+    <div id="entities" class="tab-pane fade">
+      <table class="table">
         <thead>
         <tr>
-            <th>Entities</th>
-            <th>This Week's Top 10 Keywords</th>
+          <th>Entities</th>
+          <th>This Week's Top 10 Keywords</th>
         </tr>
         </thead>
         <tbody>
         <tr>
-            <td id="entity_div" style="font-weight:bold;"></td>
-            <td style="width:35%;"><table id="key_div" class="table"></table></td>
+          <td id="entity_div" style="font-weight:bold;"></td>
+          <td style="width:35%;"><table id="key_div" class="table"></table></td>
         </tr>
 
         </tbody>
-    </table>
+      </table>
+    </div>
+
+    <div id="technicalAnalysis" class="tab-pane fade">
+      <table class="table">
+        <tr>
+          <td>{{weekSumIndex}}</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>{{weekSumMax}}</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>{{weekSumMin}}</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>{{weekSumMomentum}}</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>{{weekSumRSI}}</td>
+          <td></td>
+        </tr>
+      </table>
+    </div>
+  </div>
 
   <table class="table">
     <thead>
@@ -734,4 +795,20 @@
   </table>
 
 
+
+
+
+
+
+
+
+
+<div>
+  News was obtained via IBM's Alchemy API: http://www.alchemyapi.com/
+
 </div>
+
+</div>
+
+
+

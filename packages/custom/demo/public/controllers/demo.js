@@ -14,6 +14,10 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
       $scope.MILLISECONDS_PER_DAY = 86400000;
       $scope.MILLISECONDS_PER_HOUR = 3600000;
 
+      $scope.alchemyKeys = ["7ed25a35adda3ae7dac5d889e70927c7410937f8",
+                            "280db58834a1809dff4890e4c64eec5f266766e3"];
+
+
 
       //refresh();
       $scope.chartTypes = ['Line', 'Candlestick'];
@@ -37,6 +41,14 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
       };
 
       $scope.selectWeek = function () {
+          // the following yyyymmdd() function was found at:
+          // http://stackoverflow.com/questions/3066586/get-string-in-yyyymmdd-format-from-js-date-object
+          Date.prototype.yyyymmdd = function () {
+              var yyyy = this.getFullYear().toString();
+              var mm = (this.getMonth() + 1).toString(); // getMonth() is zero-based
+              var dd = this.getDate().toString();
+              return yyyy + '-' + (mm[1] ? mm : "0" + mm[0]) + '-' + (dd[1] ? dd : "0" + dd[0]); // padding
+          };
           var day = $scope.eventDate.getDay();
           var timeInMilliseconds = $scope.eventDate.getTime();
           if (day == $scope.SUNDAY) {
@@ -60,33 +72,34 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
 
           }
 
+          $scope.startDate = $scope.startDate.yyyymmdd();
+          $scope.endDate = $scope.endDate.yyyymmdd();
+
 
       }
 
       //This function is called when the user clicks "Display" on the html page
       $scope.getData = function () {
+          $scope.noQuotesMessage = "";
+          $scope.noNewsMessage = "";
           if (($scope.symbol.localeCompare("") == 0)) {
               return;
           }
           $scope.selectWeek();
-          Date.prototype.yyyymmdd = function () {
-              var yyyy = this.getFullYear().toString();
-              var mm = (this.getMonth() + 1).toString(); // getMonth() is zero-based
-              var dd = this.getDate().toString();
-              return yyyy + '-' + (mm[1] ? mm : "0" + mm[0]) + '-' + (dd[1] ? dd : "0" + dd[0]); // padding
-          };
+
 
           // First check to see if there is a weeksum in the database for the requested week.
           // If a weeksum cannot be found, call analyze week to get the data.
           // If the weeksum was available, make the get-rest calls to get the data from the database
-          $http.get('/api/demo/weeksum_by_date_index?date=' + $scope.startDate.yyyymmdd() + '&qsymbol=' + $scope.symbol).success(function (response) {
+          $http.get('/api/demo/weeksum_by_date_index?date=' + $scope.startDate +
+                    '&qsymbol=' + $scope.symbol).success(function (response) {
               if (response.length > 0) {
                   $scope.weekSummary = response;
                   $scope.generateDataDisplay();
               }
               else {
-                  $http.get('/api/demo/crawl_and_generate_week_summary?startdate=' + $scope.startDate.yyyymmdd() + '&enddate=' +
-                      $scope.endDate.yyyymmdd() + '&qsymbol=' + $scope.symbol).success(function (response) {
+                  $http.get('/api/demo/crawl_and_generate_week_summary?startdate=' + $scope.startDate + '&enddate=' +
+                      $scope.endDate + '&qsymbol=' + $scope.symbol).success(function (response) {
                       $scope.weekSummary = response;
                       $scope.generateDataDisplay();
 
@@ -100,43 +113,85 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
 
       }
 
+      $scope.callAlchemy = function() {
+          $scope.selectWeek();
+          $http.get('/api/demo/get_news_from_alchemy?startdate=' + $scope.startDate +
+              '&enddate=' + $scope.endDate + '&commodity=' + $scope.commodity).success(function (response) {
+              $scope.getData();
+
+          });
+
+      }
+
       $scope.generateDataDisplay = function () {
-          $http.get('/api/demo/quotes_by_date_range?startdate=' + $scope.startDate.yyyymmdd() +
-              '&enddate=' + $scope.endDate.yyyymmdd() + '&indexsymbol=' + $scope.symbol).success(function (response) {
+          $http.get('/api/demo/quotes_by_date_range?startdate=' + $scope.startDate +
+              '&enddate=' + $scope.endDate + '&indexsymbol=' + $scope.symbol).success(function (response) {
               $scope.quotes = response;
+              if(response.length == 0) {
+                  $scope.noQuotesMessage = "No index data is available for this week."
+              }
               if (!($scope.symbol.localeCompare("") == 0)) {
                   $scope.showGraph();
                   $scope.calculatePerformance();
               }
           });
-          $http.get('/api/demo/newsbydaterange?startdate=' + $scope.startDate.yyyymmdd() +
-              '&enddate=' + $scope.endDate.yyyymmdd()).success(function (response) {
+
+          $http.get('/api/demo/newsbydaterange?startdate=' + $scope.startDate +
+              '&enddate=' + $scope.endDate).success(function (response) {
+              console.log($scope.articles);
+              if(response.length == 0) {
+                  $scope.noNewsMessage = "No news is in the database for this week.";
+              }
               $scope.articles = response;
               $scope.sentimentSummary();
               $scope.keywordSummary();
               $scope.textWordCloud();
-          });
-          $http.get('/api/demo/entitiesbydaterange?startdate=' + $scope.startDate.yyyymmdd() +
-              '&enddate=' + $scope.endDate.yyyymmdd()).success(function (response) {
-              $scope.entity = response;
 
-              $scope.entitySummary();
+
           });
+
+          $http.get('/api/demo/entitiesbydaterange?startdate=' + $scope.startDate +
+              '&enddate=' + $scope.endDate).success(function (response) {
+
+              $scope.entity = response;
+              $scope.entitySummary();
+
+
+          });
+
+
+
           //Disply Week summary data.
-          $http.get('/api/demo/weeksum_by_date_index?date=' + $scope.startDate.yyyymmdd() + '&qsymbol=' + $scope.symbol).success(function (response) {
+          $http.get('/api/demo/weeksum_by_date_index?date=' + $scope.startDate + '&qsymbol=' + $scope.symbol).success(function (response) {
               $scope.weekSummary = response;
               //Populate weeksum data
-              $scope.weekSumIndex = "Current Index: "+ $scope.weekSummary[0].week_index;
-              $scope.weekSumMax = "Max: "+$scope.weekSummary[0].bcom_max;
-              $scope.weekSumMin = "Min: "+$scope.weekSummary[0].bcom_min;
-              $scope.weekSumMomentum = "This week Momentum (Mon. - Fri.): "+$scope.weekSummary[0].bcom_week_momentum;
-              $scope.weekSumRSI = "RSI(Relative Strength Index): "+$scope.weekSummary[0].bcom_week_rsi;
+              if(response.length == 0) {
+                  $scope.weekSumIndex = "Current Index: ";
+                  $scope.weekSumMax = "Max: ";
+                  $scope.weekSumMin = "Min: ";
+                  $scope.weekSumMomentum = "Momentum (Mon. - Fri.): ";
+                  $scope.weekSumRSI = "RSI(Relative Strength Index): ";
+
+              }
+              else {
+                  $scope.weekSumIndex = "Current Index: " + $scope.weekSummary[0].week_index;
+                  $scope.weekSumMax = "Max: " + $scope.weekSummary[0].bcom_max;
+                  $scope.weekSumMin = "Min: " + $scope.weekSummary[0].bcom_min;
+                  $scope.weekSumMomentum = "Momentum (Mon. - Fri.): " + $scope.weekSummary[0].bcom_week_momentum;
+                  $scope.weekSumRSI = "RSI(Relative Strength Index): " + $scope.weekSummary[0].bcom_week_rsi;
+              }
+
           });
 
       }
 
 
       $scope.sentimentSummary = function () {
+          if($scope.articles.length == 0) {
+              $scope.sentimentMsg = "";
+
+              return;
+          }
 
           var positiveCount = 0;
           var negativeCount = 0;
@@ -294,13 +349,17 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
       }
 
       $scope.calculatePerformance = function () {
+          if($scope.quotes.length == 0) {
+              $scope.indexPerfMsg = "";
 
+              return;
+          }
           var weekOpen = $scope.quotes[$scope.quotes.length - 1].open;
           var weekClose = $scope.quotes[0].close;
 
           $scope.weeklyPercentChg = (((weekClose - weekOpen) /
           weekOpen) * 100).toFixed(2);
-          $scope.indexPerfMsg = "Index grown: ";
+          $scope.indexPerfMsg = "";
           if ($scope.weeklyPercentChg > 0) {
               $scope.indexPerfMsg += "+ " + $scope.weeklyPercentChg + "%";
           }
@@ -489,7 +548,7 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
 
 
           function showLineChart() {
-              console.log(new Date($scope.quotes[0].qdate).getTime());
+
               d3.select("svg").remove();
               $scope.config = {};
 

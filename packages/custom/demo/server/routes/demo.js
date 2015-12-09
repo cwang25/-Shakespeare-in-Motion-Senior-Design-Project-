@@ -108,6 +108,38 @@ module.exports = function(Demo, app, auth, database) {
     //res.send(respond_msg);
   });
 
+  app.get('/api/demo/get_news_from_alchemy', function (req, res, next) {
+    var commodity = req.query.commodity;
+    var pyShell = require('python-shell');
+    var respond_msg = 'Scripts finished running\n';
+    var options = {
+      mode: 'text',
+      scriptPath: 'packages/custom/demo/PythonScripts',
+      args:['-start',req.query.startdate,'-end',req.query.enddate]
+    };
+    options["args"] = ['-start',req.query.startdate,'-end',req.query.enddate, '-commodity', commodity];
+    pyShell.run('ArticleCrawler.py', options, function(err,results){
+      if (err){
+        //console.log(err);
+        res.send("Error");
+      }else {
+
+        pyShell.run('ArticleDatabaseClean.py', options, function(err,results){
+          if (err){
+            console.log(err);
+          }else {
+            console.log(results);
+            res.send(results);
+          }
+          //req.query.date = req.query.startdate;
+          ////res.send(req.query);
+          //weeksum.weeksum_by_date(req, res, next);
+        });
+      }
+    });
+    //res.send(respond_msg);
+  });
+
 
   /**
    * Date range api requries url paramters
