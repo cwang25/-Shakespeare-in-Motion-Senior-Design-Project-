@@ -9,7 +9,7 @@ var mongoose = require('mongoose'),
     _ = require('lodash');
 var rqChecker = require('./requestChecker');
 
-module.exports = function(Articles) {
+module.exports = function(app) {
 
     return {
         /**
