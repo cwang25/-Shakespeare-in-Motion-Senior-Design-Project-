@@ -128,17 +128,8 @@ def generate_summary(articles, quotes, quote):
         RS = AU/AD
     RSI = 100 - (100/(1+RS))
     summary["bcom_week_rsi"] = RSI
-    # print "---RSI calc----"
-    # print "AU: " + str(AU)
-    # print "AD: " + str(AD)
-    # print "RS: " + str(RS)
-    # print "RSI: " + str(RSI)
-    # print "---------------"
-
     #calculate Momentum
     summary["bcom_week_momentum"] = float(last_q["close"]) - float(first_q["close"])
-
-
     #article summary
     avg_sentiment = 0.0
     news_id_list = []

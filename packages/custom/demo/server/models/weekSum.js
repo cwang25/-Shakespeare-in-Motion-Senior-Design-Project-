@@ -90,7 +90,7 @@ WeekSumSchema.pre("save",function(next){
   mongoose.models["WeekSum"].findOne({
     week_start_date: self.week_start_date,
     week_end_date: self.week_end_date,
-    week_index: self.week_index
+    week_index: self.week_index,
   },function(err, weekSum){
     if(err){
       next(err);
