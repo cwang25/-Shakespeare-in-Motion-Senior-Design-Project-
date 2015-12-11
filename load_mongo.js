@@ -4,6 +4,17 @@ db.quotes.insert({
     high : 89.019997,
     volume : 0,
     low : 88.139999,
+    qdate : ISODate('2015-10-04T00:00:00Z'),
+    close : 88.800003,
+    qsymbol : '^DJC',
+    open : 88.160004
+
+});
+
+db.quotes.insert({
+    high : 89.019997,
+    volume : 0,
+    low : 88.139999,
     qdate : ISODate('2015-10-05T00:00:00Z'),
     close : 88.800003,
     qsymbol : '^DJC',
@@ -56,6 +67,17 @@ db.quotes.insert({
 });
 
 /**db.quotes.insert({
+    high : 91.940002,
+    volume : 0,
+    low : 90.449997,
+    qdate : ISODate('2015-10-10T00:00:00Z'),
+    close : 91.010002,
+    qsymbol : '^DJC',
+    open : 90.459999
+
+});
+
+db.quotes.insert({
     high : 91.68,
     volume : 0,
     low : 90.040001,
@@ -335,18 +357,56 @@ db.entities.remove({});
 
 db.entities.insert({
     entityDate: ISODate('2015-10-05T00:00:00Z'),
-    text: "Gold",
-    count: 2,
+    text: "Federal Reserve",
+    count: 11,
     sentiment: 0.5
 
 });
 
 db.entities.insert({
     entityDate: ISODate('2015-10-07T00:00:00Z'),
-    text: "Oil",
-    count: 1,
+    text: "ECB",
+    count: 10,
     sentiment: -0.25
 
 });
+
+db.entities.insert({
+    entityDate: ISODate('2015-10-05T00:00:00Z'),
+    text: "Weather",
+    count: 9,
+    sentiment: 0.5
+
+});
+
+db.entities.insert({
+    entityDate: ISODate('2015-10-07T00:00:00Z'),
+    text: "Currency",
+    count: 8,
+    sentiment: -0.25
+
+});
+
+db.entities.insert({
+    entityDate: ISODate('2015-10-05T00:00:00Z'),
+    text: "Stock Market",
+    count: 7,
+    sentiment: 0.5
+
+});
+
+db.entities.insert({
+    entityDate: ISODate('2015-10-07T00:00:00Z'),
+    text: "Bond Prices",
+    count: 6,
+    sentiment: -0.25
+
+});
+
+
+
+
+
+
 
 

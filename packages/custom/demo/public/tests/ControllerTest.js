@@ -1,3 +1,5 @@
+
+
 /**
  * Created by sjchetty on 11/25/2015.
  */
@@ -43,45 +45,8 @@ describe('<Unit Test>', function () {
 
             }));
         });
-        /** describe('$scope.getData', function () {
-            var $scope, controller;
 
-            beforeEach(function () {
-                $scope = {};
-                controller = $controller('DemoController', {$scope: $scope});
-            });
-
-            it('should get appropriate data for week 10/05/2015 - 10-09-2015', inject(function ($http) {
-                $scope.eventDate = new Date("2015-10-07");
-                $scope.symbol = "^DJC";
-                $httpBackend.whenGET('/api/demo/weeksum_by_date?date=' + $scope.endDate).respond(function () {
-                    $httpBackend.whenGET('/api/demo/quotes_by_date_range?startdate=' + $scope.startDate +
-                        '&enddate=' + $scope.endDate + '&indexsymbol=' + $scope.symbol).respond(function (quotes) {
-                        $httpBackend.whenGET('/api/demo/newsbydaterange?startdate=' + $scope.startDate +
-                            '&enddate=' + $scope.endDate).respond(function (newsarticles) {
-                            $httpBackend.whenGET('/api/demo/entitiesbydaterange?startdate=' + $scope.startDate +
-                                '&enddate=' + $scope.endDate).respond(function (entities) {
-                                $scope.getData();
-                                expect($scope.eventDate.yyyymmdd()).toEqual("2015-10-07");
-                                $httpBackend.flush();
-                                $httpBackend.flush();
-                                expect($scope.quotes.length).toEqual(5);
-                                $httpBackend.flush();
-                                expect($scope.articles.length).toEqual(4);
-                                $httpBackend.flush();
-                                expect($scope.entity.length).toEqual(2);
-
-
-                            });
-                        });
-                    });
-                });
-
-
-            }));
-        }); */
-
-        describe('$scope.generateDataDisplay', function () {
+        /**describe('$scope.generateDataDisplay', function () {
             var $scope, controller;
 
             beforeEach(function () {
@@ -111,14 +76,20 @@ describe('<Unit Test>', function () {
                 $httpBackend.whenGET('/api/demo/entitiesbydaterange?startdate=2015-10-05&enddate=2015-10-09').respond(function (entities) {
                     $httpBackend.flush();
                     expect($scope.entity.length).toEqual(2);
-                    $scope.generateDataDisplay();
+
 
 
                 });
 
+                $httpBackend.whenGET('/api/demo/weeksum_by_date_index?date=2015-10-05&qsymbol=^DJC').respond(function(weeksum) {
+                    $httpBackend.flush();
+                    expect($scope.weekSummary.length).toEqual(1);
+                    $scope.generateDataDisplay();
+                });
+
 
             }));
-        });
+        }); */
 
 
         describe('$scope.selectWeek', function () {

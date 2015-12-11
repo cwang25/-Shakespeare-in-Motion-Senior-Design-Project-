@@ -30,7 +30,9 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
               $scope.showGraph();
           }
 
-          $scope.textWordCloud();
+          if($scope.articles != null) {
+              $scope.textWordCloud();
+          }
       };
 
       $scope.openDatePicker = function ($event) {
@@ -52,8 +54,6 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
           var day = $scope.eventDate.getDay();
           var timeInMilliseconds = $scope.eventDate.getTime();
           if (day == $scope.SUNDAY) {
-
-
               $scope.startDate = new Date(timeInMilliseconds + $scope.MILLISECONDS_PER_DAY);
               $scope.endDate = new Date(timeInMilliseconds + ($scope.MILLISECONDS_PER_DAY *
                   $scope.FRIDAY) + $scope.MILLISECONDS_PER_HOUR);
@@ -72,8 +72,9 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
 
           }
 
-          $scope.startDate = $scope.startDate.yyyymmdd();
-          $scope.endDate = $scope.endDate.yyyymmdd();
+          $scope.startDateString = $scope.startDate.yyyymmdd();
+          $scope.endDateString = $scope.endDate.yyyymmdd();
+
 
 
       }
@@ -91,15 +92,15 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
           // First check to see if there is a weeksum in the database for the requested week.
           // If a weeksum cannot be found, call analyze week to get the data.
           // If the weeksum was available, make the get-rest calls to get the data from the database
-          $http.get('/api/demo/weeksum_by_date_index?date=' + $scope.startDate +
+          $http.get('/api/demo/weeksum_by_date_index?date=' + $scope.startDateString +
                     '&qsymbol=' + $scope.symbol).success(function (response) {
               if (response.length > 0) {
                   $scope.weekSummary = response;
                   $scope.generateDataDisplay();
               }
               else {
-                  $http.get('/api/demo/crawl_and_generate_week_summary?startdate=' + $scope.startDate + '&enddate=' +
-                      $scope.endDate + '&qsymbol=' + $scope.symbol).success(function (response) {
+                  $http.get('/api/demo/crawl_and_generate_week_summary?startdate=' + $scope.startDateString + '&enddate=' +
+                      $scope.endDateString + '&qsymbol=' + $scope.symbol).success(function (response) {
                       $scope.weekSummary = response;
                       $scope.generateDataDisplay();
 
@@ -115,8 +116,8 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
 
       $scope.callAlchemy = function() {
           $scope.selectWeek();
-          $http.get('/api/demo/get_news_from_alchemy?startdate=' + $scope.startDate +
-              '&enddate=' + $scope.endDate + '&commodity=' + $scope.commodity).success(function (response) {
+          $http.get('/api/demo/get_news_from_alchemy?startdate=' + $scope.startDateString +
+              '&enddate=' + $scope.endDateString + '&commodity=' + $scope.commodity).success(function (response) {
               $scope.getData();
 
           });
@@ -124,8 +125,8 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
       }
 
       $scope.generateDataDisplay = function () {
-          $http.get('/api/demo/quotes_by_date_range?startdate=' + $scope.startDate +
-              '&enddate=' + $scope.endDate + '&indexsymbol=' + $scope.symbol).success(function (response) {
+          $http.get('/api/demo/quotes_by_date_range?startdate=' + $scope.startDateString +
+              '&enddate=' + $scope.endDateString + '&indexsymbol=' + $scope.symbol).success(function (response) {
               $scope.quotes = response;
               if(response.length == 0) {
                   $scope.noQuotesMessage = "No index data is available for this week."
@@ -136,8 +137,8 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
               }
           });
 
-          $http.get('/api/demo/newsbydaterange?startdate=' + $scope.startDate +
-              '&enddate=' + $scope.endDate).success(function (response) {
+          $http.get('/api/demo/newsbydaterange?startdate=' + $scope.startDateString +
+              '&enddate=' + $scope.endDateString).success(function (response) {
               console.log($scope.articles);
               if(response.length == 0) {
                   $scope.noNewsMessage = "No news is in the database for this week.";
@@ -150,8 +151,8 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
 
           });
 
-          $http.get('/api/demo/entitiesbydaterange?startdate=' + $scope.startDate +
-              '&enddate=' + $scope.endDate).success(function (response) {
+          $http.get('/api/demo/entitiesbydaterange?startdate=' + $scope.startDateString +
+              '&enddate=' + $scope.endDateString).success(function (response) {
 
               $scope.entity = response;
               $scope.entitySummary();
@@ -162,7 +163,7 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
 
 
           //Disply Week summary data.
-          $http.get('/api/demo/weeksum_by_date_index?date=' + $scope.startDate + '&qsymbol=' + $scope.symbol).success(function (response) {
+          $http.get('/api/demo/weeksum_by_date_index?date=' + $scope.startDateString + '&qsymbol=' + $scope.symbol).success(function (response) {
               $scope.weekSummary = response;
               //Populate weeksum data
               if(response.length == 0) {
