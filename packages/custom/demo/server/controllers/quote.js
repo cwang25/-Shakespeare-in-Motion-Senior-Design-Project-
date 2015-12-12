@@ -9,7 +9,7 @@ var mongoose = require('mongoose'),
     _ = require('lodash');
 var rqChecker = require('./requestChecker');
 
-module.exports = function(Articles) {
+module.exports = function(app) {
 
     return {
         /**
@@ -26,8 +26,9 @@ module.exports = function(Articles) {
         /**
          * Create an quote
          * - private api
+         * next optional callback function
          */
-        create: function(req, res) {
+        create: function(req, res, next) {
             if(rqChecker.check_local(req, res)){
                 var quote = new Quote(req.body);
                 //console.log(article);
@@ -41,6 +42,8 @@ module.exports = function(Articles) {
                         });
                     }
                     res.json(quote);
+                    //ensure the callback is there.
+                    typeof next == "function" && next();
                 });
             }
         },
@@ -49,7 +52,7 @@ module.exports = function(Articles) {
          * -private api
          */
         update: function(req, res) {
-            if(rqChecker.check_local(req, rest)){
+            if(rqChecker.check_local(req, res)){
                 var quote = req.quote;
                 quote = _.extend(quote, req.body);
                 quote.save(function (err) {

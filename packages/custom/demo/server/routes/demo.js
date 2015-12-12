@@ -131,13 +131,9 @@ module.exports = function(Demo, app, auth, database) {
             console.log(results);
             res.send(results);
           }
-          //req.query.date = req.query.startdate;
-          ////res.send(req.query);
-          //weeksum.weeksum_by_date(req, res, next);
         });
       }
     });
-    //res.send(respond_msg);
   });
 
 
