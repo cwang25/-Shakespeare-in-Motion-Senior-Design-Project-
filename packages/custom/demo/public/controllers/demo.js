@@ -139,7 +139,6 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
 
           $http.get('/api/demo/newsbydaterange?startdate=' + $scope.startDateString +
               '&enddate=' + $scope.endDateString).success(function (response) {
-              console.log($scope.articles);
               if(response.length == 0) {
                   $scope.noNewsMessage = "No news is in the database for this week.";
               }
@@ -552,9 +551,6 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
 
               d3.select("svg").remove();
               $scope.config = {};
-
-
-              console.log($scope.quotes);
               var quoteDates = [];
               quoteDates.push('Dates');
 
@@ -568,8 +564,6 @@ angular.module('mean.demo').controller('DemoController', ['$scope', 'Global', 'D
               angular.forEach($scope.quotes, function (quote) {
                   quotePrices.push(quote.close);
               });
-
-
               $scope.chart = c3.generate({
                   bindto: '#lineChart',
                   data: {

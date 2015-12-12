@@ -66,7 +66,7 @@ db.quotes.insert({
 
 });
 
-/**db.quotes.insert({
+db.quotes.insert({
     high : 91.940002,
     volume : 0,
     low : 90.449997,
@@ -132,7 +132,7 @@ db.quotes.insert({
 
 });
 
- */
+
 
 db.quotes.insert({
     high : 89.629997,
@@ -305,6 +305,13 @@ db.quotes.insert({
 db.newsarticles.remove({});
 
 db.newsarticles.insert({
+    title : "Gold Rises",
+    content: "Fed Delays Rate Hike",
+    newsDate : ISODate('2015-10-02T00:00:00Z'),
+    sentiment : 0.75
+});
+
+db.newsarticles.insert({
    title : "Gold Rises",
    content: "Fed Delays Rate Hike",
     newsDate : ISODate('2015-10-05T00:00:00Z'),
@@ -401,6 +408,13 @@ db.entities.insert({
     count: 6,
     sentiment: -0.25
 
+});
+
+db.newsarticles.insert({
+    title : "Gold Rises",
+    content: "Fed Delays Rate Hike",
+    newsDate : ISODate('2015-10-10T00:00:00Z'),
+    sentiment : 0.75
 });
 
 
