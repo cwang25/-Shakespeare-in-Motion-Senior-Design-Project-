@@ -572,7 +572,7 @@
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>This endpoint retrieves a specific news article record.</p>
+<p>This endpoint retrieves a specific quote record.</p>
 
 <h3 id="http-request">HTTP Request</h3>
 
@@ -840,7 +840,967 @@
 </tr>
 </tbody></table>
 
-<aside class="warning">This API is a private api, which server will only accept the requests from authenticated sources.</aside>
+        <h2 id="quotes-by-symbol">Get Quotes by Symbol</h2>
+        <pre class="highlight javascript"><code>
+          <span class="nx">$http</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'http://localhost:3000/api/demo/quotes_by_symbol?indexsymbol=^DJC'</span><span class="p">).</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+          <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+          <span class="p">});</span>
+
+        </code></pre>
+<pre class="highlight python"><code>
+  <span class="kn">import</span> <span class="nn">requests</span>
+
+  <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://localhost:3000/api/demo/quotes_by_symbol?indexsymbol=^DJC'</span><span class="p">)</span>
+
+</code></pre>
+
+        <blockquote>
+          <p>The above command returns JSON structured like this:</p>
+        </blockquote>
+<pre class="highlight json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"56140b96704afaca3a822c88"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"high"</span><span class="p">:</span><span class="w"> </span><span class="mf">88.889999</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"low"</span><span class="p">:</span><span class="w"> </span><span class="mf">88.400002</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"qdate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-09-15T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"close"</span><span class="p">:</span><span class="w"> </span><span class="mf">88.57</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^DJC"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"open"</span><span class="p">:</span><span class="w"> </span><span class="mf">88.839996</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"adj_close"</span><span class="p">:</span><span class="w"> </span><span class="mf">88.57</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"__v"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"56140b96704afaca3a822c89"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"high"</span><span class="p">:</span><span class="w"> </span><span class="mf">89.32</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"low"</span><span class="p">:</span><span class="w"> </span><span class="mf">88.349998</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"qdate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-09-14T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"close"</span><span class="p">:</span><span class="w"> </span><span class="mf">88.57</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^DJC"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"open"</span><span class="p">:</span><span class="w"> </span><span class="mf">89.309998</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"adj_close"</span><span class="p">:</span><span class="w"> </span><span class="mf">88.57</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"__v"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"56140b96704afaca3a822c8a"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"high"</span><span class="p">:</span><span class="w"> </span><span class="mf">89.199997</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"low"</span><span class="p">:</span><span class="w"> </span><span class="mf">87.879997</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"qdate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-09-11T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"close"</span><span class="p">:</span><span class="w"> </span><span class="mf">88.93</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^DJC"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"open"</span><span class="p">:</span><span class="w"> </span><span class="mf">89.120003</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"adj_close"</span><span class="p">:</span><span class="w"> </span><span class="mf">88.93</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"__v"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"56140b96704afaca3a822c8b"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"high"</span><span class="p">:</span><span class="w"> </span><span class="mf">89.269997</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"low"</span><span class="p">:</span><span class="w"> </span><span class="mf">87.949997</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"qdate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-09-10T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"close"</span><span class="p">:</span><span class="w"> </span><span class="mf">89.150002</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^DJC"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"open"</span><span class="p">:</span><span class="w"> </span><span class="mf">88.279999</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"adj_close"</span><span class="p">:</span><span class="w"> </span><span class="mf">89.150002</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"__v"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+        <p>This endpoint retrieves a list of quotes that have a particular market symbol.</p>
+
+        <h3 id="http-request">HTTP Request</h3>
+
+        <p><code class="prettyprint">GET http://localhost:3000/api/demo/quotes_by_symbol?indexsymbol=XX</code></p>
+
+        <h3 id="url-parameters">URL Parameters</h3>
+
+        <p>* - required parameter</p>
+
+        <table><thead>
+        <tr>
+          <th>Parameter</th>
+          <th>Description</th>
+        </tr>
+        </thead><tbody>
+        <tr>
+          <td>indexsymbol*</td>
+          <td>A market ticker symbol</td>
+        </tr>
+        </tbody></table>
+
+        <h1 id="entities">Entities</h1>
+        <h2 id="get-all-entities">Get All Entities</h2>
+<pre class="highlight javascript"><code>
+  <span class="nx">$http</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'http://localhost:3000/api/demo/entity'</span><span class="p">).</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+  <span class="p">});</span>
+
+</code></pre>
+<pre class="highlight python"><code>
+  <span class="kn">import</span> <span class="nn">requests</span>
+
+  <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://localhost:3000/api/demo/entity'</span><span class="p">)</span>
+
+</code></pre>
+
+        <blockquote>
+          <p>The above command returns JSON structured like this:</p>
+        </blockquote>
+<pre class="highlight json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55ff65f3e57ca43d87d69255"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"entityDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-12-12T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Federal Reserve"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"sentiment"</span><span class="p">:</span><span class="w"> </span><span class="p">0.5</span><span class="w">
+
+  </span><span class="p">},</span>
+  <span class="p">{</span><span class="w">
+    </span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55ff65f3e57ca43d87d69259"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"entityDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-12-12T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Inflation"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"sentiment"</span><span class="p">:</span><span class="w"> </span><span class="p">0.5</span><span class="w">
+
+  </span><span class="p">}</span>
+</span><span class="p">]</span><span class="w">
+</span></span></code></pre>
+
+        <p>This endpoint retrieves all entities.</p>
+
+        <h3 id="http-request">HTTP Request</h3>
+
+        <p><code class="prettyprint">GET http://localhost:3000/api/demo/entity</code></p>
+
+        <h2 id="create-and-store-entities">Create and Store Entities</h2>
+<pre class="highlight javascript"><code>
+  <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"entityDate"</span><span class="p">:</span><span class="s2">"2015-12-12T00:00:00.000Z"</span><span class="p">,</span> <span class="s2">"title"</span><span class="p">:</span><span class="s2">"Federal Reserve"</span><span class="p">,</span><span class="s2">"count"</span><span class="p">:</span><span class="s2">10</span><span class="p">,</span><span class="p"></span><span class="s2">"sentiment"</span><span class="p">:</span><span class="s2">0.5</span><span class="p"></span><span class="p">};</span>
+  <span class="nx">$http</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'/api/demo/entity'</span><span class="p">,</span> <span class="nx">data</span><span class="p">).</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+  <span class="p">});</span>
+
+</code></pre>
+<pre class="highlight python"><code>
+  <span class="kn">import</span> <span class="nn">requests</span>
+
+  <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">"entityDate"</span><span class="p">:</span><span class="s">"2015-12-12T00:00:00.000Z"</span><span class="p">,</span> <span class="s">"title"</span><span class="p">:</span><span class="s">"Federal Reserve",</span><span class="s">"count"</span><span class="p">:</span><span class="s">10,</span><span class="s">"sentiment"</span><span class="p">:</span><span class="s">0.5,</span><span class="p">}</span>
+  <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'http://localhost:3000/api/demo/entity'</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+</code></pre>
+
+        <blockquote>
+          <p>The above command requires to attach JSON structured in the request body:</p>
+        </blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"entityDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-12-12T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Federal Reserve"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"count"</span><span class="p">:</span><span class="w"> </span><span class="p">10,</span><span class="w">
+  </span><span class="nt">"sentiment"</span><span class="p">:</span><span class="w"> </span><span class="s2">-0.25</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+        <p>This endpoint will create and store entities to server&rsquo;s database.</p>
+
+        <h3 id="http-request">HTTP Request</h3>
+
+        <p><code class="prettyprint">POST http://localhost:3000/api/demo/entity/</code></p>
+
+        <h3 id="json-data-format">JSON data format</h3>
+
+        <p>* - required field</p>
+
+        <table><thead>
+        <tr>
+          <th>Field</th>
+          <th>Description</th>
+        </tr>
+        </thead><tbody>
+        <tr>
+          <td>entityDate</td>
+          <td>The date of the entity (default is the date when the entity is inserted in to the database)</td>
+        </tr>
+        <tr>
+          <td>*title</td>
+          <td>The title of the entity</td>
+        </tr>
+        <tr>
+          <td>*count</td>
+          <td>The number of times an entity appears in the news for a given week</td>
+        </tr>
+        <tr>
+          <td>sentiment</td>
+          <td>A value indicating whether the news depicted the entity in a positive or negative tone. Values range from -1 to +1.</td>
+        </tr>
+        </tbody></table>
+
+        <aside class="warning">This API is a private api, which server will only accept the requests from authenticated sources.</aside>
+
+        <h2 id="get-entities-with-time-range">Get Entities with Time Range</h2>
+<pre class="highlight javascript"><code>
+  <span class="nx">$http</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'http://localhost:3000/api/demo/entitiesbydaterange?startdate=2015-11-16&amp;enddate=2015-11-17'</span><span class="p">).</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+  <span class="p">});</span>
+
+</code></pre>
+<pre class="highlight python"><code>
+  <span class="kn">import</span> <span class="nn">requests</span>
+
+  <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://localhost:3000/api/demo/entitiesbydaterange?startdate=2015-11-16&amp;enddate=2015-11-17'</span><span class="p">)</span>
+
+</code></pre>
+
+        <blockquote>
+          <p>The above command returns JSON structured like this:</p>
+        </blockquote>
+<pre class="highlight json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+     </span><span class="nt">"entityDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Federal Reserve"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"count"</span><span class="p">:</span><span class="w"> </span><span class="p">10,</span><span class="w">
+    </span><span class="nt">"sentiment"</span><span class="p">:</span><span class="w"> </span><span class="s2">0.5</span><span class="w">
+  </span><span class="p">},</span>
+  </span><span class="p">{</span><span class="w">
+     </span><span class="nt">"entityDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-17T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Federal Reserve"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"count"</span><span class="p">:</span><span class="w"> </span><span class="p">10,</span><span class="w">
+    </span><span class="nt">"sentiment"</span><span class="p">:</span><span class="w"> </span><span class="s2">0.5</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+  </span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+        <p>This endpoint retrieves a list of entities that are in the given time range.</p>
+
+        <h3 id="http-request">HTTP Request</h3>
+
+        <p><code class="prettyprint">GET http://localhost:3000/api/demo/entitiesbydaterange?startdate=YYYY-MM-DD&amp;enddate=YYYY-MM-DD</code></p>
+
+        <h3 id="url-parameters">URL Parameters</h3>
+
+        <p>* - required field</p>
+
+        <table><thead>
+        <tr>
+          <th>Parameter</th>
+          <th>Description</th>
+        </tr>
+        </thead><tbody>
+        <tr>
+          <td>startdate*</td>
+          <td>The start date of the time range</td>
+        </tr>
+        <tr>
+          <td>enddate*</td>
+          <td>The end date of the time range</td>
+        </tr>
+        </tbody></table>
+
+        <aside class="notice">The time range of startdate and enddate will be inclusive</aside>
+
+        <h2 id="get-a-specific-entity">Get a Specific Entity</h2>
+<pre class="highlight javascript"><code>
+  <span class="nx">$http</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'http://localhost:3000/api/demo/entity/55ff65f3e57ca43d87d69255'</span><span class="p">).</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+  <span class="p">});</span>
+
+</code></pre>
+<pre class="highlight python"><code>
+  <span class="kn">import</span> <span class="nn">requests</span>
+
+  <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://localhost:3000/api/demo/entity/55ff65f3e57ca43d87d69255'</span><span class="p">)</span>
+
+</code></pre>
+
+        <blockquote>
+          <p>The above command returns JSON structured like this:</p>
+        </blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55ff65f3e57ca43d87d69255"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"entityDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-12-12T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Federal Reserve"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"count"</span><span class="p">:</span><span class="w"> </span><span class="p"></span><span class="s2">10,</span><span class="w">
+  </span><span class="nt">"sentiment"</span><span class="p">:</span><span class="w"> </span><span class="s2">0.5</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+        <p>This endpoint retrieves a specific entity.</p>
+
+
+
+        <h3 id="http-request">HTTP Request</h3>
+
+        <p><code class="prettyprint">GET http://localhost:3000/api/demo/entity/:entityId</code></p>
+
+        <h3 id="url-parameters">URL Parameters</h3>
+
+        <p>* - required field</p>
+
+        <table><thead>
+        <tr>
+          <th>Parameter</th>
+          <th>Description</th>
+        </tr>
+        </thead><tbody>
+        <tr>
+          <td>entityId*</td>
+          <td>The ID of the entity to retrieve</td>
+        </tr>
+        </tbody></table>
+
+        <aside class="notice">The entityId of the entity is the primary key that the record is stored in the databse.</aside>
+
+        <h2 id="update-a-specific-entity">Update a Specific Entity</h2>
+<pre class="highlight javascript"><code>
+  <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"entityDate"</span><span class="p">:</span><span class="s2">"2015-12-12T00:00:00.000Z"</span><span class="p">,</span> <span class="s2">"title"</span><span class="p">:</span><span class="s2">"Federal Reserve"</span><span class="s2">"count"</span><span class="p">:</span><span class="s2">10</span><span class="p">,</span><span class="s2">"sentiment"</span><span class="p">:</span><span class="s2">0.5</span><span class="p"></span><span class="p">};</span>
+  <span class="nx">$http</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="s1">'/api/demo/entity/55ff65f3e57ca43d87d69255'</span><span class="p">,</span> <span class="nx">data</span><span class="p">).</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+  <span class="p">});</span>
+
+</code></pre>
+<pre class="highlight python"><code>
+  <span class="kn">import</span> <span class="nn">requests</span>
+
+  <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">"entityDate"</span><span class="p">:</span><span class="s">"2015-12-12T00:00:00.000Z"</span>,<span class="p">,</span> <span class="s">"title"</span><span class="p">:</span><span class="s">"Federal Reserve"</span>,<span class="s">"count"</span><span class="p">:</span><span class="s">10</span>,<span class="s">"sentiment"</span><span class="p">:</span><span class="s">0.5</span><span class="p">}</span>
+  <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s">'http://localhost:3000/api/demo/entity/55ff65f3e57ca43d87d69255'</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+</code></pre>
+
+        <blockquote>
+          <p>The above command requires to attach JSON structured in the request body:</p>
+        </blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"entityDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-12-12T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Federal Reserve"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"count"</span><span class="p">:</span><span class="w"> </span><span class="p"></span><span class="s2">10,</span><span class="w">
+  </span><span class="nt">"sentiment"</span><span class="p">:</span><span class="w"> </span><span class="s2">0.5</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+        <p>This endpoint update a specific entity record.</p>
+
+        <h3 id="http-request">HTTP Request</h3>
+
+        <p><code class="prettyprint">PUT http://localhost:3000/api/demo/entity/:entityId</code></p>
+
+        <h3 id="url-parameters">URL Parameters</h3>
+
+        <table><thead>
+        <tr>
+          <th>Parameter</th>
+          <th>Description</th>
+        </tr>
+        </thead><tbody>
+        <tr>
+          <td>entityId*</td>
+          <td>The ID of the entity to retrieve</td>
+        </tr>
+        </tbody></table>
+
+        <h3 id="json-data-format">JSON data format</h3>
+
+        <p>* - required field</p>
+
+        <table><thead>
+        <tr>
+          <th>Field</th>
+          <th>Description</th>
+        </tr>
+        </thead><tbody>
+        <tr>
+          <td>entityDate</td>
+          <td>The date of the entity (default is the date when the entity is inserted in to the database)</td>
+        </tr>
+        <tr>
+          <td>*title</td>
+          <td>The title of the entity</td>
+        </tr>
+        <tr>
+          <td>*count</td>
+          <td>The number of times the entity appears in the news for a given week</td>
+        </tr>
+        <tr>
+          <td>sentiment</td>
+          <td>A value indicating whether the news depicted the entity in a positive or negative tone. Values range from -1 to +1.</td>
+        </tr>
+        </tbody></table>
+
+        <aside class="warning">This API is a private api, which server will only accept the requests from authenticated sources.</aside>
+
+        <h2 id="delete-an-entity">Delete an Entity</h2>
+
+
+<pre class="highlight javascript"><code>
+  <span class="nx">$http</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="s1">'http://localhost:3000/api/demo/entity/55ff65f3e57ca43d87d69255'</span><span class="p">).</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+  <span class="p">});</span>
+
+</code></pre>
+<pre class="highlight python"><code>
+  <span class="kn">import</span> <span class="nn">requests</span>
+
+  <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s">'http://localhost:3000/api/demo/entity/55ff65f3e57ca43d87d69255'</span><span class="p">)</span>
+
+</code></pre>
+
+        <p>This endpoint delete a specific entity record.</p>
+
+        <h3 id="http-request">HTTP Request</h3>
+
+        <p><code class="prettyprint">DELETE http://localhost:3000/api/demo/entity/:entityId</code></p>
+
+        <h3 id="url-parameters">URL Parameters</h3>
+
+        <p>* - required field</p>
+
+        <table><thead>
+        <tr>
+          <th>Parameter</th>
+          <th>Description</th>
+        </tr>
+        </thead><tbody>
+        <tr>
+          <td>entityId*</td>
+          <td>The ID of the entity to delete</td>
+        </tr>
+        </tbody></table>
+
+        <aside class="warning">This API is a private api, which server will only accept the requests from authenticated sources.</aside>
+
+        <h1 id="week_summary">Week Summaries</h1>
+        <h2 id="get-all-week_summaries">Get All Week Summaries</h2>
+<pre class="highlight javascript"><code>
+  <span class="nx">$http</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'http://localhost:3000/api/demo/weeksum'</span><span class="p">).</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+  <span class="p">});</span>
+
+</code></pre>
+<pre class="highlight python"><code>
+  <span class="kn">import</span> <span class="nn">requests</span>
+
+  <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://localhost:3000/api/demo/weeksum'</span><span class="p">)</span>
+
+</code></pre>
+
+        <blockquote>
+          <p>The above command returns JSON structured like this:</p>
+        </blockquote>
+<pre class="highlight json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55ff65f3e57ca43d87d69255"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"week_start_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"week_end_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-20T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"week_index"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^DJC"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"bcom_indices"</span><span class="p">:</span><span class="w"> </span><span class="mi">["55ff65","55ff66","55ff67","55ff68","55ff69"]</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"bcom_max"</span><span class="p">:</span><span class="w"> </span><span class="p">87.0</span><span class="w">
+    </span><span class="nt">"bcom_min"</span><span class="p">:</span><span class="w"> </span><span class="p">82.0</span><span class="w">
+    </span><span class="nt">"bcom_avg_slope"</span><span class="p">:</span><span class="w"> </span><span class="p">-0.15</span><span class="w">
+    </span><span class="nt">"bcom_week_momentum"</span><span class="p">:</span><span class="w"> </span><span class="p">-2.20</span><span class="w">
+    </span><span class="nt">"bcom_week_rsi"</span><span class="p">:</span><span class="w"> </span><span class="p">30.75</span><span class="w">
+    </span><span class="nt">"articles"</span><span class="p">:</span><span class="w"> </span><span class="mi">["55ff71","55ff72","55ff73","55ff74","55ff75"]</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"avg_article_sentiment"</span><span class="p">:</span><span class="w"> </span><span class="mi">0.31</span><span class="p">,</span><span class="w">
+
+  </span><span class="p">},</span>
+  <span class="p">{</span><span class="w">
+    </span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55ff65f3e57ca43d87d69270"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"week_start_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-09T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"week_end_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-13T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"week_index"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^DJC"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"bcom_indices"</span><span class="p">:</span><span class="w"> </span><span class="mi">["55ff41","55ff42","55ff43","55ff44","55ff45"]</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"bcom_max"</span><span class="p">:</span><span class="w"> </span><span class="p">86.0</span><span class="w">
+    </span><span class="nt">"bcom_min"</span><span class="p">:</span><span class="w"> </span><span class="p">84.0</span><span class="w">
+    </span><span class="nt">"bcom_avg_slope"</span><span class="p">:</span><span class="w"> </span><span class="p">-0.10</span><span class="w">
+    </span><span class="nt">"bcom_week_momentum"</span><span class="p">:</span><span class="w"> </span><span class="p">-1.30</span><span class="w">
+    </span><span class="nt">"bcom_week_rsi"</span><span class="p">:</span><span class="w"> </span><span class="p">40.50</span><span class="w">
+    </span><span class="nt">"articles"</span><span class="p">:</span><span class="w"> </span><span class="mi">["55ff91","55ff92","55ff93","55ff94","55ff95"]</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"avg_article_sentiment"</span><span class="p">:</span><span class="w"> </span><span class="mi">0.40</span><span class="p">,</span><span class="w">
+
+  </span><span class="p">}</span>
+  </span><span class="p">]</span><span class="w">
+</span></span></code></pre>
+
+        <p>This endpoint retrieves all week summaries.</p>
+
+        <h3 id="http-request">HTTP Request</h3>
+
+        <p><code class="prettyprint">GET http://localhost:3000/api/demo/weeksum</code></p>
+
+        <h2 id="create-and-store-week-summaries">Create and Store Week Summaries</h2>
+<pre class="highlight javascript"><code>
+  <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55ff65f3e57ca43d87d69255"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"week_start_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"week_end_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-20T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"week_index"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^DJC"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"bcom_indices"</span><span class="p">:</span><span class="w"> </span><span class="mi">["55ff65","55ff66","55ff67","55ff68","55ff69"]</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"bcom_max"</span><span class="p">:</span><span class="w"> </span><span class="p">87.0</span><span class="w">
+    </span><span class="nt">"bcom_min"</span><span class="p">:</span><span class="w"> </span><span class="p">82.0</span><span class="w">
+    </span><span class="nt">"bcom_avg_slope"</span><span class="p">:</span><span class="w"> </span><span class="p">-0.15</span><span class="w">
+    </span><span class="nt">"bcom_week_momentum"</span><span class="p">:</span><span class="w"> </span><span class="p">-2.20</span><span class="w">
+    </span><span class="nt">"bcom_week_rsi"</span><span class="p">:</span><span class="w"> </span><span class="p">30.75</span><span class="w">
+    </span><span class="nt">"articles"</span><span class="p">:</span><span class="w"> </span><span class="mi">["55ff71","55ff72","55ff73","55ff74","55ff75"]</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"avg_article_sentiment"</span><span class="p">:</span><span class="w"> </span><span class="mi">0.31</span><span class="p"></span><span class="w">
+    </span><span class="p">};</span>
+</span>
+  <span class="nx">$http</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'/api/demo/weeksum'</span><span class="p">,</span> <span class="nx">data</span><span class="p">).</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+  <span class="p">});</span>
+
+</code></pre>
+<pre class="highlight python"><code>
+  <span class="kn">import</span> <span class="nn">requests</span>
+
+  <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55ff65f3e57ca43d87d69255"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"week_start_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"week_end_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-20T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"week_index"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^DJC"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"bcom_indices"</span><span class="p">:</span><span class="w"> </span><span class="mi">["55ff65","55ff66","55ff67","55ff68","55ff69"]</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"bcom_max"</span><span class="p">:</span><span class="w"> </span><span class="p">87.0</span><span class="w">
+    </span><span class="nt">"bcom_min"</span><span class="p">:</span><span class="w"> </span><span class="p">82.0</span><span class="w">
+    </span><span class="nt">"bcom_avg_slope"</span><span class="p">:</span><span class="w"> </span><span class="p">-0.15</span><span class="w">
+    </span><span class="nt">"bcom_week_momentum"</span><span class="p">:</span><span class="w"> </span><span class="p">-2.20</span><span class="w">
+    </span><span class="nt">"bcom_week_rsi"</span><span class="p">:</span><span class="w"> </span><span class="p">30.75</span><span class="w">
+    </span><span class="nt">"articles"</span><span class="p">:</span><span class="w"> </span><span class="mi">["55ff71","55ff72","55ff73","55ff74","55ff75"]</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"avg_article_sentiment"</span><span class="p">:</span><span class="w"> </span><span class="mi">0.31</span><span class="p"></span><span class="w">
+    </span><span class="p">};</span>
+  <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'http://localhost:3000/api/demo/entity'</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+</code></pre>
+
+        <blockquote>
+          <p>The above command requires to attach JSON structured in the request body:</p>
+        </blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55ff65f3e57ca43d87d69255"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"week_start_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"week_end_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-20T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"week_index"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^DJC"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"bcom_indices"</span><span class="p">:</span><span class="w"> </span><span class="mi">["55ff65","55ff66","55ff67","55ff68","55ff69"]</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"bcom_max"</span><span class="p">:</span><span class="w"> </span><span class="p">87.0</span><span class="w">
+    </span><span class="nt">"bcom_min"</span><span class="p">:</span><span class="w"> </span><span class="p">82.0</span><span class="w">
+    </span><span class="nt">"bcom_avg_slope"</span><span class="p">:</span><span class="w"> </span><span class="p">-0.15</span><span class="w">
+    </span><span class="nt">"bcom_week_momentum"</span><span class="p">:</span><span class="w"> </span><span class="p">-2.20</span><span class="w">
+    </span><span class="nt">"bcom_week_rsi"</span><span class="p">:</span><span class="w"> </span><span class="p">30.75</span><span class="w">
+    </span><span class="nt">"articles"</span><span class="p">:</span><span class="w"> </span><span class="mi">["55ff71","55ff72","55ff73","55ff74","55ff75"]</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"avg_article_sentiment"</span><span class="p">:</span><span class="w"> </span><span class="mi">0.31</span><span class="p"></span><span class="w">
+    </span><span class="p">};</span>
+</span></code></pre>
+
+        <p>This endpoint will create and store week summaries to server&rsquo;s database.</p>
+
+        <h3 id="http-request">HTTP Request</h3>
+
+        <p><code class="prettyprint">POST http://localhost:3000/api/demo/weeksum/</code></p>
+
+        <h3 id="json-data-format">JSON data format</h3>
+
+        <p>* - required field</p>
+
+        <table><thead>
+        <tr>
+          <th>Field</th>
+          <th>Description</th>
+        </tr>
+        </thead><tbody>
+        <tr>
+          <td>*week_start_date</td>
+          <td>The starting date of a Monday-Friday period</td>
+        </tr>
+        <tr>
+          <td>*week_end_date</td>
+          <td>The ending date of a Monday-Friday period</td>
+        </tr>
+        <tr>
+          <td>week_index</td>
+          <td>The market index symbol (default is ^DJC)</td>
+        </tr>
+        <tr>
+          <td>bcom_indices</td>
+          <td>An array of market quotes. Default is an empty array.</td>
+        </tr>
+        <tr>
+          <td>*bcom_max</td>
+          <td>The market index's highest value during the week</td>
+        </tr>
+        <tr>
+          <td>*bcom_min</td>
+          <td>The market index's lowest value during the week</td>
+        </tr>
+        <tr>
+          <td>*bcom_avg_slope</td>
+          <td>The market index's slope</td>
+        </tr>
+        <tr>
+          <td>bcom_week_momentum</td>
+          <td>The market index's momentum value</td>
+        </tr>
+        <tr>
+          <td>bcom_week_rsi</td>
+          <td>The market index's Relative Strength Index value</td>
+        </tr>
+        <tr>
+          <td>articles</td>
+          <td>An array of news articles for the week. Default is an empty array</td>
+        </tr>
+        <tr>
+          <td>avg_article_sentiment</td>
+          <td>The average sentiment value of articles in the database for the week</td>
+        </tr>
+        </tbody></table>
+
+        <aside class="warning">This API is a private api, which server will only accept the requests from authenticated sources.</aside>
+
+        <h2 id="get-week-summary-by-date-index">Get Week Summary by Date and Index</h2>
+<pre class="highlight javascript"><code>
+  <span class="nx">$http</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'http://localhost:3000/api/demo/weeksum_by_date_index?startdate=2015-11-16&amp;indexsymbol=^DJC'</span><span class="p">).</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+  <span class="p">});</span>
+
+</code></pre>
+<pre class="highlight python"><code>
+  <span class="kn">import</span> <span class="nn">requests</span>
+
+  <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://localhost:3000/api/demo/weeksum_by_date_index?startdate=2015-11-16&amp;indexsymbol=^DJC'</span><span class="p">)</span>
+
+</code></pre>
+
+        <blockquote>
+          <p>The above command returns JSON structured like this:</p>
+        </blockquote>
+<pre class="highlight json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55ff65f3e57ca43d87d69255"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"week_start_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"week_end_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-20T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"week_index"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^DJC"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"bcom_indices"</span><span class="p">:</span><span class="w"> </span><span class="mi">["55ff65","55ff66","55ff67","55ff68","55ff69"]</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"bcom_max"</span><span class="p">:</span><span class="w"> </span><span class="p">87.0</span><span class="w">
+    </span><span class="nt">"bcom_min"</span><span class="p">:</span><span class="w"> </span><span class="p">82.0</span><span class="w">
+    </span><span class="nt">"bcom_avg_slope"</span><span class="p">:</span><span class="w"> </span><span class="p">-0.15</span><span class="w">
+    </span><span class="nt">"bcom_week_momentum"</span><span class="p">:</span><span class="w"> </span><span class="p">-2.20</span><span class="w">
+    </span><span class="nt">"bcom_week_rsi"</span><span class="p">:</span><span class="w"> </span><span class="p">30.75</span><span class="w">
+    </span><span class="nt">"articles"</span><span class="p">:</span><span class="w"> </span><span class="mi">["55ff71","55ff72","55ff73","55ff74","55ff75"]</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"avg_article_sentiment"</span><span class="p">:</span><span class="w"> </span><span class="mi">0.31</span><span class="p">,</span><span class="w">
+    </span><span class="p">}</span>
+
+  </span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+        <p>This endpoint retrieves a week summary for week that includes the specified date</p>
+
+        <h3 id="http-request">HTTP Request</h3>
+
+        <p><code class="prettyprint">GET http://localhost:3000/api/demo/weeksum_by_date_index?date=YYYY-MM-DD&indexsymbol=XX</code></p>
+
+        <h3 id="url-parameters">URL Parameters</h3>
+
+        <p>* - required field</p>
+
+        <table><thead>
+        <tr>
+          <th>Parameter</th>
+          <th>Description</th>
+        </tr>
+        </thead><tbody>
+        <tr>
+          <td>*date</td>
+          <td>The date that should be included in the time range of the week summary returned</td>
+        </tr>
+        <tr>
+          <td>indexsymbol</td>
+          <td>A market ticker symbol</td>
+        </tr>
+        </tbody></table>
+
+
+        <h2 id="get-a-specific-week-summary">Get a Specific Week Summary</h2>
+<pre class="highlight javascript"><code>
+  <span class="nx">$http</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'http://localhost:3000/api/demo/weeksumId/55ff65f3e58'</span><span class="p">).</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+  <span class="p">});</span>
+
+</code></pre>
+<pre class="highlight python"><code>
+  <span class="kn">import</span> <span class="nn">requests</span>
+
+  <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://localhost:3000/api/demo/weeksumId/55ff65f3e58'</span><span class="p">)</span>
+
+</code></pre>
+
+        <blockquote>
+          <p>The above command returns JSON structured like this:</p>
+        </blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55ff65f3e58"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"week_start_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"week_end_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-20T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"week_index"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^DJC"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"bcom_indices"</span><span class="p">:</span><span class="w"> </span><span class="mi">["55ff65","55ff66","55ff67","55ff68","55ff69"]</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"bcom_max"</span><span class="p">:</span><span class="w"> </span><span class="p">87.0</span><span class="w">
+    </span><span class="nt">"bcom_min"</span><span class="p">:</span><span class="w"> </span><span class="p">82.0</span><span class="w">
+    </span><span class="nt">"bcom_avg_slope"</span><span class="p">:</span><span class="w"> </span><span class="p">-0.15</span><span class="w">
+    </span><span class="nt">"bcom_week_momentum"</span><span class="p">:</span><span class="w"> </span><span class="p">-2.20</span><span class="w">
+    </span><span class="nt">"bcom_week_rsi"</span><span class="p">:</span><span class="w"> </span><span class="p">30.75</span><span class="w">
+    </span><span class="nt">"articles"</span><span class="p">:</span><span class="w"> </span><span class="mi">["55ff71","55ff72","55ff73","55ff74","55ff75"]</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"avg_article_sentiment"</span><span class="p">:</span><span class="w"> </span><span class="mi">0.31</span><span class="p">,</span><span class="w">
+    </span><span class="p">}</span>
+
+  </span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+        <p>This endpoint retrieves a specific week summary.</p>
+
+
+
+        <h3 id="http-request">HTTP Request</h3>
+
+        <p><code class="prettyprint">GET http://localhost:3000/api/demo/weeksumId/:weeksumId</code></p>
+
+        <h3 id="url-parameters">URL Parameters</h3>
+
+        <p>* - required field</p>
+
+        <table><thead>
+        <tr>
+          <th>Parameter</th>
+          <th>Description</th>
+        </tr>
+        </thead><tbody>
+        <tr>
+          <td>*weeksumId</td>
+          <td>The ID of the week summary to retrieve</td>
+        </tr>
+        </tbody></table>
+
+        <aside class="notice">The weeksumId of the week summary is the primary key of the record that is stored in the database.</aside>
+
+        <h2 id="update-a-specific-week-summary">Update a Specific Week Summary</h2>
+<pre class="highlight javascript"><code>
+  <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55ff65f3e57ca43d87d69255"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"week_start_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"week_end_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-20T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"week_index"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^DJC"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"bcom_indices"</span><span class="p">:</span><span class="w"> </span><span class="mi">["55ff65","55ff66","55ff67","55ff68","55ff69"]</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"bcom_max"</span><span class="p">:</span><span class="w"> </span><span class="p">87.0</span><span class="w">
+    </span><span class="nt">"bcom_min"</span><span class="p">:</span><span class="w"> </span><span class="p">82.0</span><span class="w">
+    </span><span class="nt">"bcom_avg_slope"</span><span class="p">:</span><span class="w"> </span><span class="p">-0.15</span><span class="w">
+    </span><span class="nt">"bcom_week_momentum"</span><span class="p">:</span><span class="w"> </span><span class="p">-2.20</span><span class="w">
+    </span><span class="nt">"bcom_week_rsi"</span><span class="p">:</span><span class="w"> </span><span class="p">30.75</span><span class="w">
+    </span><span class="nt">"articles"</span><span class="p">:</span><span class="w"> </span><span class="mi">["55ff71","55ff72","55ff73","55ff74","55ff75"]</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"avg_article_sentiment"</span><span class="p">:</span><span class="w"> </span><span class="mi">0.31</span><span class="p"></span><span class="w">
+    </span><span class="p">};</span>
+  </span>
+  <span class="nx">$http</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="s1">'/api/demo/weeksum/55ff65f3e57ca43d87d69255'</span><span class="p">,</span> <span class="nx">data</span><span class="p">).</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+  <span class="p">});</span>
+
+</code></pre>
+<pre class="highlight python"><code>
+  <span class="kn">import</span> <span class="nn">requests</span>
+
+  <span class="n">data</span><span class="o">=</span> <span class="p">{</span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55ff65f3e57ca43d87d69255"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"week_start_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"week_end_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-20T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"week_index"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^DJC"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"bcom_indices"</span><span class="p">:</span><span class="w"> </span><span class="mi">["55ff65","55ff66","55ff67","55ff68","55ff69"]</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"bcom_max"</span><span class="p">:</span><span class="w"> </span><span class="p">87.0</span><span class="w">
+    </span><span class="nt">"bcom_min"</span><span class="p">:</span><span class="w"> </span><span class="p">82.0</span><span class="w">
+    </span><span class="nt">"bcom_avg_slope"</span><span class="p">:</span><span class="w"> </span><span class="p">-0.15</span><span class="w">
+    </span><span class="nt">"bcom_week_momentum"</span><span class="p">:</span><span class="w"> </span><span class="p">-2.20</span><span class="w">
+    </span><span class="nt">"bcom_week_rsi"</span><span class="p">:</span><span class="w"> </span><span class="p">30.75</span><span class="w">
+    </span><span class="nt">"articles"</span><span class="p">:</span><span class="w"> </span><span class="mi">["55ff71","55ff72","55ff73","55ff74","55ff75"]</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"avg_article_sentiment"</span><span class="p">:</span><span class="w"> </span><span class="mi">0.31</span><span class="p"></span><span class="w">
+    </span><span class="p">};</span>
+  </span>
+  <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s">'http://localhost:3000/api/demo/weeksum/55ff65f3e57ca43d87d69255'</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+</code></pre>
+
+        <blockquote>
+          <p>The above command requires to attach JSON structured in the request body:</p>
+        </blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"week_start_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"week_end_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-20T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"week_index"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^DJC"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"bcom_indices"</span><span class="p">:</span><span class="w"> </span><span class="mi">["55ff65","55ff66","55ff67","55ff68","55ff69"]</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"bcom_max"</span><span class="p">:</span><span class="w"> </span><span class="p">87.0</span><span class="w">
+    </span><span class="nt">"bcom_min"</span><span class="p">:</span><span class="w"> </span><span class="p">82.0</span><span class="w">
+    </span><span class="nt">"bcom_avg_slope"</span><span class="p">:</span><span class="w"> </span><span class="p">-0.15</span><span class="w">
+    </span><span class="nt">"bcom_week_momentum"</span><span class="p">:</span><span class="w"> </span><span class="p">-2.20</span><span class="w">
+    </span><span class="nt">"bcom_week_rsi"</span><span class="p">:</span><span class="w"> </span><span class="p">30.75</span><span class="w">
+    </span><span class="nt">"articles"</span><span class="p">:</span><span class="w"> </span><span class="mi">["55ff71","55ff72","55ff73","55ff74","55ff75"]</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"avg_article_sentiment"</span><span class="p">:</span><span class="w"> </span><span class="mi">0.31</span><span class="p"></span><span class="w">
+    </span><span class="p"></span>
+  <span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+        <p>This endpoint updates a specific week summary.</p>
+
+        <h3 id="http-request">HTTP Request</h3>
+
+        <p><code class="prettyprint">PUT http://localhost:3000/api/demo/weeksum/:weeksumId</code></p>
+
+        <h3 id="url-parameters">URL Parameters</h3>
+
+        <table><thead>
+        <tr>
+          <th>Parameter</th>
+          <th>Description</th>
+        </tr>
+        </thead><tbody>
+        <tr>
+          <td>weeksumId*</td>
+          <td>The ID of the week summary to retrieve</td>
+        </tr>
+        </tbody></table>
+
+        <h3 id="json-data-format">JSON data format</h3>
+
+        <p>* - required field</p>
+
+        <table><thead>
+        <tr>
+          <th>Field</th>
+          <th>Description</th>
+        </tr>
+        </thead><tbody>
+        <tr>
+          <td>*week_start_date</td>
+          <td>The starting date of a Monday-Friday period</td>
+        </tr>
+        <tr>
+          <td>*week_end_date</td>
+          <td>The ending date of a Monday-Friday period</td>
+        </tr>
+        <tr>
+          <td>week_index</td>
+          <td>The market index symbol (default is ^DJC)</td>
+        </tr>
+        <tr>
+          <td>bcom_indices</td>
+          <td>An array of market quotes. Default is an empty array.</td>
+        </tr>
+        <tr>
+          <td>*bcom_max</td>
+          <td>The market index's highest value during the week</td>
+        </tr>
+        <tr>
+          <td>*bcom_min</td>
+          <td>The market index's lowest value during the week</td>
+        </tr>
+        <tr>
+          <td>*bcom_avg_slope</td>
+          <td>The market index's slope</td>
+        </tr>
+        <tr>
+          <td>bcom_week_momentum</td>
+          <td>The market index's momentum value</td>
+        </tr>
+        <tr>
+          <td>bcom_week_rsi</td>
+          <td>The market index's Relative Strength Index value</td>
+        </tr>
+        <tr>
+          <td>articles</td>
+          <td>An array of news articles for the week. Default is an empty array</td>
+        </tr>
+        <tr>
+          <td>avg_article_sentiment</td>
+          <td>The average sentiment value of articles in the database for the week</td>
+        </tr>
+        </tbody></table>
+
+
+        <aside class="warning">This API is a private api, which server will only accept the requests from authenticated sources.</aside>
+
+        <h2 id="delete-a-week-summary">Delete a Week Summary</h2>
+
+
+<pre class="highlight javascript"><code>
+  <span class="nx">$http</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="s1">'http://localhost:3000/api/demo/weeksum/55ff65f3e57ca43d87d69255'</span><span class="p">).</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+  <span class="p">});</span>
+
+</code></pre>
+<pre class="highlight python"><code>
+  <span class="kn">import</span> <span class="nn">requests</span>
+
+  <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s">'http://localhost:3000/api/demo/weeksum/55ff65f3e57ca43d87d69255'</span><span class="p">)</span>
+
+</code></pre>
+
+        <p>This endpoint delete a specific week summary record.</p>
+
+        <h3 id="http-request">HTTP Request</h3>
+
+        <p><code class="prettyprint">DELETE http://localhost:3000/api/demo/weeksum/:weeksumId</code></p>
+
+        <h3 id="url-parameters">URL Parameters</h3>
+
+        <p>* - required field</p>
+
+        <table><thead>
+        <tr>
+          <th>Parameter</th>
+          <th>Description</th>
+        </tr>
+        </thead><tbody>
+        <tr>
+          <td>*entityId</td>
+          <td>The ID of the week summary to delete</td>
+        </tr>
+        </tbody></table>
+
+        <aside class="warning">This API is a private api, which server will only accept the requests from authenticated sources.</aside>
+
+        <h1 id="crawl-and-generate-week-summary">Crawl and Generate Week Summary</h1>
+
+<pre class="highlight javascript"><code>
+  <span class="nx">$http</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'http://localhost:3000/api/demo/crawl_and_generate_week_summary'</span><span class="p">).</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+  <span class="p">});</span>
+
+</code></pre>
+<pre class="highlight python"><code>
+  <span class="kn">import</span> <span class="nn">requests</span>
+
+  <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://localhost:3000/api/demo/crawl_and_generate_week_summary'</span><span class="p">)</span>
+
+</code></pre>
+
+
+        <p>This endpoint runs IndexCrawler.py, a Python script to execute YQL scripts to obtain market quotes from Yahoo Finance. After the quotes have been obtained, a week summary is generated </p>
+
+        <h3 id="http-request">HTTP Request</h3>
+
+        <p><code class="prettyprint">GET http://localhost:3000/api/demo/crawl_and_generate_week_summary</code></p>
+
+
+
+        <h1 id="get_news_from_alchemy">Get News from Alchemy</h1>
+
+<pre class="highlight javascript"><code>
+  <span class="nx">$http</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'http://localhost:3000/api/demo/get_news_from_alchemy'</span><span class="p">).</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+  <span class="p">});</span>
+
+</code></pre>
+<pre class="highlight python"><code>
+  <span class="kn">import</span> <span class="nn">requests</span>
+
+  <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://localhost:3000/api/demo/get_news_from_alchemy'</span><span class="p">)</span>
+
+</code></pre>
+
+
+        <p>This endpoint runs ArticleCrawler.py, a Python script that uses the Alchemy API to obtain news. After the news have been obtained, ArticleDatabaseClean.py is executed to generate the full text of news articles. </p>
+
+        <h3 id="http-request">HTTP Request</h3>
+
+        <p><code class="prettyprint">GET http://localhost:3000/api/demo/get_news_from_alchemy</code></p>
 
       </div>
       <div class="dark-box">
