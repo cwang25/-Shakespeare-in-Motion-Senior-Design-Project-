@@ -99,23 +99,89 @@ describe('<Unit Test>', function() {
         done();
       });
 
-
-      it('should be able to show an error when try to save missing date record', function(done) {
+      it('should be able to retrieve quotes in time range and also update through controller without problems', function(done) {
         this.timeout(10000);
-        djcQuote.qdate = '';
-        return djcQuote.save(function(err) {
-          expect(err).to.not.be(null);
-          done();
+        req.query = {
+          startdate : "2015-10-10",
+          enddate : "2015-10-10"
+        };
+        quoteCtr.quotes_in_time_range(req, res, function(){
+          console.log(res.json_object);
+          expect(res.json_object[0].high).to.be(150);
+          req = {};
+          req.ip = "127.0.0.1";
+          req.quote = res.json_object[0];
+          //update
+          req.quote.high = 200;
+          res = {};
+          quoteCtr.update(req, res, function(){
+            quoteCtr.quotes_in_time_range(req, res, function(){
+              console.log("After update: -----\n"+ res.json_object[0]);
+              expect(res.json_object[0].qsymbol).to.be(200);
+            });quoteCtr
+          });
         });
+        done();
+      });
+
+      it('should be able to retrieve quotes by symbol without problems', function(done) {
+        this.timeout(10000);
+        req.query = {
+          indexsymbol:"^DJC"
+        };
+        quoteCtr.quotes_by_symbol(req, res, function(){
+          console.log(res.json_object);
+          expect(res.json_object[0].qsymbol).to.be("^DJC");
+        });
+        done();
+      });
+      it('should be able to retrieve all quotes without problems', function(done) {
+        this.timeout(10000);
+        quoteCtr.all(req, res, function(){
+          console.log(res.json_object);
+          expect(res.json_object[0].qsymbol).to.be("^DJC");
+        });
+        done();
+      });
+
+      it('should be able to delete through controller without problems', function(done) {
+        this.timeout(10000);
+        req.body = {
+          qsymbol : "^DJC",
+          qdate : "2015-10-12",
+          open : "100",
+          high : "150",
+          low : "90",
+          close : "110",
+          adj_close : "115",
+          volume : "20"
+        };
+        //add dumb record to remove
+        quoteCtr.create(req, res, function(){
+          expect(res.json_object.qdate).to.be(req.body.qdate);
+          //destry
+          req = {};
+          req.ip = "127.0.0.1";
+          req.quote = res.json_object;
+          quoteCtr.destroy(req,res,function(){
+            quoteCtr.all(req, res, function(){
+              console.log(res.json_object);
+              expect(res.json_object.length).to.be(1);
+            });
+          })
+        });
+        //
+        done();
       });
 
     });
 
-    afterEach(function(done) {
+    after(function(done) {
       this.timeout(10000);
-
-      Quote.remove({}).exec();
-      done();
+      Quote.remove({},function(err){
+        console.log("db cleaned");
+        done();
+      });
     });
   });
 });

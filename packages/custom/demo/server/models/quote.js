@@ -55,15 +55,21 @@ QuoteSchema.pre("save",function(next){
   var self = this;
   mongoose.models["Quote"].findOne({
     qsymbol: self.qsymbol,
-    qdate: self.qdate
+    qdate: self.qdate,
+    open: self.open,
+    high: self.high,
+    low: self.low,
+    close: self.close,
+    volume: self.volume,
+    adj_close: self.adj_close
   },function(err, quote){
     if(err){
       next(err);
     }else if(quote){
-      console.log("There is no two same symbol quotes with the same date ");
+      console.log("There is no two same symbol quotes");
       console.log(self);
       console.log(quote);
-      self.invalidate("qsymbol","There is no two same symbol quotes with the same date");
+      self.invalidate("qsymbol","There is no two same symbol quotes");
       next(new Error("date must be different for quote with same symbol"));
     }else{
       next();

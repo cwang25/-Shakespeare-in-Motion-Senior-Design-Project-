@@ -51,7 +51,7 @@ module.exports = function(app) {
          * Update an quote
          * -private api
          */
-        update: function(req, res) {
+        update: function(req, res, next) {
             if(rqChecker.check_local(req, res)){
                 var quote = req.quote;
                 quote = _.extend(quote, req.body);
@@ -62,6 +62,8 @@ module.exports = function(app) {
                         });
                     }
                     res.json(quote);
+                    //ensure the callback is there.
+                    typeof next == "function" && next();
                 });
             }
         },
@@ -69,7 +71,7 @@ module.exports = function(app) {
          * Delete an quote
          * -private api
          */
-        destroy: function(req, res) {
+        destroy: function(req, res, next) {
             if (rqChecker.check_local(req, res)) {
                 var quote = req.quote;
                 quote.remove(function (err) {
@@ -79,6 +81,8 @@ module.exports = function(app) {
                         });
                     }
                     res.json(quote);
+                    //ensure the callback is there.
+                    typeof next == "function" && next();
                 });
             }
         },
@@ -110,14 +114,15 @@ module.exports = function(app) {
                         error: 'Cannot list the qutoes'
                     });
                 }
-
                 res.json(quotes)
+                //ensure the callback is there.
+                typeof next == "function" && next();
             });
         },
         /**
          * List of Quotes
          */
-        all: function(req, res) {
+        all: function(req, res, next) {
             Quote.find({}).sort('-qdate').exec(function(err, quote) {
                 if (err) {
                     return res.status(500).json({
@@ -126,6 +131,8 @@ module.exports = function(app) {
                 }
 
                 res.json(quote)
+                //ensure the callback is there.
+                typeof next == "function" && next();
             });
         },
         /**
@@ -147,6 +154,8 @@ module.exports = function(app) {
                     });
                 }
                 res.json(quotes)
+                //ensure the callback is there.
+                typeof next == "function" && next();
             });
         }
     };
