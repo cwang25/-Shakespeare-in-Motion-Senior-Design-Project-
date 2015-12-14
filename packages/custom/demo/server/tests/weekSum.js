@@ -6,8 +6,8 @@
  * Module dependencies.
  */
 var expect = require('expect.js'),
-    mongoose = require('mongoose'),
-    WeekSum = mongoose.model('WeekSum');
+  mongoose = require('mongoose'),
+  WeekSum = mongoose.model('WeekSum');
 /**
  * Globals
  */
@@ -46,7 +46,7 @@ describe('<Unit Test>', function() {
         bcom_week_momentum:"10",
         bcom_week_rsi:"5",
         articles:["4","5","6"],
-        avg_articles_sentiment:"-1"
+        avg_articles_sentiment:"-1.0"
       });
       weekSum3 = new WeekSum({
         week_start_date:"2015-11-09",
@@ -64,10 +64,35 @@ describe('<Unit Test>', function() {
       done();
     });
     describe('WeekSum Save', function() {
+      it('should be able to save without problems', function(done) {
+        this.timeout(10000);
+        var data1, data2, data3;
+
+        weekSum1.save(function(err, data) {
+          expect(err).to.be(null);
+          weekSum1["_id"] = data._id;
+          data1 = data;
+          console.log(data1+"*******");
+          weekSum2.save(function(err, data) {
+            expect(err).to.be(null);
+            weekSum2["_id"] = data._id;
+            data2 = data;
+            weekSum3.save(function(err, data) {
+              expect(err).to.be(null);
+              weekSum3["_id"] = data._id;
+              data3 = data;
+              expect(data1.bcom_max).to.equal(90);
+              expect(data2.bcom_max).to.equal(15000);
+              expect(data3.bcom_max).to.equal(88);
+              done();
+            });
+          });
+        });
+      });
 
       it('should save without problems', function(done) {
         this.timeout(10000);
-        return weekSum1.save(function(err) {
+        weekSum1.save(function(err) {
           expect(err).to.be(null);
           done();
         });
@@ -77,7 +102,7 @@ describe('<Unit Test>', function() {
       it('should be able to show an error when try to save missing date record', function(done) {
         this.timeout(10000);
         weekSum1.week_end_date = '';
-        return weekSum1.save(function(err) {
+        weekSum1.save(function(err) {
           expect(err).to.not.be(null);
           done();
         });
@@ -85,7 +110,7 @@ describe('<Unit Test>', function() {
       it('should be able to show an error when try to save missing date record', function(done) {
         this.timeout(10000);
         weekSum1.week_start_date = '';
-        return weekSum1.save(function(err) {
+        weekSum1.save(function(err) {
           expect(err).to.not.be(null);
           done();
         });
