@@ -34,16 +34,14 @@ describe('<Unit Test>', function() {
       //mock response .send method instead of actually sending response, print to console log.
       res.send = function(msg) {
         // fake the write method
-        console.log("Mock response message received: "+msg);
-        return msg;
+        console.log("Mock response message received"+msg);
       };
       //mock response .json method instead of actaully stringfy json object
       res.json = function(jsonobj) {
         // fake the json method
-        console.log("Mock response json object received: "+jsonobj);
+        console.log("Mock response json object received");
         res.json_object = jsonobj;
         //console.log(res.json+"===============");
-        return jsonobj;
       };
 
       djcQuote = new Quote({
@@ -93,10 +91,12 @@ describe('<Unit Test>', function() {
           volume : "20"
         };
         quoteCtr.create(req, res, function(){
-          expect(res.json_object.qdate).to.be(req.body.qdate);
+          //console.log(res.json_object.qdate+"------"+req.body.qdate);
+          expect(res.json_object.qsymbol).to.equal(req.body.qsymbol);
+          done();
         });
+
         //
-        done();
       });
 
       it('should be able to retrieve quotes in time range and also update through controller without problems', function(done) {
@@ -106,22 +106,28 @@ describe('<Unit Test>', function() {
           enddate : "2015-10-10"
         };
         quoteCtr.quotes_in_time_range(req, res, function(){
-          console.log(res.json_object);
-          expect(res.json_object[0].high).to.be(150);
+          expect(res.json_object[0].high).to.equal(150);
           req = {};
           req.ip = "127.0.0.1";
           req.quote = res.json_object[0];
           //update
-          req.quote.high = 200;
-          res = {};
+          req.body = {
+            high : "200"
+          }
+          //req.body.high = 200;
           quoteCtr.update(req, res, function(){
+            req = {};
+            req.query = {
+              startdate : "2015-10-10",
+              enddate : "2015-10-10"
+            };
             quoteCtr.quotes_in_time_range(req, res, function(){
-              console.log("After update: -----\n"+ res.json_object[0]);
-              expect(res.json_object[0].qsymbol).to.be(200);
-            });quoteCtr
+              //console.log("After update: -----\n"+ res.json_object[0]);
+              expect(res.json_object[0].high).to.equal(200);
+              done();
+            });
           });
         });
-        done();
       });
 
       it('should be able to retrieve quotes by symbol without problems', function(done) {
@@ -131,17 +137,17 @@ describe('<Unit Test>', function() {
         };
         quoteCtr.quotes_by_symbol(req, res, function(){
           console.log(res.json_object);
-          expect(res.json_object[0].qsymbol).to.be("^DJC");
+          expect(res.json_object[0].qsymbol).to.equal("^DJC");
+          done();
         });
-        done();
       });
       it('should be able to retrieve all quotes without problems', function(done) {
         this.timeout(10000);
         quoteCtr.all(req, res, function(){
           console.log(res.json_object);
-          expect(res.json_object[0].qsymbol).to.be("^DJC");
+          expect(res.json_object[0].qsymbol).to.equal("^DJC");
+          done();
         });
-        done();
       });
 
       it('should be able to delete through controller without problems', function(done) {
@@ -158,20 +164,21 @@ describe('<Unit Test>', function() {
         };
         //add dumb record to remove
         quoteCtr.create(req, res, function(){
-          expect(res.json_object.qdate).to.be(req.body.qdate);
+          expect(res.json_object.qsymbol).to.equal(req.body.qsymbol);
           //destry
           req = {};
           req.ip = "127.0.0.1";
           req.quote = res.json_object;
+
           quoteCtr.destroy(req,res,function(){
             quoteCtr.all(req, res, function(){
               console.log(res.json_object);
-              expect(res.json_object.length).to.be(1);
+              expect(res.json_object.length).to.equal(1);
+              done();
             });
-          })
+          });
         });
         //
-        done();
       });
 
     });
@@ -179,7 +186,6 @@ describe('<Unit Test>', function() {
     after(function(done) {
       this.timeout(10000);
       Quote.remove({},function(err){
-        console.log("db cleaned");
         done();
       });
     });

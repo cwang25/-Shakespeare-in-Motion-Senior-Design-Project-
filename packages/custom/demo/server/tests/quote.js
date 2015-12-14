@@ -58,26 +58,36 @@ describe('<Unit Test>', function() {
 
       it('should be able to save without problems', function(done) {
         this.timeout(10000);
+        var data1, data2, data3;
         djcQuote.save(function(err, data) {
           expect(err).to.be(null);
-          expect(data.high).to.equal("150");
-          expect(data.low).to.equal("90");
+
           djcQuote["_id"] = data._id;
+          data1 = data;
         });
         djcQuote2.save(function(err, data) {
           expect(err).to.be(null);
-          expect(data.high).to.equal("15000");
-          expect(data.low).to.equal("9000");
-          djcQuote2["_id"] = data._id;
 
+          djcQuote2["_id"] = data._id;
+          data2 = data;
         });
         djiQuote.save(function(err, data) {
           expect(err).to.be(null);
-          expect(data.high).to.equal("120");
-          expect(data.low).to.equal("50");
+
           djiQuote["_id"] = data._id;
+          data3 = data;
         });
-        done();
+        setTimeout(function(){
+          expect(data1.high).to.equal(150);
+          expect(data1.low).to.equal(90);
+
+          expect(data3.high).to.equal(15000);
+          expect(data3.low).to.equal(9000);
+
+          expect(data2.high).to.equal(120);
+          expect(data2.low).to.equal(50);
+          done();
+        },3000);
       });
 
       //it('should be able to show an error when try to save duplicate record', function(done) {

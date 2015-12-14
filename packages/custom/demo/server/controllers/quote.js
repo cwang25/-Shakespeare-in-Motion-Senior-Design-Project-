@@ -36,6 +36,7 @@ module.exports = function(app) {
                     if (err) {
                         console.log("Failed to store data: " + quote);
                         console.log(err);
+                        typeof next === 'function' && next();
                         return res.status(500).json({
                             error: 'Cannot save the quote',
                             message: req.body
@@ -43,7 +44,9 @@ module.exports = function(app) {
                     }
                     res.json(quote);
                     //ensure the callback is there.
-                    typeof next == "function" && next();
+                    if(typeof next === 'function') {
+                        next();
+                    }
                 });
             }
         },
@@ -63,7 +66,10 @@ module.exports = function(app) {
                     }
                     res.json(quote);
                     //ensure the callback is there.
-                    typeof next == "function" && next();
+                    //ensure the callback is there.
+                    if(typeof next === 'function') {
+                        next();
+                    }
                 });
             }
         },
@@ -82,7 +88,10 @@ module.exports = function(app) {
                     }
                     res.json(quote);
                     //ensure the callback is there.
-                    typeof next == "function" && next();
+                    //ensure the callback is there.
+                    if(typeof next === 'function') {
+                        next();
+                    }
                 });
             }
         },
@@ -116,7 +125,9 @@ module.exports = function(app) {
                 }
                 res.json(quotes)
                 //ensure the callback is there.
-                typeof next == "function" && next();
+                if(typeof next === 'function') {
+                    next();
+                }
             });
         },
         /**
@@ -132,7 +143,9 @@ module.exports = function(app) {
 
                 res.json(quote)
                 //ensure the callback is there.
-                typeof next == "function" && next();
+                if(typeof next === 'function') {
+                    next();
+                }
             });
         },
         /**
@@ -155,7 +168,9 @@ module.exports = function(app) {
                 }
                 res.json(quotes)
                 //ensure the callback is there.
-                typeof next == "function" && next();
+                if(typeof next === 'function') {
+                    next();
+                }
             });
         }
     };
