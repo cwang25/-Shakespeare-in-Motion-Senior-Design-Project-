@@ -41,11 +41,13 @@ module.exports = function(app) {
                             message: req.body
                         });
                     }
+                    //console.log("********"+req.mochaunittest);
                     res.json(quote);
-                    //ensure the callback is there.
-                    if(typeof next === 'function') {
+                    if(typeof next === 'function' && req.mochaunittest == true) {
                         next();
                     }
+                    //ensure the callback is there.
+
                 });
             }
         },
@@ -66,7 +68,7 @@ module.exports = function(app) {
                     res.json(quote);
                     //ensure the callback is there.
                     //ensure the callback is there.
-                    if(typeof next === 'function') {
+                    if(typeof next === 'function' && req.mochaunittest == true) {
                         next();
                     }
                 });
@@ -88,7 +90,7 @@ module.exports = function(app) {
                     res.json(quote);
                     //ensure the callback is there.
                     //ensure the callback is there.
-                    if(typeof next === 'function') {
+                    if(typeof next === 'function' && req.mochaunittest == true) {
                         next();
                     }
                 });
@@ -124,7 +126,7 @@ module.exports = function(app) {
                 }
                 res.json(quotes)
                 //ensure the callback is there.
-                if(typeof next === 'function') {
+                if(typeof next === 'function' && req.mochaunittest == true) {
                     next();
                 }
             });
@@ -142,7 +144,7 @@ module.exports = function(app) {
 
                 res.json(quote)
                 //ensure the callback is there.
-                if(typeof next === 'function') {
+                if(typeof next === 'function' && req.mochaunittest == true) {
                     next();
                 }
             });
@@ -167,7 +169,7 @@ module.exports = function(app) {
                 }
                 res.json(quotes)
                 //ensure the callback is there.
-                if(typeof next === 'function') {
+                if(typeof next === 'function' && req.mochaunittest == true) {
                     next();
                 }
             });

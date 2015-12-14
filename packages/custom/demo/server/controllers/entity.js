@@ -49,7 +49,7 @@ module.exports = function(Entities) {
                     //});
 
                     res.json(one_entity);
-                    if(typeof next === 'function') {
+                    if(typeof next === 'function' && req.mochaunittest == true) {
                         next();
                     }
                 });
@@ -77,7 +77,7 @@ module.exports = function(Entities) {
                     //    url: config.hostname + '/entitys/' + entity._id
                     //});
                     res.json(one_entity);
-                    if(typeof next === 'function') {
+                    if(typeof next === 'function' && req.mochaunittest == true) {
                         next();
                     }
                 });
@@ -103,7 +103,7 @@ module.exports = function(Entities) {
                     //    name: entity.title
                     //});
                     res.json(one_entity);
-                    if(typeof next === 'function') {
+                    if(typeof next === 'function' && req.mochaunittest == true) {
                         next();
                     }
                 });
@@ -139,7 +139,7 @@ module.exports = function(Entities) {
                 }
 
                 res.json(all_entities);
-                if(typeof next === 'function') {
+                if(typeof next === 'function' && req.mochaunittest == true) {
                     next();
                 }
             });
@@ -155,7 +155,7 @@ module.exports = function(Entities) {
                     });
                 }
                 res.json(all_entities);
-                if(typeof next === 'function') {
+                if(typeof next === 'function' && req.mochaunittest == true) {
                     next();
                 }
             });

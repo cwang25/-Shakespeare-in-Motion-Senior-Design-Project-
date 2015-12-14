@@ -41,7 +41,7 @@ module.exports = function(app) {
                         });
                     }
                     res.json(weeksum);
-                    if(typeof next === 'function') {
+                    if(typeof next === 'function' && req.mochaunittest == true) {
                         next();
                     }
                 });
@@ -62,7 +62,7 @@ module.exports = function(app) {
                         });
                     }
                     res.json(weeksum);
-                    if(typeof next === 'function') {
+                    if(typeof next === 'function' && req.mochaunittest == true) {
                         next();
                     }
                 });
@@ -82,7 +82,7 @@ module.exports = function(app) {
                         });
                     }
                     res.json(weeksum);
-                    if(typeof next === 'function') {
+                    if(typeof next === 'function' && req.mochaunittest == true) {
                         next();
                     }
                 });
@@ -117,7 +117,7 @@ module.exports = function(app) {
                     });
                 }
                 res.json(weeksums)
-                if(typeof next === 'function') {
+                if(typeof next === 'function' && req.mochaunittest == true) {
                     next();
                 }
             });
@@ -134,7 +134,7 @@ module.exports = function(app) {
                 }
 
                 res.json(weeksum);
-                if(typeof next === 'function') {
+                if(typeof next === 'function' && req.mochaunittest == true) {
                     next();
                 }
             });

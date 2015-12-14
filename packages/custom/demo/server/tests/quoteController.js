@@ -29,6 +29,7 @@ describe('<Unit Test>', function() {
       //create mock req and res
       req = {};
       req.ip = "127.0.0.1";
+      req.mochaunittest = true;
       res = {};
       res.json_object="";
       //mock response .send method instead of actually sending response, print to console log.
@@ -109,6 +110,7 @@ describe('<Unit Test>', function() {
           expect(res.json_object[0].high).to.equal(150);
           req = {};
           req.ip = "127.0.0.1";
+          req.mochaunittest = true;
           req.quote = res.json_object[0];
           //update
           req.body = {
@@ -117,6 +119,8 @@ describe('<Unit Test>', function() {
           //req.body.high = 200;
           quoteCtr.update(req, res, function(){
             req = {};
+            req.ip = "127.0.0.1";
+            req.mochaunittest = true;
             req.query = {
               startdate : "2015-10-10",
               enddate : "2015-10-10"
@@ -168,6 +172,7 @@ describe('<Unit Test>', function() {
           //destry
           req = {};
           req.ip = "127.0.0.1";
+          req.mochaunittest = true;
           req.quote = res.json_object;
 
           quoteCtr.destroy(req,res,function(){

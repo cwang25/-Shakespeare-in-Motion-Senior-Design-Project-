@@ -77,7 +77,7 @@ module.exports = function(app) {
                     //    url: config.hostname + '/articles/' + article._id
                     //});
                     res.json(article);
-                    if(typeof next === 'function') {
+                    if(typeof next === 'function' && req.mochaunittest == true) {
                         next();
                     }
                 });
@@ -103,7 +103,7 @@ module.exports = function(app) {
                     //    name: article.title
                     //});
                     res.json(article);
-                    if(typeof next === 'function') {
+                    if(typeof next === 'function' && req.mochaunittest == true) {
                         next();
                     }
                 });
@@ -139,7 +139,7 @@ module.exports = function(app) {
                 }
 
                 res.json(newsarticles);
-                if(typeof next === 'function') {
+                if(typeof next === 'function' && req.mochaunittest == true) {
                     next();
                 }
             });
@@ -155,7 +155,7 @@ module.exports = function(app) {
                     });
                 }
                 res.json(newsarticles);
-                if(typeof next === 'function') {
+                if(typeof next === 'function' && req.mochaunittest == true) {
                     next();
                 }
             });
