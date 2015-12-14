@@ -49,7 +49,7 @@ module.exports = function(app) {
                     //});
 
                     res.json(article);
-                    if(typeof next === 'function') {
+                    if(typeof next === 'function' && req.mochaunittest == true) {
                         next();
                     }
                 });
