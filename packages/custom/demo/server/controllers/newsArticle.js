@@ -26,7 +26,7 @@ module.exports = function(app) {
         /**
          * Create an article
          */
-        create: function(req, res) {
+        create: function(req, res, next) {
             if(rqChecker.check_local(req, res)){
                 var article = new NewsArticle(req.body);
                 //console.log(article);
@@ -49,13 +49,16 @@ module.exports = function(app) {
                     //});
 
                     res.json(article);
+                    if(typeof next === 'function') {
+                        next();
+                    }
                 });
             }
         },
         /**
          * Update an article
          */
-        update: function(req, res) {
+        update: function(req, res, next) {
             if(rqChecker.check_local(req, res)){
                 var article = req.newsarticle;
                 article = _.extend(article, req.body);
@@ -74,13 +77,16 @@ module.exports = function(app) {
                     //    url: config.hostname + '/articles/' + article._id
                     //});
                     res.json(article);
+                    if(typeof next === 'function') {
+                        next();
+                    }
                 });
             }
         },
         /**
          * Delete an article
          */
-        destroy: function(req, res) {
+        destroy: function(req, res, next) {
             if(rqChecker.check_local(req, res)){
                 var article = req.newsarticle;
                 article.remove(function(err) {
@@ -97,6 +103,9 @@ module.exports = function(app) {
                     //    name: article.title
                     //});
                     res.json(article);
+                    if(typeof next === 'function') {
+                        next();
+                    }
                 });
             }
         },
@@ -129,20 +138,26 @@ module.exports = function(app) {
                     });
                 }
 
-                res.json(newsarticles)
+                res.json(newsarticles);
+                if(typeof next === 'function') {
+                    next();
+                }
             });
         },
         /**
          * List of Articles
          */
-        all: function(req, res) {
+        all: function(req, res, next ) {
             NewsArticle.find().exec(function(err, newsarticles) {
                 if (err) {
                     return res.status(500).json({
                         error: 'Cannot list the articles'
                     });
                 }
-                res.json(newsarticles)
+                res.json(newsarticles);
+                if(typeof next === 'function') {
+                    next();
+                }
             });
 
         }

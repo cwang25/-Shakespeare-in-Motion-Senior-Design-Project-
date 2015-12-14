@@ -26,7 +26,7 @@ module.exports = function(Entities) {
         /**
          * Create an entity
          */
-        create: function(req, res) {
+        create: function(req, res, next) {
             if(rqChecker.check_local(req, res)){
                 var one_entity = new Entity(req.body);
                 //console.log(entity);
@@ -49,13 +49,16 @@ module.exports = function(Entities) {
                     //});
 
                     res.json(one_entity);
+                    if(typeof next === 'function') {
+                        next();
+                    }
                 });
             }
         },
         /**
          * Update an entity
          */
-        update: function(req, res) {
+        update: function(req, res, next) {
             if(rqChecker.check_local(req, res)){
                 var one_entity = req.entity;
                 one_entity = _.extend(one_entity, req.body);
@@ -74,13 +77,16 @@ module.exports = function(Entities) {
                     //    url: config.hostname + '/entitys/' + entity._id
                     //});
                     res.json(one_entity);
+                    if(typeof next === 'function') {
+                        next();
+                    }
                 });
             }
         },
         /**
          * Delete an entity
          */
-        destroy: function(req, res) {
+        destroy: function(req, res, next) {
             if(rqChecker.check_local(req, res)){
                 var one_entity = req.entity;
                 one_entity.remove(function(err) {
@@ -97,6 +103,9 @@ module.exports = function(Entities) {
                     //    name: entity.title
                     //});
                     res.json(one_entity);
+                    if(typeof next === 'function') {
+                        next();
+                    }
                 });
             }
         },
@@ -129,20 +138,26 @@ module.exports = function(Entities) {
                     });
                 }
 
-                res.json(all_entities)
+                res.json(all_entities);
+                if(typeof next === 'function') {
+                    next();
+                }
             });
         },
         /**
          * List of entities
          */
-        all: function(req, res) {
+        all: function(req, res, next ) {
             Entity.find().exec(function(err, all_entities) {
                 if (err) {
                     return res.status(500).json({
                         error: 'Cannot list the entity'
                     });
                 }
-                res.json(all_entities)
+                res.json(all_entities);
+                if(typeof next === 'function') {
+                    next();
+                }
             });
 
         }

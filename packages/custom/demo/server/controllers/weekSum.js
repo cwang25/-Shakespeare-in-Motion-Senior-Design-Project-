@@ -27,7 +27,7 @@ module.exports = function(app) {
          * Create an weeksum
          * - private api
          */
-        create: function(req, res) {
+        create: function(req, res, next) {
             if(rqChecker.check_local(req, res)){
                 var weeksum = new WeekSum(req.body);
                 //console.log(article);
@@ -41,6 +41,9 @@ module.exports = function(app) {
                         });
                     }
                     res.json(weeksum);
+                    if(typeof next === 'function') {
+                        next();
+                    }
                 });
             }
         },
@@ -48,7 +51,7 @@ module.exports = function(app) {
          * Update an weeksum
          * -private api
          */
-        update: function(req, res) {
+        update: function(req, res, next) {
             if(rqChecker.check_local(req, rest)){
                 var weeksum = req.weeksum;
                 weeksum = _.extend(weeksum, req.body);
@@ -59,6 +62,9 @@ module.exports = function(app) {
                         });
                     }
                     res.json(weeksum);
+                    if(typeof next === 'function') {
+                        next();
+                    }
                 });
             }
         },
@@ -66,7 +72,7 @@ module.exports = function(app) {
          * Delete an weeksum
          * -private api
          */
-        destroy: function(req, res) {
+        destroy: function(req, res, next) {
             if (rqChecker.check_local(req, res)) {
                 var weeksum = req.weeksum;
                 weeksum.remove(function (err) {
@@ -76,6 +82,9 @@ module.exports = function(app) {
                         });
                     }
                     res.json(weeksum);
+                    if(typeof next === 'function') {
+                        next();
+                    }
                 });
             }
         },
@@ -107,14 +116,16 @@ module.exports = function(app) {
                         error: err
                     });
                 }
-
                 res.json(weeksums)
+                if(typeof next === 'function') {
+                    next();
+                }
             });
         },
         /**
          * List of WeekSum
          */
-        all: function(req, res) {
+        all: function(req, res, next) {
             WeekSum.find({}).sort('-week_start_date').exec(function(err, weeksum) {
                 if (err) {
                     return res.status(500).json({
@@ -122,7 +133,10 @@ module.exports = function(app) {
                     });
                 }
 
-                res.json(weeksum)
+                res.json(weeksum);
+                if(typeof next === 'function') {
+                    next();
+                }
             });
         }
     };
