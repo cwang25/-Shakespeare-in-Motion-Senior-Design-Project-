@@ -36,7 +36,6 @@ module.exports = function(app) {
                     if (err) {
                         console.log("Failed to store data: " + quote);
                         console.log(err);
-                        typeof next === 'function' && next();
                         return res.status(500).json({
                             error: 'Cannot save the quote',
                             message: req.body

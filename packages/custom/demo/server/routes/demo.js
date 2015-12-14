@@ -18,7 +18,7 @@ module.exports = function(Demo, app, auth, database) {
   app.param('entityId', entities.entity);
   //
   app.get('/api/demo/entitiesbydaterange', function(req, res, next){
-    entities.entitiesintimerange(req, res, next);
+    entities.entitiesintimerange(req, res);
   });
 
   var newsarticles = require('../controllers/newsArticle')(Demo);
@@ -34,8 +34,8 @@ module.exports = function(Demo, app, auth, database) {
   //record id.  It will help for update, delete, findOne.
   app.param('newsarticleId', newsarticles.newsarticle);
   //
-  app.get('/api/demo/newsbydaterange', function(req, res, next){
-    newsarticles.newsintimerange(req, res, next);
+  app.get('/api/demo/newsbydaterange', function(req, res){
+    newsarticles.newsintimerange(req, res);
   });
   //// Finish with setting up the articleId param
   //app.param('articleId', articles.article);
@@ -144,19 +144,19 @@ module.exports = function(Demo, app, auth, database) {
    */
   //i.e. /api/demo/weeksum_by_date?date=YYYY-MM-DD&qsymbol="^DJC"
   app.get('/api/demo/weeksum_by_date_index', function(req, res, next){
-    weeksum.weeksum_by_date(req, res, next);
+    weeksum.weeksum_by_date(req, res);
   });
 
   //required startdate and enddate parameter
   //i.e. /api/demo/quotes_in_time_range?startdate=YYYY-MM-DD&enddate=YYYY-MM-DD
   //optional argument: indexsymbol
   app.get('/api/demo/quotes_by_date_range', function(req, res, next){
-    quotes.quotes_in_time_range(req, res, next);
+    quotes.quotes_in_time_range(req, res);
   });
   // required parameter indexsymbol which is the symbol of the idnex to look for
   //i.e. /api/demo/quotes_by_symbol?indexsymbol=^DJI
   app.get('/api/demo/quotes_by_symbol', function(req, res, next){
-    quotes.quotes_by_symbol(req, res, next);
+    quotes.quotes_by_symbol(req, res);
   });
   //-----
   app.get('/api/demo/getAllNews', function(req, res, next){
