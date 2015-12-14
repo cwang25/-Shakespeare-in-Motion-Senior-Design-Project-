@@ -707,94 +707,100 @@
   </div>
 
 
-  <ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#newsArticles">News Articles</a></li>
-    <li><a data-toggle="tab" href="#entities">Entities</a></li>
-    <li><a data-toggle="tab" href="#technicalAnalysis">Market Technical Analysis</a></li>
-  </ul>
+  <div class="tabbable">
+    <ul class="nav nav-tabs">
+      <li class="active"><a class="atab" href="#newsArticles" data-toggle="tab">News Articles</a></li>
+      <li><a class="btab" href="#entities" data-toggle="tab">Entities</a></li>
+      <li><a class="btab" href="#wordCloud" data-toggle="tab">Word Cloud</a></li>
+      <li><a class="btab" href="#technicalAnalysis" data-toggle="tab">Technical Analysis</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active" id="newsArticles">
 
-  <div class="tab-content">
-    <div id="newsArticles" class="tab-pane fade in active">
-      <table class="table">
-        <thead>
-        <tr>
-          <th>News Date</th>
-          <th>Title</th>
-          <th>Content</th>
-          <th>URL</th>
+        <acontent><table class="table">
+          <thead>
+          <tr>
+            <th>News Date</th>
+            <th>Title</th>
+            <th>Content</th>
+            <th>URL</th>
 
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="news in articles">
-          <td style="width:auto;text-align:center;">{{news.newsDate.toString().substring(5, 10) + "\n" + news.newsDate.toString().substring(0, 4)}}</td>
-          <td style="width:17%;">{{news.title.substring(0, 200)}}</td>
-          <td><article readmore>{{news.content}}</article></td>
-          <td>{{news.url}}</td>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="news in articles">
+            <td style="width:auto;text-align:center;">{{news.newsDate.toString().substring(5, 10) + "\n" + news.newsDate.toString().substring(0, 4)}}</td>
+            <td style="width:17%;">{{news.title.substring(0, 200)}}</td>
+            <td><article readmore>{{news.content}}</article></td>
+            <td>{{news.url}}</td>
 
-        </tr>
-        </tbody>
-      </table>
+          </tr>
+          </tbody>
+        </table></acontent>
+      </div>
+      <div class="tab-pane" id="entities">
 
-    </div>
-    <div id="entities" class="tab-pane fade">
-      <table class="table">
-        <thead>
-        <tr>
-          <th>Entities</th>
-          <th>This Week's Top 10 Keywords</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td id="entity_div" style="font-weight:bold;"></td>
-          <td style="width:35%;"><table id="key_div" class="table"></table></td>
-        </tr>
+        <bcontent> <table class="table">
+          <thead>
+          <tr>
+            <th>Entities</th>
+            <th>This Week's Top 10 Keywords</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td id="entity_div" style="font-weight:bold;"></td>
+            <td style="width:35%;"><table id="key_div" class="table"></table></td>
+          </tr>
 
-        </tbody>
-      </table>
-    </div>
+          </tbody>
+        </table></bcontent>
+      </div>
+      <div class="tab-pane active" id="wordCloud">
 
-    <div id="technicalAnalysis" class="tab-pane fade">
-      <table class="table">
-        <tr>
-          <td>{{weekSumIndex}}</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>{{weekSumMax}}</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>{{weekSumMin}}</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>{{weekSumMomentum}}</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>{{weekSumRSI}}</td>
-          <td></td>
-        </tr>
-      </table>
+        <bcontent><table class="table">
+          <thead>
+          <tr>
+            <th>Word Cloud</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td id="cloud_div" style="width:auto;height:500px;"></td>
+          </tr>
+
+          </tbody>
+        </table></bcontent>
+      </div>
+      <div class="tab-pane active" id="technicalAnalysis">
+
+        <bcontent><table class="table">
+          <tr>
+            <td>{{weekSumIndex}}</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>{{weekSumMax}}</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>{{weekSumMin}}</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>{{weekSumMomentum}}</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>{{weekSumRSI}}</td>
+            <td></td>
+          </tr>
+        </table></bcontent>
+      </div>
+
+
     </div>
   </div>
-
-  <table class="table">
-    <thead>
-    <tr>
-      <th>Word Cloud</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <td id="cloud_div" style="width:auto;height:500px;"></td>
-    </tr>
-
-    </tbody>
-  </table>
-
 
 
 
