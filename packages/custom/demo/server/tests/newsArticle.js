@@ -25,7 +25,7 @@ var article3
  * Test Suites
  */
 describe('<Unit Test>', function() {
-    describe('Model entities:', function() {
+    describe('Model newsArticles:', function() {
         beforeEach(function(done) {
             this.timeout(10000);
             article = new NewsArticle({
@@ -62,14 +62,11 @@ describe('<Unit Test>', function() {
 
             it('should be able to save without problems', function(done) {
                 this.timeout(10000);
+                var newsData;
                 article.save(function(err, data) {
                     expect(err).to.be(null);
-                    expect(data.title).to.equal("Fed Raises Interest Rates");
-                    expect(data.sentiment).to.equal("0.75");
-                    expect(data.content).to.equal("First rate hike since 2006");
-                    expect(data.URL).to.equal("www.somewhere.com");
-                    expect(data.keywords.length).to.equal("2");
                     article["_id"] = data._id;
+                    newsData = data;
                 });
 
                 article2.save(function(err, data) {
@@ -81,6 +78,15 @@ describe('<Unit Test>', function() {
                     expect(err).to.be(null);
 
                 });
+                setTimeout(function() {
+                    expect(newsData.title).to.equal("Fed Raises Interest Rates");
+                    expect(newsData.sentiment).to.equal(0.75);
+                    expect(newsData.content).to.equal("First rate hike since 2006");
+                    done();
+
+                },  5000);
+
+
 
                 done();
             });

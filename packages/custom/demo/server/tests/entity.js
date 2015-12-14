@@ -47,27 +47,33 @@ describe('<Unit Test>', function() {
 
             it('should be able to save without problems', function(done) {
                 this.timeout(10000);
+                var data1, data2, data3;
+
                 entity1.save(function(err, data) {
                     expect(err).to.be(null);
-                    expect(data.text).to.equal("Federal Reserve");
-                    expect(data.count).to.equal("10");
-                    expect(data.sentiment).to.equal("0.5");
                     entity1["_id"] = data._id;
+                    data1 = data;
                 });
                 entity2.save(function(err, data) {
                     expect(err).to.be(null);
-                    expect(data.text).to.equal("Inflation");
-                    expect(data.count).to.equal("7");
                     entity2["_id"] = data._id;
+                    data2 = data;
 
                 });
                 entity3.save(function(err, data) {
                     expect(err).to.be(null);
-                    expect(data.text).to.equal("Gold Supply");
-                    expect(data.count).to.equal("2");
                     entity3["_id"] = data._id;
+                    data3 = data;
                 });
-                done();
+                setTimeout(function(){
+                    expect(data1.text).to.equal("Federal Reserve");
+                    expect(data2.text).to.equal("Inflation");
+                    expect(data3.text).to.equal("Gold Supply");
+
+                    done();
+
+                }, 5000);
+
             });
 
 

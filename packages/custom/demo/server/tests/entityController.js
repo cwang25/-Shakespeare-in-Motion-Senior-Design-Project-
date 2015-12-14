@@ -1,7 +1,3 @@
-/**
- * Created by sjchetty on 12/14/2015.
- */
-
 /* jshint -W079 */
 /* Related to https://github.com/linnovate/mean/issues/898 */
 'use strict';
@@ -17,6 +13,9 @@ var expect = require('expect.js'),
  * Globals
  */
 
+var entity1;
+var entity2;
+
 
 var req;
 var res;
@@ -24,7 +23,7 @@ var res;
  * Test Suites
  */
 describe('<Unit Test>', function() {
-    describe('Entities:', function() {
+    describe('Controller entities:', function() {
         beforeEach(function(done) {
             this.timeout(10000);
             //create mock req and res
@@ -35,17 +34,31 @@ describe('<Unit Test>', function() {
             //mock response .send method instead of actually sending response, print to console log.
             res.send = function(msg) {
                 // fake the write method
-                console.log("Mock response message received: "+msg);
-                return msg;
+                console.log("Mock response message received"+msg);
             };
             //mock response .json method instead of actaully stringfy json object
             res.json = function(jsonobj) {
                 // fake the json method
-                console.log("Mock response json object received: "+jsonobj);
+                console.log("Mock response json object received");
                 res.json_object = jsonobj;
                 //console.log(res.json+"===============");
-                return jsonobj;
             };
+
+            entity1 = new Entity({
+                entityDate: "2015-12-14",
+                text: "Federal Reserve",
+                count: "10",
+                sentiment: "0.5"
+
+            });
+
+            entity2 = new Entity({
+                entityDate: "2015-12-15",
+                text: "Inflation",
+                count: "10",
+                sentiment: "0.7"
+
+            });
 
             done();
         });
@@ -54,28 +67,31 @@ describe('<Unit Test>', function() {
             it('should be able to save through controller without problems', function(done) {
                 this.timeout(10000);
                 req.body = {
-                    entityDate : "2015-12-14",
-                    text : "Federal Reserve",
-                    count : "10",
+                    entityDate: "2015-12-14",
+                    text: "Federal Reserve",
+                    count: "10",
                     sentiment: "0.5"
                 };
                 entityCtr.create(req, res, function(){
-                    expect(res.json_object.text).to.be(req.body.text);
+                    //console.log(res.json_object.qdate+"------"+req.body.qdate);
+                    expect(res.json_object.text).to.equal("Federal Reserve");
+
                 });
 
                 req.body = {
-                    entityDate : "2015-12-15",
-                    text : "Inflation",
-                    count : "10"
-
+                    entityDate: "2015-12-15",
+                    text: "Inflation",
+                    count: "10",
+                    sentiment: "0.5"
                 };
-
                 entityCtr.create(req, res, function(){
-                    expect(res.json_object.text).to.be(req.body.text);
+                    //console.log(res.json_object.qdate+"------"+req.body.qdate);
+                    expect(res.json_object.text).to.equal("Inflation");
+
                 });
+                done();
 
                 //
-                done();
             });
 
             it('should be able to retrieve entities in time range and also update through controller without problems', function(done) {
@@ -85,57 +101,64 @@ describe('<Unit Test>', function() {
                     enddate : "2015-12-15"
                 };
                 entityCtr.entitiesintimerange(req, res, function(){
-                    console.log(res.json_object);
-                    expect(res.json_object.length).to.be(2);
+                    expect(res.json_object.length).to.equal(2);
                     req = {};
                     req.ip = "127.0.0.1";
                     req.entity = res.json_object[0];
                     //update
-                    req.entity.count = 7;
-                    res = {};
+                    req.body = {
+                        sentiment : "0.7"
+                    }
+                    //req.body.high = 200;
                     entityCtr.update(req, res, function(){
+                        req = {};
+                        req.query = {
+                            startdate : "2015-12-14",
+                            enddate : "2015-12-15"
+                        };
                         entityCtr.entitiesintimerange(req, res, function(){
-                            console.log("After update: -----\n"+ res.json_object[0]);
-                            expect(res.json_object[0].count).to.be(7);
+                            //console.log("After update: -----\n"+ res.json_object[0]);
+                            expect(res.json_object[0].sentiment).to.equal(0.7);
+                            done();
                         });
                     });
                 });
-                done();
             });
+
 
             it('should be able to retrieve all entities without problems', function(done) {
                 this.timeout(10000);
                 entityCtr.all(req, res, function(){
-                    console.log(res.json_object.length);
-                    expect(res.json_object.length).to.be(2);
+                    console.log(res.json_object);
+                    expect(res.json_object.length).to.equal(2);
+                    done();
                 });
-                done();
             });
 
             it('should be able to delete through controller without problems', function(done) {
                 this.timeout(10000);
                 req.body = {
-                    entityDate : "2015-12-17",
-                    text : "Silver",
-                    count : "3",
-                    sentiment: "-0.7"
+                    entityDate: "2015-12-14",
+                    text: "Federal Reserve",
+                    count: "10",
+                    sentiment: "0.5"
                 };
                 //add dumb record to remove
                 entityCtr.create(req, res, function(){
-                    expect(res.json_object.text).to.be(req.body.text);
                     //destry
                     req = {};
                     req.ip = "127.0.0.1";
-                    req.quote = res.json_object;
+                    req.entity = res.json_object;
+
                     entityCtr.destroy(req,res,function(){
                         entityCtr.all(req, res, function(){
                             console.log(res.json_object);
-                            expect(res.json_object.length).to.be(2);
+                            expect(res.json_object.length).to.equal(2);
+                            done();
                         });
-                    })
+                    });
                 });
                 //
-                done();
             });
 
         });
@@ -143,10 +166,8 @@ describe('<Unit Test>', function() {
         after(function(done) {
             this.timeout(10000);
             Entity.remove({},function(err){
-                console.log("db cleaned");
                 done();
             });
         });
     });
 });
-
